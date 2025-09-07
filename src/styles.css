@@ -1,0 +1,18 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0%;
+}
+
+:root{
+    --primary-color: #0a1f44;
+    --color-blanco: #f5f7fa;   /* Blanco suave */
+    --color-gris: #4c5c68;   /* Gris azulado */
+    --color-azul: #1c3f60;   /* Azul medio */
+}
+
+img{
+    width: 100%;
+}
+html, body { height: 100%; }
+body { height: 100%; margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
