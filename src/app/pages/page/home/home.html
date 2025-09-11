@@ -1,29 +1,18 @@
-<mat-grid-list cols="12" rowHeight="800px">
-    <mat-grid-tile colspan="8">
-      <app-map></app-map>
-    </mat-grid-tile>
-    <mat-grid-tile colspan="4">
-      <div class="info-column">
-        <app-vehicules [idUsuario]="idUsuario"></app-vehicules>
-        <app-stops></app-stops>
-      </div>
-    </mat-grid-tile>
-</mat-grid-list>
-
-<!-- 
 <div class="dashboard">
-  <div class="row">
+  <!-- src/app/app.component.html -->
+<app-basic-form [settings]="settings" [formGroup]="form" />
+  />
+  <!-- <div class="row text-center">
     <div class="col-8">
       <div class="map-column">
         <app-map></app-map>
       </div>
     </div>
-
     <div class="col-4">
       <div class="info-column">
         <app-vehicules [idUsuario]="idUsuario"></app-vehicules>
         <app-stops></app-stops>
       </div>
     </div>
-  </div>
-</div> -->
+  </div> -->
+</div>

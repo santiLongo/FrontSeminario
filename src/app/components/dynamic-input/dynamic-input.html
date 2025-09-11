@@ -1,0 +1,20 @@
+<!-- src/app/components/dynamic-input/dynamic-input.component.html -->
+<div
+  class="mb-3"
+  [class.d-none]="config.hidden"
+  [class.row]="!!config.row"
+>
+  <div [class]="config.col || 'col-12'">
+    <label [for]="config.formControlName" class="form-label">
+      {{ config.label }}
+    </label>
+    <input
+      [type]="config.type"
+      class="form-control"
+      [formControl]="control()"
+      [id]="config.formControlName"
+      [readonly]="config.readonly"
+      [attr.placeholder]="config.format ? 'Formato: ' + config.format : null"
+    />
+  </div>
+</div>
