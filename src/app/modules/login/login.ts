@@ -20,7 +20,7 @@ export class Login {
               // acá guardás token o redirigís al dashboard
               localStorage.setItem('token', response.token);
               localStorage.setItem('usuario', JSON.stringify(response.usuario));
-              this.router.navigate(['/page']);
+              this.router.navigate(['/inicio/dashboard']);
             },
             error: (err) => {
               console.error('Error en login', err);

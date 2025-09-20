@@ -1,22 +1,21 @@
 import { Routes } from '@angular/router';
-import { Login } from './pages/login/login';
-import { Page } from './pages/page/page';
+import { Login } from './modules/login/login';
+import { InicioComponent } from './modules/inicio/inicio.component';
 import { AuthGuard } from './guards/auth.guard';
-import { pageRoutes } from './pages/page/page.routes';
+import { PageNotFoundComponent } from './modules/page-not-found/page-not-found.component';
 
 export const routes: Routes = [
     { 
         path: '', 
-        component: Login 
+        component: Login,
     },
     { 
-        path: 'page', 
-        component: Page,
+        path: 'inicio', 
         canActivate: [AuthGuard],
-        children: pageRoutes,
+        loadChildren: () => import('./modules/inicio/inicio.routes').then(m => m.routes)
     },
     { 
         path: '**', 
-        redirectTo: '' 
+        component: PageNotFoundComponent,
     }
 ];
