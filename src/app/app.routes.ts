@@ -1,21 +1,16 @@
 import { Routes } from '@angular/router';
-import { Login } from './modules/login/login';
-import { InicioComponent } from './modules/inicio/inicio.component';
+import { Login } from './pages/login/login';
 import { AuthGuard } from './guards/auth.guard';
-import { PageNotFoundComponent } from './modules/page-not-found/page-not-found.component';
+import { pageRoutes } from './pages/page/page.routes';
 
 export const routes: Routes = [
     { 
         path: '', 
-        component: Login,
+        component: Login 
     },
     { 
-        path: 'inicio', 
+        path: 'page', 
         canActivate: [AuthGuard],
-        loadChildren: () => import('./modules/inicio/inicio.routes').then(m => m.routes)
+        loadChildren: () => pageRoutes,
     },
-    { 
-        path: '**', 
-        component: PageNotFoundComponent,
-    }
 ];

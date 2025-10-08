@@ -1,0 +1,16 @@
+<mat-card style="background-color: var(--color-gris); color: var(--color-blanco)">
+  <mat-card-header>
+    <mat-card-title>
+      <h3>{{titulo}}</h3>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <ng-content select="[filter]"></ng-content>
+  </mat-card-content>
+  <mat-card-content>
+    <ng-content select="[body]"></ng-content>
+  </mat-card-content>
+  <mat-card-footer style="display: flex; justify-content: flex-end; margin-right: 20px;" >
+    <p>{{nombreComponente}}</p>
+  </mat-card-footer>
+</mat-card>

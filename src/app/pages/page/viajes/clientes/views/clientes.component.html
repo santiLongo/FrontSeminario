@@ -1,0 +1,40 @@
+<!-- <mat-expansion-panel style="background-color: var(--color-blanco); margin-top: 10px; color: var(--color-gris)">
+    <mat-expansion-panel-header>
+        <mat-panel-title>Filtros</mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="filter">
+        <form
+        [formGroup]="formulario"
+        style="
+            margin-top: 10px;
+            margin-bottom: 10px;
+        "
+        >
+        <div class="row">
+            <div class="col-6">
+            <mat-form-field
+                style="width: 100%"
+            >
+                <mat-label>Razon Social</mat-label>
+                <input matInput formControlName="razonSocial" />
+            </mat-form-field>
+            </div>
+            <div class="col-6">
+            <mat-form-field
+                style="width: 100%;"
+            >
+                <mat-label>Cuit</mat-label>
+                <input matInput formControlName="cuit" />
+            </mat-form-field>
+            </div>
+        </div>
+        </form>
+    </div>
+</mat-expansion-panel>
+ -->
+
+<app-card-view titulo="Maestro de Clientes" nombreComponente="maestro-clientes-home">
+    <div body>
+        <app-basic-form [config]="config" [formulario]="formulario"></app-basic-form>
+    </div>
+</app-card-view>

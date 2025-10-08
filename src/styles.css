@@ -7,21 +7,3 @@
   --color-azul: #1c3f60; /* Azul medio */
 }
 
-/* styles.css (añadir) */
-html, body {
-  height: 100%;
-  margin: 0;
-}
-
-/* Aseguramos que app-root y app-inicio ocupen la pantalla y actúen como flex column */
-app-root,
-app-inicio {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-/* El main dentro de app-inicio se expande para empujar el footer hacia abajo */
-main {
-  flex: 1 1 auto;
-}

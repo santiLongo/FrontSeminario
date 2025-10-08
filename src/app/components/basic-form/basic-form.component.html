@@ -1,0 +1,49 @@
+<form [formGroup]="formulario" style="margin-top: 10px; margin-bottom: 10px">
+  @for (group of groupedRows; track group.row) {
+    <div class="row mb-3">
+      @for(item of group.items; track item.formControlName){
+         <div [class]="item.col" [hidden]="item.hidden == undefined ? false : item.hidden">
+          <mat-form-field style="width: 100%;">
+            <mat-label>{{ item.label }}</mat-label>
+            @if(item.type === 'checkbox'){
+                <mat-checkbox [formControlName]="item.formControlName"></mat-checkbox>
+            }
+
+            @if (item.type === 'text' || item.type === 'number') {
+              <input matInput [formControlName]="item.formControlName" [type]="item.type" [required]="item.required == undefined? false : item.required" />
+            }
+
+            @if (item.type === 'money'){
+                <ng-container>
+                    <span matTextPrefix>$&nbsp;</span>
+                    <input
+                    matInput
+                    type="number"
+                    class="example-right-align"
+                    placeholder="0"
+                    [required]="item.required == undefined ? false : item.required"
+                    />
+                </ng-container>
+            }
+
+            @if(item.type === 'date'){
+                <ng-container>
+                    <input matInput type="date" [required]="item.required == undefined? false : item.required">
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </ng-container>
+            }
+
+            @if (item.type === 'combo' && item.comboOptions) {
+              <mat-select [formControlName]="item.formControlName" [required]="item.type" [required]="item.required == undefined? false : item.required">
+                @for (opt of item.comboOptions; track opt) {
+                  <mat-option [value]="opt">{{ opt }}</mat-option>
+                }
+              </mat-select>
+            }
+          </mat-form-field>
+        </div>
+      }
+    </div>
+  }
+</form>

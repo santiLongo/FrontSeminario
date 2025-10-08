@@ -1,0 +1,28 @@
+header {
+  background-color: #1c3f60;
+  padding: 0.5rem 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+a {
+  text-decoration: none;
+  padding: 0.5rem;
+  transition: transform 0.2s ease-in-out;
+}
+
+a:hover {
+  transform: scale(1.05);
+}
+
+.nav-icon {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  filter: brightness(0) invert(1); /* Blanco sobre fondo oscuro */
+}
