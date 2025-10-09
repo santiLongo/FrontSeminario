@@ -7,3 +7,26 @@
   --color-azul: #1c3f60; /* Azul medio */
 }
 
+/* src/styles.css */
+.cdk-overlay-pane .mat-datepicker-content { /*Pongo del date form por aca porque en la hoja del componente no me las toma*/
+  background-color: var(--color-gris) !important;
+  border: 2px solid var(--color-blanco) !important;
+  border-radius: 20px !important;
+  color: var(--color-blanco) !important
+}
+
+.cdk-overlay-pane .mat-calendar-body-cell-content {
+  color: var(--color-blanco) !important;
+}
+
+/* Cambiar color del nombre del mes/año */
+.cdk-overlay-pane .mat-calendar-body-label {
+  color: var(--color-blanco) !important;
+}
+
+/* Cambiar color de los encabezados de los días (S, M, T...) */
+.cdk-overlay-pane .mat-calendar-table-header th {
+  color: var(--color-blanco) !important;
+}
+
+/*De aca para arriba toco los estilos del date-form-field, prefiria no hacerlo aca pero me rompe las bolas en su hoja de estilos*/

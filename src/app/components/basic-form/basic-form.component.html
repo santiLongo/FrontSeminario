@@ -3,45 +3,38 @@
     <div class="row mb-3">
       @for(item of group.items; track item.formControlName){
          <div [class]="item.col" [hidden]="item.hidden == undefined ? false : item.hidden">
-          <mat-form-field style="width: 100%;">
-            <mat-label>{{ item.label }}</mat-label>
-            @if(item.type === 'checkbox'){
-                <mat-checkbox [formControlName]="item.formControlName"></mat-checkbox>
-            }
-
+          
             @if (item.type === 'text' || item.type === 'number') {
-              <input matInput [formControlName]="item.formControlName" [type]="item.type" [required]="item.required == undefined? false : item.required" />
+              <mat-form-field style="width: 100%;">
+                <mat-label>{{ item.label }}</mat-label>
+                <input matInput [formControlName]="item.formControlName" [type]="item.type" [required]="item.required == undefined? false : item.required" />
+              </mat-form-field>
             }
 
-            @if (item.type === 'money'){
-                <ng-container>
-                    <span matTextPrefix>$&nbsp;</span>
-                    <input
-                    matInput
-                    type="number"
-                    class="example-right-align"
-                    placeholder="0"
-                    [required]="item.required == undefined ? false : item.required"
-                    />
-                </ng-container>
+            @if(item.type === 'checkbox'){
+              <mat-checkbox [formControlName]="item.formControlName">{{item.label}}</mat-checkbox>
+            }
+
+            @if (item.type === 'textarea'){
+              <mat-form-field style="width: 100%;">
+                <mat-label>{{ item.label }}</mat-label>
+                <textarea matInput [formControlName]="item.formControlName" [required]="item.required == undefined? false : item.required"></textarea>
+              </mat-form-field>
             }
 
             @if(item.type === 'date'){
-                <ng-container>
-                    <input matInput type="date" [required]="item.required == undefined? false : item.required">
-                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </ng-container>
+              <app-date-form-field [label]="item.label" [required]="item.required == undefined ? false : item.required" [readonly]="item.readonly == undefined ? false : item.readonly" [formControlName]="item.formControlName"></app-date-form-field>
             }
 
-            @if (item.type === 'combo' && item.comboOptions) {
-              <mat-select [formControlName]="item.formControlName" [required]="item.type" [required]="item.required == undefined? false : item.required">
-                @for (opt of item.comboOptions; track opt) {
-                  <mat-option [value]="opt">{{ opt }}</mat-option>
-                }
-              </mat-select>
+            @if (item.type === 'combo') {
+              <app-combo-field
+              [label]="item.label"
+              [formControlName]="item.formControlName"
+              [comboName]="item.comboName == undefined ? '' : item.comboName"
+              [readonly]="item.readonly == undefined ? false : item.readonly"
+              [required]="item.required == undefined ? false : item.required"
+              ></app-combo-field>
             }
-          </mat-form-field>
         </div>
       }
     </div>

@@ -1,0 +1,8 @@
+<mat-form-field style="width: 100%;">
+  <mat-label>{{label}}</mat-label>
+  <mat-select disableRipple [required]="required" [formControlName]="formControlName">
+    @for (item of items; track $index) {
+        <mat-option [value]="item.numero">{{item.descripcion}}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>

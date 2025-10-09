@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { AfterViewInit, Component, OnInit } from "@angular/core";
 import { BasicFormComponent, BasicFormConfig } from "../../../../../components/basic-form/basic-form.component";
 import { CardViewComponent } from "../../../../../components/card-view/card-view.component";
 import { FormControl, FormGroup } from "@angular/forms";
@@ -8,7 +8,7 @@ import { FormControl, FormGroup } from "@angular/forms";
     templateUrl: './clientes.component.html',
     imports: [CardViewComponent, BasicFormComponent],
 })
-export class ClientesComponent implements OnInit { 
+export class ClientesComponent implements AfterViewInit { 
     public config: BasicFormConfig[] = [
         {
             formControlName: 'razonSocial',
@@ -25,19 +25,22 @@ export class ClientesComponent implements OnInit {
             type: 'text',
         },
         {
-            formControlName: 'fecha',
-            label: 'Fecha',
+            formControlName: 'soyCheckbox',
+            label: 'Soy un checkbox',
             row: 1,
             col: 'col-4',
-            type: 'date',
+            type: 'checkbox',
         }
     ]
     public formulario: FormGroup = new FormGroup({
         razonSocial: new FormControl(''),
         cuit: new FormControl(''),
+        soyCheckbox: new FormControl(false),
     })
     
-    ngOnInit() {
-        
+    ngAfterViewInit(): void {
+        this.formulario.valueChanges.subscribe((val) => {
+            console.log(val);
+        });
     }
 }
