@@ -9,5 +9,4 @@ import {MatCardModule} from '@angular/material/card';
 })
 export class CardViewComponent {
     @Input() titulo: string = 'Titulo';
-    @Input() nombreComponente: string = 'Nombre Componente'; 
 }
