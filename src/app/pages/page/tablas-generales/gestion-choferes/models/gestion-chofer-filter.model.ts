@@ -1,6 +1,6 @@
-export class ClientesFilterModel {
-    provincia?: string;
-    localidad?: string;
+export interface GestionChoferesFilterModel {
+    nombre?: string;
+    apellido?: string;
     fechaAltaDesde?: Date;
     fechaAltaHasta?: Date;
     fechaBajaDesde?: Date;
