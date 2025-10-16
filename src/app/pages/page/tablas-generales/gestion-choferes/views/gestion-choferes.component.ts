@@ -13,8 +13,8 @@ import { GestionChoferesDataService } from "../services/gestion-choferes-data.se
   providers: [GestionChoferesDataService],
 })
 export class GestionChoferesComponent implements OnInit {
-    public config: BasicFormConfig[] = []
-    public gridConfig: BasicGridConfig[] = []
+    public config: BasicFormConfig[] = [];
+    public gridConfig!: BasicGridConfig;
     public formulario!: FormGroup;
     
     constructor(public dataService: GestionChoferesDataService) {}
@@ -65,7 +65,8 @@ export class GestionChoferesComponent implements OnInit {
             },
         ];
 
-        this.gridConfig = [
+        this.gridConfig = {
+            columns:[
             {
                 columnName: 'nombre',
                 label: 'Nombre',
@@ -106,7 +107,8 @@ export class GestionChoferesComponent implements OnInit {
                 label: 'Fecha Baja',
                 type: 'date',
             },
-        ];
+        ]
+    }
         this.formulario = new FormGroup({
             nombre: new FormControl(''),
             apellido: new FormControl(''),

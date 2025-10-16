@@ -61,7 +61,3 @@ export interface BasicFormConfig  {
     hidden?: boolean;
     readonly?: boolean;
 }
-
-function provideNativeDateAdapter(): import("@angular/core").Provider {
-    throw new Error("Function not implemented.");
-}

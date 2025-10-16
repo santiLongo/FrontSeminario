@@ -20,14 +20,28 @@ import { ClientesGridModel } from '../models/clientes-grid.model';
   imports: [CardViewComponent, BasicFilterComponent, BasicGridComponent],
   providers: [ClientesDataService],
 })
-export class ClientesComponent implements OnInit {
+export class ClientesComponent implements OnInit, AfterViewInit {
   public config: BasicFormConfig[] = [];
-  public gridConfig: BasicGridConfig[] = [];
+  public gridConfig!: BasicGridConfig;
   public formulario: FormGroup = new FormGroup({});
 
   constructor(public dataService: ClientesDataService) {}
+  ngAfterViewInit(): void {
+    this.formulario.valueChanges.subscribe((value) => {
+      console.log(value);
+    });
+  }
 
   ngOnInit(): void {
+    this.formulario = new FormGroup({
+      provincia: new FormControl(),
+      localidad: new FormControl(),
+      fechaAltaDesde: new FormControl(),
+      fechaAltaHasta: new FormControl(),
+      fechaBajaDesde: new FormControl(),
+      fechaBajaHasta: new FormControl(),
+    });
+
     this.config = [
       {
         formControlName: 'provincia',
@@ -73,27 +87,20 @@ export class ClientesComponent implements OnInit {
       },
     ];
 
-    this.gridConfig = [
-      { label: 'Razón Social', columnName: 'razonSocial', type: 'text' },
-      { label: 'CUIT', columnName: 'cuit', type: 'text' },
-      { label: 'Dirección', columnName: 'direccion', type: 'text' },
-      { label: 'Teléfono', columnName: 'telefono', type: 'text' },
-      { label: 'Mail', columnName: 'mail', type: 'text' },
-      { label: 'Provincia', columnName: 'provincia', type: 'text' },
-      { label: 'Localidad', columnName: 'localidad', type: 'text' },
-      { label: 'User Alta', columnName: 'userAlta', type: 'text' },
-      { label: 'Fecha Alta', columnName: 'fechaAlta', type: 'date' },
-      { label: 'Fecha Baja', columnName: 'fechaBaja', type: 'date' },
-    ];
-
-    this.formulario = new FormGroup({
-        provincia: new FormControl(null),
-        localidad: new FormControl(null),
-        fechaAltaDesde: new FormControl(null),
-        fechaAltaHasta: new FormControl(null),
-        fechaBajaDesde: new FormControl(null),
-        fechaBajaHasta: new FormControl(null),
-    });
+    this.gridConfig = {
+      columns: [
+        { label: 'Razón Social', columnName: 'razonSocial', type: 'text' },
+        { label: 'CUIT', columnName: 'cuit', type: 'text' },
+        { label: 'Dirección', columnName: 'direccion', type: 'text' },
+        { label: 'Teléfono', columnName: 'telefono', type: 'text' },
+        { label: 'Mail', columnName: 'mail', type: 'text' },
+        { label: 'Provincia', columnName: 'provincia', type: 'text' },
+        { label: 'Localidad', columnName: 'localidad', type: 'text' },
+        { label: 'User Alta', columnName: 'userAlta', type: 'text' },
+        { label: 'Fecha Alta', columnName: 'fechaAlta', type: 'date' },
+        { label: 'Fecha Baja', columnName: 'fechaBaja', type: 'date' },
+      ],
+    };
   }
 
   onSearch() {

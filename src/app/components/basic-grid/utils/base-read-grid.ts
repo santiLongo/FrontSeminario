@@ -3,13 +3,13 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { BaseReadService } from '../services/base-read.service';
-import { BasicGridConfig } from '../basic-grid.component';
+import { BasicGridConfig, GridColumnConfig } from '../basic-grid.component';
 
 @Directive()
 // Clase abstracta base para cualquier grilla con servicio de lectura
 export abstract class BaseReadGrid<T> implements OnInit, OnDestroy {
   @Input() readService!: BaseReadService<T>;
-  @Input() config: BasicGridConfig[] = [];
+  @Input() config!: BasicGridConfig;
 
   dataSource = new MatTableDataSource<T>([]);
   displayedColumns: string[] = [];
@@ -18,7 +18,7 @@ export abstract class BaseReadGrid<T> implements OnInit, OnDestroy {
   private subs: Subscription = new Subscription();
 
   ngOnInit(): void {
-    this.displayedColumns = this.config.map(c => c.columnName);
+    this.displayedColumns = this.config.columns.map(c => c.columnName);
     this.loadData();
   }
 
@@ -43,14 +43,21 @@ export abstract class BaseReadGrid<T> implements OnInit, OnDestroy {
   this.readService.search();
   }
 
-  formatValue(value: any, config: BasicGridConfig): string {
+  formatValue(value: any, column: GridColumnConfig): string {
     if (value == null) return '';
-    if (config.type === 'date' && config.format === 'date-time') {
-      return new Date(value).toLocaleString();
+
+    if (column.type === 'date') {
+      const date = new Date(value);
+      return column.format === 'date-time'
+        ? date.toLocaleString()
+        : date.toLocaleDateString();
     }
-    if (config.type === 'number' && config.format === 'decimal') {
+
+    if (column.type === 'number' && column.format === 'decimal') {
       return Number(value).toLocaleString(undefined, { minimumFractionDigits: 2 });
     }
+
     return String(value);
   }
+
 }
