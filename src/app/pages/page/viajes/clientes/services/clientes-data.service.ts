@@ -16,11 +16,7 @@ export class ClientesDataService extends BaseReadService<ClientesGridModel>{
      }
 
     getAll(): Observable<ClientesGridModel[]> {
-        let valores: ClientesFilterModel = {};
-        this.filterSub$.subscribe((req) => {
-            console.log('Filtro actual:', req);
-            valores = req;
-        });
+        const valores: ClientesFilterModel = this.filterSub$.value;
         return this.httpService.getAll(valores);
     }
 }

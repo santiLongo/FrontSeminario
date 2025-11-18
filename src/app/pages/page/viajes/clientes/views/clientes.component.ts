@@ -101,6 +101,8 @@ export class ClientesComponent implements OnInit, AfterViewInit {
         { label: 'Fecha Baja', columnName: 'fechaBaja', type: 'date' },
       ],
     };
+
+    this.dataService.search();
   }
 
   onSearch() {

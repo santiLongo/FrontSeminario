@@ -18,7 +18,7 @@ export abstract class BaseReadGrid<T> implements OnInit, OnDestroy {
   private subs: Subscription = new Subscription();
 
   ngOnInit(): void {
-    this.displayedColumns = this.config.columns.map(c => c.columnName);
+    this.displayedColumns = this.config.columns.map((c) => c.columnName);
     this.loadData();
   }
 
@@ -29,18 +29,15 @@ export abstract class BaseReadGrid<T> implements OnInit, OnDestroy {
   protected loadData(): void {
     if (!this.readService) return;
 
-     const sub = this.readService.dataSub$.subscribe({
-    next: (data) => {
-      this.dataSource.data = data;
-      if (this.paginator) this.dataSource.paginator = this.paginator;
-    },
-    error: (err) => console.error('Error al cargar datos del grid:', err)
-  });
+    const sub = this.readService.dataSub$.subscribe({
+      next: (data) => {
+        this.dataSource.data = data;
+        if (this.paginator) this.dataSource.paginator = this.paginator;
+      },
+      error: (err) => console.error('Error al cargar datos del grid:', err),
+    });
 
-  this.subs.add(sub);
-
-  // Lanzar una búsqueda inicial si el servicio lo requiere
-  this.readService.search();
+    this.subs.add(sub);
   }
 
   formatValue(value: any, column: GridColumnConfig): string {
@@ -54,10 +51,11 @@ export abstract class BaseReadGrid<T> implements OnInit, OnDestroy {
     }
 
     if (column.type === 'number' && column.format === 'decimal') {
-      return Number(value).toLocaleString(undefined, { minimumFractionDigits: 2 });
+      return Number(value).toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+      });
     }
 
     return String(value);
   }
-
 }

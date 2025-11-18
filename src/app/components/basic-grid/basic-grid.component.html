@@ -1,15 +1,14 @@
 <div class="mat-elevation-z8">
   <table
-    style="margin-top: 10px"
+    style="margin-top: 10px; color: #fff;"
     mat-table
     [dataSource]="dataSource"
     matSort
     (matSortChange)="announceSortChange($event)"
   >
-    @if (config.actions!.length > 0) {
-    <ng-container [matColumnDef]="'actions'" style="border: 1px solid #000">
+    @if (config.actions! != null) {
+    <ng-container [matColumnDef]="'actions'">
       <th
-        style="border: 1px solid #000; background-color: var(--color-gris)"
         mat-header-cell
         *matHeaderCellDef
       >
@@ -28,10 +27,10 @@
     @for (col of config.columns; track $index) {
     <ng-container
       [matColumnDef]="col.columnName"
-      style="border: 1px solid #000"
+      style="border: 1px solid #fff"
     >
       <th
-        style="border: 1px solid #000; background-color: var(--color-gris)"
+        style="color: #fff; border: 1px solid #fff"
         mat-header-cell
         *matHeaderCellDef
         mat-sort-header
@@ -40,7 +39,7 @@
         {{ col.label }}
       </th>
       <td
-        style="border: 1px solid #000; background-color: var(--color-blanco)"
+        style="color: #fff; border: 1px solid #fff"
         mat-cell
         *matCellDef="let element"
       >

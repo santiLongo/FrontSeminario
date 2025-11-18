@@ -1,0 +1,7 @@
+.mat-mdc-form-field::after  {
+  text-align: center !important;
+}
+
+.mat-mdc-select-arrow svg {
+  left: 0% !important;
+}

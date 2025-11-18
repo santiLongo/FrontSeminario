@@ -19,6 +19,7 @@ import { BaseReadGrid } from './utils/base-read-grid';
 @Component({
   selector: 'app-basic-grid',
   templateUrl: './basic-grid.component.html',
+  styleUrls: ['./basic-grid.component.css'],
   imports: [MatTableModule, MatPaginatorModule, MatSortModule, MatButtonModule, MatMenuModule, MatIconModule],
 })
 export class BasicGridComponent<T>
