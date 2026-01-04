@@ -3,9 +3,19 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": ".",
     "strict": true,
+    "strictPropertyInitialization": false,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
+    "paths": {
+      "lib-core": [
+        "projects/lib-core/src/public-api.ts"
+      ],
+      "lib-home": [
+        "projects/lib-home/src/public-api.ts"
+      ]
+    },
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
@@ -29,6 +39,18 @@
     },
     {
       "path": "./tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/lib-home/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/lib-home/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/lib-core/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/lib-core/tsconfig.spec.json"
     }
   ]
 }

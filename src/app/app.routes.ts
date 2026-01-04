@@ -1,17 +1,36 @@
+import { Title } from '@angular/platform-browser';
 import { Routes } from '@angular/router';
-import { Login } from './pages/login/login';
-import { AuthGuard } from './guards/auth.guard';
-import { pageRoutes } from './pages/page/page.routes';
+import { AuthGuard } from 'src/guard/auth.guard';
+import { HomeComponent } from 'src/home/view/home.component';
 
 export const routes: Routes = [
-    { 
-        path: '', 
-        component: Login 
+    {
+        path: '',
+        redirectTo: 'login',
+        pathMatch: 'full',
     },
-    { 
-        path: 'page', 
+    {
+        path: 'login',
+        loadComponent: () => import('lib-home').then(m => m.LoginComponent),
+    },
+    {
+        path: '',
+        component: HomeComponent,
         canActivate: [AuthGuard],
-        loadChildren: () => import('./pages/page/page.routes').then((m) => m.pageRoutes),
-        // loadChildren: () => pageRoutes,
+        canActivateChild: [AuthGuard],
+        data: {
+            title: 'Home'
+        },
+        children: [
+            {
+                path: 'dashboard',
+                loadComponent: () => import('lib-home').then(m => m.DashboardHomeComponent)
+            }
+        ]
     },
+    {
+        path: '**',
+        canActivate: [AuthGuard],
+        loadComponent: () => import('lib-home').then(m => m.NotFoundComponent)
+    }
 ];
