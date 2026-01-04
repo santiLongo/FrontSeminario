@@ -1,8 +1,0 @@
-export class ClientesFilterModel {
-    provincia?: string;
-    localidad?: string;
-    fechaAltaDesde?: Date;
-    fechaAltaHasta?: Date;
-    fechaBajaDesde?: Date;
-    fechaBajaHasta?: Date;
-}
