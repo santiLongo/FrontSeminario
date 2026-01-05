@@ -1,0 +1,22 @@
+mat-icon {
+  transition: transform 200ms ease-in-out;
+}
+
+mat-icon.rotated {
+  transform: rotate(90deg);
+}
+
+/* .mat-tree-node {
+  overflow: hidden;
+}
+
+.mat-tree-node .cdk-tree-node {
+  transition: max-height 250ms ease, opacity 250ms ease;
+  max-height: 0;
+  opacity: 0;
+}
+
+.mat-tree-node-expanded .cdk-tree-node {
+  max-height: 500px;
+  opacity: 1;
+} */

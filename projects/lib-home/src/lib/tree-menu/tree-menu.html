@@ -1,0 +1,40 @@
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+
+  <mat-tree-node *matTreeNodeDef="let node">
+    <button
+      matIconButton
+      (click)="(node.onClick?.())"
+      style="width: auto; display: flex; justify-content: center"
+    >
+      <mat-icon color="#0CF061"> {{ node.icon }} </mat-icon>
+      {{ node.name }}
+    </button>
+  </mat-tree-node>
+
+  <mat-tree-node
+  *matTreeNodeDef="let node; when: hasChild"
+  matTreeNodePadding
+>
+  <button
+    matIconButton
+    (click)="treeControl.toggle(node)"
+    style="width: auto; display: flex; justify-content: center"
+  >
+    <mat-icon
+      class="mat-icon-rtl-mirror"
+      [class.rotated]="treeControl.isExpanded(node)"
+    >
+      chevron_right
+    </mat-icon>
+    {{ node.name }}
+  </button>
+
+  <div
+    [@expandCollapse]="
+      treeControl.isExpanded(node) ? 'expanded' : 'collapsed'
+    "
+  >
+    <ng-container matTreeNodeOutlet></ng-container>
+  </div>
+</mat-tree-node>
+</mat-tree>
