@@ -5,11 +5,6 @@ import { HomeComponent } from 'src/home/view/home.component';
 
 export const routes: Routes = [
     {
-        path: '',
-        redirectTo: 'login',
-        pathMatch: 'full',
-    },
-    {
         path: 'login',
         loadComponent: () => import('lib-home').then(m => m.LoginComponent),
     },
@@ -19,12 +14,20 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
         canActivateChild: [AuthGuard],
         data: {
-            title: 'Home'
-        },
+                    title: 'Home'
+                },
         children: [
             {
                 path: 'dashboard',
-                loadComponent: () => import('lib-home').then(m => m.DashboardHomeComponent)
+                loadComponent: () => import('lib-home').then(m => m.DashboardHomeComponent),
+            },
+            {
+                path: 'viajes',
+                loadChildren: () => import('lib-viajes').then(m => m.ViajesRoutes)
+            },
+            {
+                path: 'configuracion',
+                loadChildren: () => import('lib-config').then(m => m.ConfiguracionRoutes)
             }
         ]
     },

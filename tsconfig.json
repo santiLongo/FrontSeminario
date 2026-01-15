@@ -9,11 +9,17 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "paths": {
+      "lib-config": [
+        "projects/lib-config/src/public-api.ts"
+      ],
       "lib-core": [
         "projects/lib-core/src/public-api.ts"
       ],
       "lib-home": [
         "projects/lib-home/src/public-api.ts"
+      ],
+      "lib-viajes": [
+        "projects/lib-viajes/src/public-api.ts"
       ]
     },
     "noImplicitReturns": true,
@@ -38,6 +44,9 @@
   "files": [],
   "references": [
     {
+      "path": "./tsconfig.react.json"
+    },
+    {
       "path": "./tsconfig.app.json"
     },
     {
@@ -54,6 +63,18 @@
     },
     {
       "path": "./projects/lib-core/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/lib-viajes/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/lib-viajes/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/lib-config/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/lib-config/tsconfig.spec.json"
     }
   ]
 }

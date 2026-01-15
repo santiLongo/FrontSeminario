@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ReactComponentDirective } from 'lib-core';
 import type { MenuProps } from 'antd';
-import { Menu } from 'antd';
 import { TreeMenuV2, TreeMenuV2Props } from './react-component/tree-menu-v2';
 import {
   AppstoreOutlined,
-  MailOutlined,
-  SettingOutlined,
   TruckOutlined,
 } from '@ant-design/icons';
-import React from 'react';
 import { Router } from '@angular/router';
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -40,7 +36,7 @@ export class TreeMenuV2Component implements OnInit {
               label: 'Gestion de Viajes',
               icon: TruckOutlined,
               onClick: () => {
-                this.router.navigate(['/gestion-viajes']);
+                this.router.navigate(['viajes/gestion-viajes']);
               },
             },
             {
@@ -125,7 +121,7 @@ export class TreeMenuV2Component implements OnInit {
           key: 14,
           label: 'Configuraciones',
           onClick: () => {
-            this.router.navigate(['/configuraciones']);
+            this.router.navigate(['/configuracion']);
           },
         },
       ],

@@ -148,6 +148,66 @@
           }
         }
       }
+    },
+    "lib-viajes": {
+      "projectType": "library",
+      "root": "projects/lib-viajes",
+      "sourceRoot": "projects/lib-viajes/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/lib-viajes/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/lib-viajes/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "projects/lib-viajes/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
+    },
+    "lib-config": {
+      "projectType": "library",
+      "root": "projects/lib-config",
+      "sourceRoot": "projects/lib-config/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/lib-config/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/lib-config/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "projects/lib-config/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
     }
   }
 }
