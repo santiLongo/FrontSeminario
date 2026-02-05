@@ -1,0 +1,20 @@
+<mat-form-field appearance="outline" class="example-full-width">
+  <mat-label>{{ label }}</mat-label>
+
+  <mat-select>
+    @for (item of data; track item.numero) {
+      <mat-option [value]="item.numero">{{item.descripcion}}</mat-option>
+    }
+  </mat-select>
+
+  @if (value) {
+    <button
+      matSuffix
+      mat-icon-button
+      type="button"
+      aria-label="Clear"
+      (click)="clear()">
+      <mat-icon>close</mat-icon>
+    </button>
+  }
+</mat-form-field>

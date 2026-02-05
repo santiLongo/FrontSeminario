@@ -25,10 +25,10 @@ export const routes: Routes = [
                 path: 'viajes',
                 loadChildren: () => import('lib-viajes').then(m => m.ViajesRoutes)
             },
-            {
-                path: 'configuracion',
-                loadChildren: () => import('lib-config').then(m => m.ConfiguracionRoutes)
-            }
+            // {
+            //     path: 'configuracion',
+            //     loadChildren: () => import('lib-home').then(m => m.ConfiguracionRoutes)
+            // }
         ]
     },
     {

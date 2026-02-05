@@ -4,14 +4,23 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": ".",
-    "strict": true,
-    "strictPropertyInitialization": false,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
+  "strict": true,
+  "strictPropertyInitialization": false,
+  "noImplicitOverride": true,
+  "noPropertyAccessFromIndexSignature": true,
+
+  "module": "ES2022",
+  "moduleResolution": "bundler",
+  "target": "ES2022",
+
+  "experimentalDecorators": true,
+  "importHelpers": true,
+  "allowSyntheticDefaultImports": true,
+  "esModuleInterop": true,
+
+  "skipLibCheck": true,
+  "isolatedModules": true,
     "paths": {
-      "lib-config": [
-        "projects/lib-config/src/public-api.ts"
-      ],
       "lib-core": [
         "projects/lib-core/src/public-api.ts"
       ],
@@ -22,30 +31,16 @@
         "projects/lib-viajes/src/public-api.ts"
       ]
     },
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true,
-    "isolatedModules": true,
-    "experimentalDecorators": true,
-    "importHelpers": true,
-    "target": "ES2022",
-    "module": "preserve",
-    "jsx": "react-jsx",
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "typeCheckHostBindings": true,
-    "strictTemplates": true
+    "strictTemplates": true,
   },
   "files": [],
   "references": [
-    {
-      "path": "./tsconfig.react.json"
-    },
     {
       "path": "./tsconfig.app.json"
     },
@@ -69,12 +64,6 @@
     },
     {
       "path": "./projects/lib-viajes/tsconfig.spec.json"
-    },
-    {
-      "path": "./projects/lib-config/tsconfig.lib.json"
-    },
-    {
-      "path": "./projects/lib-config/tsconfig.spec.json"
     }
   ]
 }

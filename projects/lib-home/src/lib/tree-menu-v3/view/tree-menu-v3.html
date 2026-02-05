@@ -1,0 +1,24 @@
+<ul nz-menu nzMode="inline" style="background-color: transparent; border-color: transparent;">
+  @for (item of items; track item.key) {
+
+    @if (item.children && item.children.length > 0) {
+      <li nz-submenu [nzTitle]=" item.label">
+        <ul>
+          @for (child of item.children; track child.key) {
+            <li nz-menu-item (click)="child.onClick?.()">
+              {{ child.label }}
+            </li>
+          }
+        </ul>
+      </li>
+    }
+    @else {
+      <li nz-menu-item  (click)="item.onClick?.()">
+        <span title>
+          <span>{{ item.label }}</span>
+        </span>
+      </li>
+    }
+
+  }
+</ul>

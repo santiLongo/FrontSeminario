@@ -6,12 +6,12 @@
     "outDir": "../../out-tsc/lib",
     "declaration": true,
     "declarationMap": true,
-    "inlineSources": true,
+    //"inlineSources": true,
     "types": []
   },
   "include": [
     "src/**/*.ts"
-  ],
+, "src/lib/tree-menu-v2/react-component/mount.js", "src/lib/tree-menu-v2/react-component/tree-menu-v2.tsx"  ],
   "exclude": [
     "**/*.spec.ts"
   ]

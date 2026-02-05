@@ -3,3 +3,4 @@
  */
 
 export * from './lib/router/routes';
+export * from './lib/config/index';

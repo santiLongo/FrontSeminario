@@ -31,6 +31,12 @@
           },
           "configurations": {
             "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.production.ts"
+                }
+              ],    
               "budgets": [
                 {
                   "type": "initial",
@@ -46,6 +52,12 @@
               "outputHashing": "all"
             },
             "development": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ],    
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
@@ -171,36 +183,6 @@
           "builder": "@angular/build:karma",
           "options": {
             "tsConfig": "projects/lib-viajes/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
-          }
-        }
-      }
-    },
-    "lib-config": {
-      "projectType": "library",
-      "root": "projects/lib-config",
-      "sourceRoot": "projects/lib-config/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular/build:ng-packagr",
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/lib-config/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/lib-config/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular/build:karma",
-          "options": {
-            "tsConfig": "projects/lib-config/tsconfig.spec.json",
             "polyfills": [
               "zone.js",
               "zone.js/testing"
