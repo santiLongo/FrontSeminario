@@ -1,4 +1,4 @@
 export interface LoginCommand{
-    email: string;
+    usuario: string;
     password: string;
 }
