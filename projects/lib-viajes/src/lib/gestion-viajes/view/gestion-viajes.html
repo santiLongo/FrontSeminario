@@ -1,9 +1,102 @@
 <app-core-view title="Gestion de Viajes">
-    <div header>
-        
-    </div>
-    <!--  -->
-    <div body>
-        
-    </div>
+  <div header></div>
+  <!--  -->
+  <div body>
+    <app-filter>
+      <div body>
+        <div class="row">
+          <div class="col-6">
+            <form [formGroup]="form">
+              <app-date-form-field
+                formControlName="fechaAltaDesde"
+                [label]="'Fecha de Alta Desde'"
+              ></app-date-form-field>
+            </form>
+          </div>
+          <div class="col-6">
+            <form [formGroup]="form">
+              <app-date-form-field
+                formControlName="fechaAltaHasta"
+                [label]="'Fecha de Alta Hasta'"
+              ></app-date-form-field>
+            </form>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <form [formGroup]="form">
+              <app-combo
+                formControlName="idChofer"
+                type="ComboChoferes"
+                [label]="'Chofer'"
+              ></app-combo>
+            </form>
+          </div>
+          <div class="col-6">
+            <form [formGroup]="form">
+              <app-combo
+                formControlName="idCamion"
+                type="ComboCamiones"
+                [label]="'Camion'"
+              ></app-combo>
+            </form>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <form [formGroup]="form">
+              <app-viaje-mask
+                formControlName="nroViaje"
+                [label]="'Nro. Viaje'"
+              ></app-viaje-mask>
+            </form>
+          </div>
+          <div class="col-3">
+            <form [formGroup]="form">
+              <app-combo
+                formControlName="estado"
+                type="ComboEstadosViaje"
+                [label]="'Estado del Viaje'"
+              ></app-combo>
+            </form>
+          </div>
+          <div class="col-3">
+            <form [formGroup]="form">
+              <app-combo
+                formControlName="idCliente"
+                type="ComboClientes"
+                [label]="'Cliente'"
+              ></app-combo>
+            </form>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <form [formGroup]="form">
+              <app-combo
+                formControlName="idLocalizacionProcedencia"
+                type="ComboDestinoProcedencias"
+                [label]="'Procedencia'"
+              ></app-combo>
+            </form>
+          </div>
+          <div class="col-6">
+            <form [formGroup]="form">
+              <app-combo
+                formControlName="idLocalizacionDestino"
+                type="ComboDestinoProcedencias"
+                [label]="'Destino'"
+              ></app-combo>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div footer>
+        <button matFab extended (onclick)="onBuscar()">
+          <mat-icon>search</mat-icon>
+          Buscar
+        </button>
+      </div>
+    </app-filter>
+  </div>
 </app-core-view>

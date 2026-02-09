@@ -4,7 +4,7 @@ import { Component, Input } from "@angular/core";
     standalone: true,
     selector: 'app-core-view',
     templateUrl: './core-view.html',
-    styleUrl: './core-view.css'
+    styleUrls: ['./core-view.css']
 })
 export class CoreViewComponent{
     @Input('title') title: string;

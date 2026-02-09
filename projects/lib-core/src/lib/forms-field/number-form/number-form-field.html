@@ -1,13 +1,19 @@
-<mat-form-field appearance="outline" class="example-full-width">
+<mat-form-field
+  appearance="outline"
+  class="example-full-width"
+  style="width: 100%"
+>
   <mat-label>{{ label }}</mat-label>
 
   <input
     #input
     matInput
     type="number"
-    [formControl]="formControl"
+    [value]="value"
     [readonly]="readonly"
     [disabled]="disabled"
+    (input)="onInput($any($event.target).value)"
+    (blur)="onBlur()"
   />
 
   @if (value) {
@@ -15,8 +21,9 @@
       matSuffix
       mat-icon-button
       type="button"
-      aria-label="Clear"
-      (click)="clear()">
+      (click)="clear()"
+      style="border-color: transparent; background-color: transparent"
+    >
       <mat-icon>close</mat-icon>
     </button>
   }

@@ -1,37 +1,66 @@
-import { Component, ElementRef, Input, Optional, ViewChild } from "@angular/core";
-import { ControlContainer, FormControl } from '@angular/forms'
+import {
+  Component,
+  forwardRef,
+  Input,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 @Component({
-    standalone: false,
-    selector: 'app-textarea-form-field',
-    templateUrl: './textarea-form-field.html'
+  standalone: false,
+  selector: 'app-textarea-form-field',
+  templateUrl: './textarea-form-field.html',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => TextareaFormFieldComponent),
+      multi: true,
+    },
+  ],
 })
-export class TextareaFormFieldComponent{
-    @Input({ required: true }) label!: string;
-    @Input({ required: true }) formControlName!: string;
-    
-    @Input() readonly = false;
-    @Input() disabled = false;
+export class TextareaFormFieldComponent implements ControlValueAccessor {
+  @Input({ required: true }) label!: string;
+  @Input() readonly = false;
 
-    @ViewChild('input', { static: true }) inputRef!: ElementRef<HTMLInputElement>;
-    
-    constructor(
-        @Optional() private controlContainer: ControlContainer
-    ) {}
+  @ViewChild('input', { static: true })
+  textareaRef!: ElementRef<HTMLTextAreaElement>;
 
-    get formControl(): FormControl {
-        const control = this.controlContainer?.control?.get(this.formControlName);
-        return control as FormControl;
-    }
+  value: string | null = null;
+  disabled = false;
 
-    get value(): string {
-    return this.formControl?.value ?? '';
-    }
+  private onChange = (_: any) => {};
+  private onTouched = () => {};
 
-    clear(): void {
-        this.formControl.setValue('');
-        this.formControl.markAsDirty();
-        this.formControl.markAsTouched();
-        this.inputRef.nativeElement.focus();
-    }
+  writeValue(value: string | null): void {
+    this.value = value;
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
+
+  onInput(value: string): void {
+    this.value = value;
+    this.onChange(value);
+  }
+
+  onBlur(): void {
+    this.onTouched();
+  }
+
+  clear(): void {
+    this.value = null;
+    this.onChange(null);
+    this.onTouched();
+    queueMicrotask(() => this.textareaRef?.nativeElement.focus());
+  }
 }

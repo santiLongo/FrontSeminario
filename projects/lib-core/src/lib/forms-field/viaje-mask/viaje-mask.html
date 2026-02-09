@@ -9,11 +9,12 @@
     #input
     matInput
     type="text"
-    [value]="value"
     [readonly]="readonly"
     [disabled]="disabled"
-    (input)="onInput($any($event.target).value)"
+    [imask]="mask"
+    (accept)="onMaskAccept($event)"
     (blur)="onBlur()"
+    placeholder="V-2026-00000000"
   />
 
   @if (value) {

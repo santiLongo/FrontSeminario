@@ -6,20 +6,21 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import IMask from 'imask';
 
 @Component({
   standalone: false,
-  selector: 'app-form-field',
-  templateUrl: './form-field.html',
+  selector: 'app-viaje-mask',
+  templateUrl: './viaje-mask.html',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => FormFieldComponent),
+      useExisting: forwardRef(() => ViajeMaskComponent),
       multi: true,
     },
   ],
 })
-export class FormFieldComponent implements ControlValueAccessor {
+export class ViajeMaskComponent implements ControlValueAccessor {
   @Input({ required: true }) label!: string;
   @Input() readonly = false;
 
@@ -63,4 +64,31 @@ export class FormFieldComponent implements ControlValueAccessor {
     this.onTouched();
     queueMicrotask(() => this.inputRef?.nativeElement.focus());
   }
+
+  onMaskAccept(value: string) {
+    this.value = value;
+    this.onChange(value);
+  }
+
+  mask = {
+    mask: 'V-{YYYY}-{NNNNNNNN}',
+    lazy: false,
+    overwrite: true,
+    blocks: {
+      YYYY: {
+        mask: IMask.MaskedRange,
+        from: 2000,
+        to: 2099,
+      },
+      NNNNNNNN: {
+        mask: IMask.MaskedNumber,
+        scale: 0,
+        signed: false,
+        min: 0,
+        max: 99999999,
+        normalizeZeros: true,
+        prepare: (str: string) => str.slice(0, 8),
+      },
+    },
+  };
 }

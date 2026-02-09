@@ -1,14 +1,17 @@
-<mat-form-field appearance="outline" class="example-full-width">
+<mat-form-field appearance="outline" style="width: 100%">
   <mat-label>{{ label }}</mat-label>
 
   <input
-    #input
     matInput
-    type="date"
-    [formControl]="formControl"
-    [readonly]="readonly"
+    [matDatepicker]="picker"
     [disabled]="disabled"
+    [readonly]="true"
+    (dateChange)="onDateChange($event.value)"
+    (blur)="onTouched()"
   />
+
+  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
 
   @if (value) {
     <button
@@ -16,7 +19,9 @@
       mat-icon-button
       type="button"
       aria-label="Clear"
-      (click)="clear()">
+      (click)="clear()"
+      style="border-color: transparent; background-color: transparent;"
+    >
       <mat-icon>close</mat-icon>
     </button>
   }

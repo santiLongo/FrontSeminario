@@ -1,22 +1,29 @@
-<mat-form-field appearance="outline" class="example-full-width">
+<mat-form-field
+  appearance="outline"
+  class="example-full-width"
+  style="width: 100%"
+>
   <mat-label>{{ label }}</mat-label>
 
-  <input
+  <textarea
     #input
     matInput
-    type=""
-    [formControl]="formControl"
+    [value]="value"
     [readonly]="readonly"
     [disabled]="disabled"
-  />
+    (input)="onInput($any($event.target).value)"
+    (blur)="onBlur()"
+  >
+  </textarea>
 
   @if (value) {
     <button
       matSuffix
       mat-icon-button
       type="button"
-      aria-label="Clear"
-      (click)="clear()">
+      (click)="clear()"
+      style="border-color: transparent; background-color: transparent"
+    >
       <mat-icon>close</mat-icon>
     </button>
   }

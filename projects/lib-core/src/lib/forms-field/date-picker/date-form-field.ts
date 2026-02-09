@@ -1,37 +1,62 @@
-import { Component, ElementRef, Input, Optional, ViewChild } from "@angular/core";
-import { ControlContainer, FormControl } from '@angular/forms'
+import {
+  Component,
+  ElementRef,
+  forwardRef,
+  Input,
+  ViewChild,
+} from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { MatDatepickerInput } from '@angular/material/datepicker';
 
 @Component({
-    standalone: false,
-    selector: 'app-date-form-field',
-    templateUrl: './date-form-field.html'
+  standalone: false,
+  selector: 'app-date-form-field',
+  templateUrl: './date-form-field.html',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => DateFormFieldComponent),
+      multi: true,
+    },
+  ],
 })
-export class DateFormFieldComponent{
-    @Input({ required: true }) label!: string;
-    @Input({ required: true }) formControlName!: string;
-    
-    @Input() readonly = false;
-    @Input() disabled = false;
+export class DateFormFieldComponent implements ControlValueAccessor {
+  @ViewChild(MatDatepickerInput) datepickerInput!: MatDatepickerInput<Date>;
 
-    @ViewChild('input', { static: true }) inputRef!: ElementRef<HTMLInputElement>;
-    
-    constructor(
-        @Optional() private controlContainer: ControlContainer
-    ) {}
+  @Input({ required: true }) label!: string;
+  @Input() readonly = false;
 
-    get formControl(): FormControl {
-        const control = this.controlContainer?.control?.get(this.formControlName);
-        return control as FormControl;
-    }
+  value: Date | null = null;
+  disabled = false;
 
-    get value(): string {
-    return this.formControl?.value ?? '';
-    }
+  onChange = (_: Date | null) => {};
+  onTouched = () => {};
 
-    clear(): void {
-        this.formControl.setValue('');
-        this.formControl.markAsDirty();
-        this.formControl.markAsTouched();
-        this.inputRef.nativeElement.focus();
-    }
+  writeValue(value: Date | null): void {
+    this.value = value;
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
+
+  onDateChange(date: Date | null): void {
+    this.value = date;
+    this.onChange(date);
+  }
+
+  clear(): void {
+    this.value = null;
+  this.datepickerInput.value = null;
+  this.onChange(null);
+  this.onTouched();
+  }
 }

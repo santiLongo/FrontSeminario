@@ -1,12 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { CoreViewComponent } from 'lib-core'
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { CoreViewComponent, InputFormsModule, FilterComponent } from 'lib-core'
+import { FormBuilder, FormGroup, ɵInternalFormsSharedModule, ReactiveFormsModule } from '@angular/forms';
+import { MatIconModule } from "@angular/material/icon";
+
 
 @Component({
   standalone: true,
   selector: 'app-gestion-viajes',
   templateUrl: './gestion-viajes.html',
-  imports: [CoreViewComponent]
+  imports: [
+    CoreViewComponent,
+    InputFormsModule,
+    ɵInternalFormsSharedModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    FilterComponent
+]
 })
 export class GestionViajesComponent implements OnInit {
   public form: FormGroup;
@@ -30,5 +39,9 @@ export class GestionViajesComponent implements OnInit {
       fechaAltaHasta: [],
       estado: [],
     });
+  }
+
+  onBuscar(){
+    this
   }
 }
