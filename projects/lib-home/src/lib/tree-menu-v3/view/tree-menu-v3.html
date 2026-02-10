@@ -1,8 +1,11 @@
-<ul nz-menu nzMode="inline" style="background-color: transparent; border-color: transparent;">
+<ul
+  nz-menu
+  nzMode="inline"
+  class="menu-container"
+>
   @for (item of items; track item.key) {
-
     @if (item.children && item.children.length > 0) {
-      <li nz-submenu [nzTitle]=" item.label">
+      <li nz-submenu [nzTitle]="item.label">
         <ul>
           @for (child of item.children; track child.key) {
             <li nz-menu-item (click)="child.onClick?.()">
@@ -11,14 +14,20 @@
           }
         </ul>
       </li>
-    }
-    @else {
-      <li nz-menu-item  (click)="item.onClick?.()">
+    } @else {
+      <li nz-menu-item (click)="item.onClick?.()">
         <span title>
           <span>{{ item.label }}</span>
         </span>
       </li>
     }
-
   }
+
+   <li class="menu-spacer"></li>
+
+  <li nz-menu-item (click)="logout()">
+    <span title>
+      <span>Salir</span>
+    </span>
+  </li>
 </ul>

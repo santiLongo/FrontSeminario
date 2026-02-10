@@ -8,7 +8,7 @@
   },
   "include": [
     "src/**/*.ts"
-  ],
+, "projects/lib-core/src/lib/services/auth.service.ts", "projects/lib-core/src/lib/interceptor/auth-interceptor.service.ts"  ],
   "exclude": [
     "src/**/*.spec.ts",
   ]

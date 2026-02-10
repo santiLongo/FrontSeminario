@@ -10,6 +10,6 @@ export class ReponseDialogService {
   constructor(private dialog: MatDialog) {}
 
   showError(message: string) {
-    this.dialog.open(ShowErrorDialogComponent, { data: { error: message } });
+    this.dialog.open(ShowErrorDialogComponent, { data: { error: message }, width: '400px' });
   }
 }

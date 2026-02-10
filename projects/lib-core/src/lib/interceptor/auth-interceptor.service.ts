@@ -10,7 +10,7 @@ import {
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Router } from '@angular/router';
-import { AuthService } from './auth.service';
+import { AuthService } from 'lib-core';
 
 export const authInterceptor: HttpInterceptorFn = (
   req: HttpRequest<any>,

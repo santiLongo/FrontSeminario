@@ -3,16 +3,18 @@ import { CommonModule } from '@angular/common';
 import { TreeMenuItem } from '../models/tree-menu-item';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { Router } from '@angular/router';
-import { IconDirective } from "@ant-design/icons-angular";
+import { TreeMenuV3Service } from '../services/tree-menu-v3.service';
 
 @Component({
   standalone: true,
   selector: 'app-tree-menu-v3',
   templateUrl: './tree-menu-v3.html',
+  styleUrls: ['./tree-menu-v3.css'],
   styles: [
     `
       [nz-menu] {
         width: 240px;
+        overflow-x: hidden;
       }
     `
   ],
@@ -21,7 +23,7 @@ import { IconDirective } from "@ant-design/icons-angular";
 export class TreeMenuV3Component implements OnInit {
   @Input() items: TreeMenuItem[] = [];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private service: TreeMenuV3Service) {}
 
   trackByKey(_: number, item: TreeMenuItem) {
     return item.key;
@@ -132,5 +134,9 @@ export class TreeMenuV3Component implements OnInit {
         },
       },
     ];
+  }
+
+  logout() {
+    this.service.logout();
   }
 }

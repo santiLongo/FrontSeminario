@@ -1,0 +1,26 @@
+<nz-table
+  [nzData]="data"
+  [nzLoading]="loading"
+  [nzFrontPagination]="false"
+  style="width: 100%; overflow-y: auto;"
+>
+  <thead>
+    <tr>
+      @for (column of columns; track column.key) {
+        <th>{{ column.title }}</th>
+      }
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (row of data; track row) {
+      <tr>
+        @for (column of columns; track column.key) {
+          <td>
+            {{ row[column.key] }}
+          </td>
+        }
+      </tr>
+    }
+  </tbody>
+</nz-table>

@@ -14,3 +14,25 @@ mat-icon {
 mat-icon.rotated {
   transform: rotate(90deg);
 }
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 56px; 
+  z-index: 1100;
+}
+
+.layout-container {
+  height: calc(100vh - 56px);
+  margin-top: 56px;
+}
+
+mat-sidenav {
+  position: fixed;
+  top: 56px;
+  height: calc(100vh - 56px);
+  width: 260px;
+  overflow-y: auto;
+}

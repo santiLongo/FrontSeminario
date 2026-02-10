@@ -92,11 +92,14 @@
         </div>
       </div>
       <div footer>
-        <button matFab extended (onclick)="onBuscar()">
+        <button matFab extended (click)="onBuscar()">
           <mat-icon>search</mat-icon>
           Buscar
         </button>
       </div>
     </app-filter>
+    <!--  -->
+    <br style="margin: 20;">
+    <app-grid [dataService]="dataService" [config]="gridConfig" ></app-grid>
   </div>
 </app-core-view>
