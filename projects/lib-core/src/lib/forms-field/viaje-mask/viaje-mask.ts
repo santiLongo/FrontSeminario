@@ -1,15 +1,24 @@
+import { CommonModule } from '@angular/common';
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   forwardRef,
   Input,
   ViewChild,
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import IMask from 'imask';
+import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { IMaskModule } from 'angular-imask';
+import IMask, { InputMask } from 'imask';
 
 @Component({
-  standalone: false,
+  standalone: true,
   selector: 'app-viaje-mask',
   templateUrl: './viaje-mask.html',
   providers: [
@@ -19,8 +28,22 @@ import IMask from 'imask';
       multi: true,
     },
   ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    IMaskModule,
+  ]
 })
-export class ViajeMaskComponent implements ControlValueAccessor {
+export class ViajeMaskComponent
+  implements ControlValueAccessor, AfterViewInit
+{
   @Input({ required: true }) label!: string;
   @Input() readonly = false;
 
@@ -30,65 +53,60 @@ export class ViajeMaskComponent implements ControlValueAccessor {
   value: string | null = null;
   disabled = false;
 
+  private maskRef!: InputMask<any>;
+
   private onChange = (_: any) => {};
   private onTouched = () => {};
 
-  writeValue(value: string | null): void {
-    this.value = value;
+  ngAfterViewInit(): void {
+    queueMicrotask(() => {
+      this.maskRef = IMask(this.inputRef.nativeElement, {
+        mask: 'V-{NNNNNNNN}',
+        lazy: false,
+        overwrite: true,
+        blocks: {
+          NNNNNNNN: {
+            mask: IMask.MaskedNumber,
+            scale: 0,
+            min: 0,
+            max: 99999999,
+          },
+        },
+      });
+
+      this.maskRef.on('accept', () => {
+        const val = this.maskRef.value || null;
+        this.value = val;
+        this.onChange(val);
+      });
+
+      this.maskRef.on('blur', () => this.onTouched());
+    });
   }
 
-  registerOnChange(fn: any): void {
+  writeValue(value: string | null): void {
+    this.value = value;
+    if (this.maskRef) this.maskRef.value = value ?? '';
+  }
+
+  registerOnChange(fn: any) {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: any) {
     this.onTouched = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
+  setDisabledState(isDisabled: boolean) {
     this.disabled = isDisabled;
+    if (this.maskRef) this.maskRef.updateOptions({ lazy: isDisabled });
   }
 
-  onInput(value: string): void {
-    this.value = value;
-    this.onChange(value);
-  }
-
-  onBlur(): void {
-    this.onTouched();
-  }
-
-  clear(): void {
+  clear() {
     this.value = null;
+    this.maskRef.value = '';
     this.onChange(null);
     this.onTouched();
-    queueMicrotask(() => this.inputRef?.nativeElement.focus());
+    queueMicrotask(() => this.inputRef.nativeElement.focus());
   }
-
-  onMaskAccept(value: string) {
-    this.value = value;
-    this.onChange(value);
-  }
-
-  mask = {
-    mask: 'V-{YYYY}-{NNNNNNNN}',
-    lazy: false,
-    overwrite: true,
-    blocks: {
-      YYYY: {
-        mask: IMask.MaskedRange,
-        from: 2000,
-        to: 2099,
-      },
-      NNNNNNNN: {
-        mask: IMask.MaskedNumber,
-        scale: 0,
-        signed: false,
-        min: 0,
-        max: 99999999,
-        normalizeZeros: true,
-        prepare: (str: string) => str.slice(0, 8),
-      },
-    },
-  };
 }

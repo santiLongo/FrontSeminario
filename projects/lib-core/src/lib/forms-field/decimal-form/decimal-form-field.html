@@ -1,0 +1,26 @@
+<mat-form-field appearance="fill" style="width: 100%">
+  <mat-label>{{ label }}</mat-label>
+
+  <input
+    #input
+    matInput
+    type="text"
+    [value]="display"
+    [readonly]="readonly"
+    [disabled]="disabled"
+    (input)="onInput($any($event.target).value)"
+    (blur)="onBlur()"
+  />
+
+  @if (value && !readonly) {
+    <button
+      matSuffix
+      mat-icon-button
+      type="button"
+      (click)="clear()"
+      style="border-color: transparent; background: transparent"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  }
+</mat-form-field>

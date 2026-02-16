@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ApiHttpService } from "lib-core";
+import { ApiHttpService, GridState, PagedResult } from "lib-core";
 import { ViajesLibService } from "lib-viajes";
 import { GestionViajesFilterModel } from "../models/filter-model";
 import { Observable } from "rxjs";
@@ -15,8 +15,8 @@ export class GestionViajesHttpService {
         this.url = this.config.apiUrl + 'v1/viaje/';
     }
 
-    getAll(command: GestionViajesFilterModel): Observable<GestionViajesGridModel[]> {
+    getAll(command: GestionViajesFilterModel, state: GridState): Observable<PagedResult<GestionViajesGridModel>> {
         const fullUrl = this.url + 'getAll';
-        return this.http.get(fullUrl, command);
+        return this.http.getState(fullUrl, command, state);
     }
 }

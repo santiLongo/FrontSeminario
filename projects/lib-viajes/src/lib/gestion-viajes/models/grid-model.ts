@@ -2,7 +2,7 @@ export interface GestionViajesGridModel {
     idViaje: number;
     nroViaje: string;
     cliente: string;
-    patenteCamion: string;
+    patente: string;
     carga: string;
     chofer: string;
     kilometros: number;

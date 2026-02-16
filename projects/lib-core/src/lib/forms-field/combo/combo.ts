@@ -1,11 +1,19 @@
 import { Component, Input, forwardRef, OnInit, ViewChild } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { ComboType } from './models/combo-type';
 import { ComboHttpService } from './services/combo-http.service';
+import { CommonModule } from '@angular/common';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { IMaskModule } from 'angular-imask';
 
 @Component({
-  standalone: false,
+  standalone: true,
   selector: 'app-combo',
   templateUrl: './combo.html',
   providers: [
@@ -15,6 +23,18 @@ import { ComboHttpService } from './services/combo-http.service';
       multi: true,
     },
   ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    IMaskModule,
+  ]
 })
 export class ComboComponent implements ControlValueAccessor, OnInit {
 

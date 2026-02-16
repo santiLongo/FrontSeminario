@@ -2,8 +2,8 @@ export interface GestionViajesFilterModel{
     idCamion?: number;
     idCliente?: number;
     idChofer?: number;
-    idLocalizacionDestino?: number;
-    idLocalizacionProcedencia?: number;
+    idLocalidadDestino?: number;
+    idLocalidadProcedencia?: number;
     nroViaje?: string;
     fechaAltaDesde?: Date;
     fechaAltaHasta?: Date;

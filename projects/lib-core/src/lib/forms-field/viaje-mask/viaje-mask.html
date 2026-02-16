@@ -1,6 +1,5 @@
 <mat-form-field
-  appearance="outline"
-  class="example-full-width"
+  appearance="fill"
   style="width: 100%"
 >
   <mat-label>{{ label }}</mat-label>
@@ -11,13 +10,10 @@
     type="text"
     [readonly]="readonly"
     [disabled]="disabled"
-    [imask]="mask"
-    (accept)="onMaskAccept($event)"
-    (blur)="onBlur()"
-    placeholder="V-2026-00000000"
+    placeholder="V-00000000"
   />
 
-  @if (value) {
+  @if (value && !readonly) {
     <button
       matSuffix
       mat-icon-button

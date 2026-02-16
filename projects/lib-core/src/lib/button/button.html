@@ -1,0 +1,15 @@
+<button
+  type="button"
+  [ngClass]="types[type]"
+  [disabled]="disabled"
+  [hidden]="hidden"
+  (click)="click()"
+>
+  @if (icon) {
+    <mat-icon
+      aria-hidden="false"
+      aria-label="Example home icon"
+    >{{icon}}</mat-icon>
+  }
+  {{ label }}
+</button>

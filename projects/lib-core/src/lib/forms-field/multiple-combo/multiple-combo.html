@@ -1,0 +1,40 @@
+<mat-form-field appearance="fill" style="width: 100%;">
+  <mat-label>{{ label }}</mat-label>
+
+  <mat-select
+    [value]="value"
+    [disabled]="disabled"
+    [compareWith]="compareByNumero"
+    (selectionChange)="onSelectionChange($event.value)"
+    multiple
+  >
+
+  <mat-option disabled>
+    <input
+      matInput
+      placeholder="Buscar..."
+      (input)="onSearchChange($event.target.value)"
+      (click)="$event.stopPropagation()"
+    />
+  </mat-option>
+
+    @for (item of data$ | async; track item.numero) {
+      <mat-option [value]="item.numero">
+        {{ item.descripcion }}
+      </mat-option>
+    }
+  </mat-select>
+
+  @if (value && !disabled) {
+    <button
+      matSuffix
+      mat-icon-button
+      type="button"
+      aria-label="Clear"
+      (click)="clear()"
+      style="border-color: transparent; background-color: transparent;"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  }
+</mat-form-field>

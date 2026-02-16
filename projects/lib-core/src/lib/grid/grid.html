@@ -1,13 +1,39 @@
+<!-- TOOLBAR -->
+@if (toolbarButtons.length > 0) {
+  <div style="margin-bottom: 10px; display: flex; gap: 8px">
+    @for (action of toolbarButtons; track action.key) {
+      <app-button
+        [hidden]="action.hidden"
+        [disabled]="action.disabled ? action.disabled(selectedRows) : false"
+        [icon]="action.icon"
+        (onClick)="action.onClick(selectedRows)"
+        [label]="action.label"
+      ></app-button>
+    }
+  </div>
+}
+<!-- TABLA -->
 <nz-table
   [nzData]="data"
   [nzLoading]="loading"
   [nzFrontPagination]="false"
-  style="width: 100%; overflow-y: auto;"
+  [nzTotal]="total"
+  [nzPageSize]="dataService.pageSize"
+  [nzPageIndex]="dataService.page"
+  [nzShowSizeChanger]="true"
+  [nzPageSizeOptions]="[10,20,50]"
+  (nzPageSizeChange)="onPageSizeChange($event)"
+  style="width: 100%; overflow-y: auto; margin-bottom: 20px;"
 >
   <thead>
     <tr>
+      @if (menuActions.length > 0) {
+        <th style="font-size: 14px">Acciones</th>
+      }
       @for (column of columns; track column.key) {
-        <th>{{ column.title }}</th>
+        <th style="font-size: 14px" [hidden]="column.hidden">
+          {{ column.title }}
+        </th>
       }
     </tr>
   </thead>
@@ -15,9 +41,33 @@
   <tbody>
     @for (row of data; track row) {
       <tr>
-        @for (column of columns; track column.key) {
+        @if (menuActions.length > 0) {
           <td>
-            {{ row[column.key] }}
+            <button
+              class="btn btn-light"
+              style="display: flex; border-radius: 100%; background-color: transparent;"
+              [matMenuTriggerFor]="menu"
+            >
+              <mat-icon>menu</mat-icon>
+            </button>
+
+            <mat-menu #menu="matMenu">
+              @for (action of menuActions; track action.key) {
+                @if (!action.hidden || !action.hidden(row)) {
+                  <button mat-menu-item>
+                    @if (action.icon) {
+                      <mat-icon [fontIcon]="action.icon"></mat-icon>
+                    }
+                    {{ action.label }}
+                  </button>
+                }
+              }
+            </mat-menu>
+          </td>
+        }
+        @for (column of columns; track column.key) {
+          <td style="font-size: 12px" [hidden]="column.hidden">
+            {{ row[column.key] | dynamicFormat: column.type : column.format }}
           </td>
         }
       </tr>

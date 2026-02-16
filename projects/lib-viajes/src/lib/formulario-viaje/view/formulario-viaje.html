@@ -1,0 +1,384 @@
+<app-core-view title="Fomulario Viaje">
+  <div body>
+    <div class="card" style="width: 100%">
+      <div class="card-body">
+        @if (idViaje) {
+          <h5 class="card-title">
+            {{ "Viaje: " + data.datosPrincipales.idViaje }}
+          </h5>
+        }
+
+        <mat-stepper [linear]="isLinear" #stepper>
+          <mat-step
+            [label]="'Datos Principales'"
+            [stepControl]="datosPrincipales && datosCliente"
+          >
+            <h6 class="card-subtitle mb-2 text-body-secondary">
+              Datos Principales
+            </h6>
+            <form [formGroup]="datosPrincipales">
+              <div class="row">
+                <div class="col-6">
+                  <app-date-form-field
+                    formControlName="fechaPartida"
+                    [label]="'Fecha de Partida'"
+                  ></app-date-form-field>
+                </div>
+                <div class="col-6">
+                  <app-form-field
+                    formControlName="carga"
+                    [label]="'Carga'"
+                  ></app-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <app-decimal-form-field
+                    formControlName="kilos"
+                    [label]="'Kilos Netos'"
+                    [decimals]="2"
+                  ></app-decimal-form-field>
+                </div>
+                <div class="col-6">
+                  <app-decimal-form-field
+                    formControlName="kilometros"
+                    [label]="'Kilometros'"
+                    [decimals]="2"
+                  ></app-decimal-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <app-decimal-form-field
+                    formControlName="montoTotal"
+                    [label]="'Monto Total'"
+                    [decimals]="2"
+                  ></app-decimal-form-field>
+                </div>
+                <div class="col-6">
+                  <app-combo
+                    formControlName="idMoneda"
+                    [type]="'ComboMoneda'"
+                    [label]="'Moneda'"
+                  ></app-combo>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <app-decimal-form-field
+                    formControlName="precioKm"
+                    [label]="'Precio x KM'"
+                  ></app-decimal-form-field>
+                </div>
+              </div>
+            </form>
+
+            <h6 class="card-subtitle mb-2 text-body-secondary">
+              Datos Cliente
+            </h6>
+            <form [formGroup]="datosCliente">
+              <div class="row">
+                <div class="col-6">
+                  <app-combo
+                    formControlName="idCliente"
+                    [type]="'ComboClientes'"
+                    [label]="'Cliente'"
+                  ></app-combo>
+                </div>
+                <div class="col-6">
+                  <app-form-field
+                    formControlName="cuit"
+                    [label]="'Cuit Cliente'"
+                    [readonly]="true"
+                  ></app-form-field>
+                </div>
+              </div>
+            </form>
+          </mat-step>
+          <!--  -->
+          <mat-step
+            [label]="'Datos del Transporte'"
+            [stepControl]="datosCamion && datosChofer"
+          >
+            <h6 class="card-subtitle mb-2 text-body-secondary">Chofer</h6>
+
+            <form [formGroup]="datosChofer">
+              <div class="row">
+                <div class="col-6">
+                  <app-combo
+                    formControlName="idChofer"
+                    [type]="'ComboChoferes'"
+                    [label]="'Chofer'"
+                  ></app-combo>
+                </div>
+                <div class="col-6">
+                  <app-form-field
+                    [label]="'DNI'"
+                    formControlName="dni"
+                    [readonly]="true"
+                  ></app-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-12">
+                  <app-form-field
+                    [label]="'Nro. Registro'"
+                    formControlName="nroRegistro"
+                    [readonly]="true"
+                  ></app-form-field>
+                </div>
+              </div>
+            </form>
+
+            <h6 class="card-subtitle mb-2 text-body-secondary">Camion</h6>
+
+            <form [formGroup]="datosCamion">
+              <div class="row">
+                <div class="col-6">
+                  <app-combo
+                    formControlName="idCamion"
+                    [type]="'ComboCamiones'"
+                    [label]="'Camion'"
+                  ></app-combo>
+                </div>
+                <div class="col-6">
+                  <app-date-form-field
+                    [label]="'Ultimo Mantenimiento'"
+                    formControlName="ultimoMantenimiento"
+                    [readonly]="true"
+                  ></app-date-form-field>
+                </div>
+              </div>
+            </form>
+
+            <h6 class="card-subtitle mb-2 text-body-secondary">
+              Procedencias y Destinos
+            </h6>
+
+            <form [formGroup]="formulario">
+              <div class="row">
+                <div class="col-6">
+                  <app-multiple-combo
+                    [label]="'Procedencias'"
+                    [type]="'ComboDestinoProcedencias'"
+                    formControlName="datosProcedencias"
+                  ></app-multiple-combo>
+                </div>
+                <div class="col-6">
+                  <app-multiple-combo
+                    [label]="'Destinos'"
+                    [type]="'ComboDestinoProcedencias'"
+                    formControlName="datosDestino"
+                  ></app-multiple-combo>
+                </div>
+              </div>
+            </form>
+          </mat-step>
+          <!--  -->
+          <mat-step [label]="'Confirmacion'">
+            <h6 class="card-subtitle mb-2 text-body-secondary">
+              Datos Principales
+            </h6>
+            <form [formGroup]="datosPrincipales">
+              <div class="row">
+                <div class="col-6">
+                  <app-date-form-field
+                    formControlName="fechaPartida"
+                    [label]="'Fecha de Partida'"
+                  ></app-date-form-field>
+                </div>
+                <div class="col-6">
+                  <app-form-field
+                    formControlName="carga"
+                    [label]="'Carga'"
+                  ></app-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <app-decimal-form-field
+                    formControlName="kilos"
+                    [label]="'Kilos Netos'"
+                    [decimals]="2"
+                  ></app-decimal-form-field>
+                </div>
+                <div class="col-6">
+                  <app-decimal-form-field
+                    formControlName="kilometros"
+                    [label]="'Kilometros'"
+                    [decimals]="2"
+                  ></app-decimal-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <app-decimal-form-field
+                    formControlName="montoTotal"
+                    [label]="'Monto Total'"
+                    [decimals]="2"
+                  ></app-decimal-form-field>
+                </div>
+                <div class="col-6">
+                  <app-combo
+                    formControlName="idMoneda"
+                    [type]="'ComboMoneda'"
+                    [label]="'Moneda'"
+                  ></app-combo>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <app-decimal-form-field
+                    formControlName="precioKm"
+                    [label]="'Precio x KM'"
+                  ></app-decimal-form-field>
+                </div>
+              </div>
+            </form>
+
+            <h6 class="card-subtitle mb-2 text-body-secondary">
+              Datos Cliente
+            </h6>
+            <form [formGroup]="datosCliente">
+              <div class="row">
+                <div class="col-6">
+                  <app-combo
+                    formControlName="idCliente"
+                    [type]="'ComboClientes'"
+                    [label]="'Cliente'"
+                  ></app-combo>
+                </div>
+                <div class="col-6">
+                  <app-form-field
+                    formControlName="cuit"
+                    [label]="'Cuit Cliente'"
+                    [readonly]="true"
+                  ></app-form-field>
+                </div>
+              </div>
+            </form>
+            <!--  -->
+            <h6 class="card-subtitle mb-2 text-body-secondary">Chofer</h6>
+
+            <form [formGroup]="datosChofer">
+              <div class="row">
+                <div class="col-6">
+                  <app-combo
+                    formControlName="idChofer"
+                    [type]="'ComboChoferes'"
+                    [label]="'Chofer'"
+                  ></app-combo>
+                </div>
+                <div class="col-6">
+                  <app-form-field
+                    [label]="'DNI'"
+                    formControlName="dni"
+                    [readonly]="true"
+                  ></app-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-12">
+                  <app-form-field
+                    [label]="'Nro. Registro'"
+                    formControlName="nroRegistro"
+                    [readonly]="true"
+                  ></app-form-field>
+                </div>
+              </div>
+            </form>
+
+            <h6 class="card-subtitle mb-2 text-body-secondary">Camion</h6>
+
+            <form [formGroup]="datosCamion">
+              <div class="row">
+                <div class="col-6">
+                  <app-combo
+                    formControlName="idCamion"
+                    [type]="'ComboCamiones'"
+                    [label]="'Camion'"
+                  ></app-combo>
+                </div>
+                <div class="col-6">
+                  <app-date-form-field
+                    [label]="'Ultimo Mantenimiento'"
+                    formControlName="ultimoMantenimiento"
+                    [readonly]="true"
+                  ></app-date-form-field>
+                </div>
+              </div>
+            </form>
+
+            <h6 class="card-subtitle mb-2 text-body-secondary">
+              Procedencias y Destinos
+            </h6>
+
+            <form [formGroup]="formulario">
+              <div class="row">
+                <div class="col-6">
+                  <app-multiple-combo
+                    [label]="'Procedencias'"
+                    [type]="'ComboDestinoProcedencias'"
+                    formControlName="datosProcedencias"
+                  ></app-multiple-combo>
+                </div>
+                <div class="col-6">
+                  <app-multiple-combo
+                    [label]="'Destinos'"
+                    [type]="'ComboDestinoProcedencias'"
+                    formControlName="datosDestino"
+                  ></app-multiple-combo>
+                </div>
+              </div>
+            </form>
+          </mat-step>
+        </mat-stepper>
+        <div style="display: flex">
+          <div style="margin-right: auto">
+            <app-button
+              [label]="'Salir'"
+              (onClick)="salir()"
+              [type]="'danger'"
+            ></app-button>
+          </div>
+
+          <div style="display: flex; margin-left: auto; gap: 10px">
+            @if (stepper.selectedIndex !== 0) {
+              <app-button
+                [label]="'Anterior'"
+                (onClick)="anterior()"
+                [type]="'warning'"
+              ></app-button>
+            }
+
+            @if (stepper.selectedIndex !== 2) {
+              <app-button
+                [label]="'Siguiente'"
+                (onClick)="siguiente()"
+                [type]="'info'"
+              ></app-button>
+            }
+
+            @if (stepper.selectedIndex === 2 && idViaje) {
+              <app-button
+                [label]="'Guardar'"
+                (onClick)="guardar()"
+                [type]="'success'"
+              ></app-button>
+            }
+
+            @if (stepper.selectedIndex === 2 && !idViaje) {
+              <app-button
+                [label]="'Guardar'"
+                (onClick)="alta()"
+                [type]="'success'"
+              ></app-button>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-core-view>

@@ -1,4 +1,4 @@
-<mat-form-field appearance="outline" class="example-full-width" style="width: 100%;">
+<mat-form-field appearance="fill" style="width: 100%;">
   <mat-label>{{ label }}</mat-label>
 
   <mat-select
@@ -7,14 +7,14 @@
     [compareWith]="compareByNumero"
     (selectionChange)="onSelectionChange($event.value)"
   >
-    @for (item of data$ | async; track trackByNumero) {
+    @for (item of data$ | async; track item.numero) {
       <mat-option [value]="item.numero">
         {{ item.descripcion }}
       </mat-option>
     }
   </mat-select>
 
-  @if (value !== null && value !== undefined) {
+  @if (value && !disabled) {
     <button
       matSuffix
       mat-icon-button

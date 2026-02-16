@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -5,11 +6,17 @@ import {
   Input,
   ViewChild,
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { MatDatepickerInput } from '@angular/material/datepicker';
+import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerInput, MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { IMaskModule } from 'angular-imask';
 
 @Component({
-  standalone: false,
+  standalone: true,
   selector: 'app-date-form-field',
   templateUrl: './date-form-field.html',
   providers: [
@@ -19,6 +26,18 @@ import { MatDatepickerInput } from '@angular/material/datepicker';
       multi: true,
     },
   ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    IMaskModule,
+  ]
 })
 export class DateFormFieldComponent implements ControlValueAccessor {
   @ViewChild(MatDatepickerInput) datepickerInput!: MatDatepickerInput<Date>;
@@ -27,7 +46,7 @@ export class DateFormFieldComponent implements ControlValueAccessor {
   @Input() readonly = false;
 
   value: Date | null = null;
-  disabled = false;
+  disabled = this.readonly;
 
   onChange = (_: Date | null) => {};
   onTouched = () => {};

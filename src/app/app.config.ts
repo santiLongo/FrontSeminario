@@ -12,6 +12,8 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { LIB_CONFIG_PROVIDERS } from 'src/config/lib-config.providers';
 import { apiResponseInterceptor, APP_DATE_FORMATS } from 'lib-core';
 import { provideNativeDateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { LOCALE_ID } from '@angular/core';
+import { es_ES, provideNzI18n } from 'ng-zorro-antd/i18n';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -27,6 +29,11 @@ export const appConfig: ApplicationConfig = {
       provide: MAT_DATE_FORMATS,
       useValue: APP_DATE_FORMATS,
     },
+    {
+      provide: LOCALE_ID,
+      useValue: 'es-AR',
+    },
+    provideNzI18n(es_ES),
     ...LIB_CONFIG_PROVIDERS,
   ],
 };

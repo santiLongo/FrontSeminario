@@ -9,7 +9,7 @@ export const ViajesRoutes: Routes = [
             {
                 path: 'gestion-viajes',
                 loadChildren: () => import('../gestion-viajes/router/routes').then(m => m.GestionViajesRoutes),
-            }
+            },
         ]
     }
 

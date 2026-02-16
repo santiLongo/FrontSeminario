@@ -1,4 +1,4 @@
-<mat-form-field appearance="outline" style="width: 100%">
+<mat-form-field appearance="fill" style="width: 100%">
   <mat-label>{{ label }}</mat-label>
 
   <input
@@ -13,7 +13,7 @@
   <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-datepicker #picker></mat-datepicker>
 
-  @if (value) {
+  @if (value && !readonly) {
     <button
       matSuffix
       mat-icon-button

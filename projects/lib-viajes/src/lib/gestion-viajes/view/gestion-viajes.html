@@ -1,105 +1,92 @@
 <app-core-view title="Gestion de Viajes">
-  <div header></div>
-  <!--  -->
-  <div body>
+  <div header>
     <app-filter>
       <div body>
-        <div class="row">
-          <div class="col-6">
-            <form [formGroup]="form">
+        <form [formGroup]="form">
+          <div class="row">
+            <div class="col-6">
               <app-date-form-field
                 formControlName="fechaAltaDesde"
                 [label]="'Fecha de Alta Desde'"
               ></app-date-form-field>
-            </form>
-          </div>
-          <div class="col-6">
-            <form [formGroup]="form">
+            </div>
+            <div class="col-6">
               <app-date-form-field
                 formControlName="fechaAltaHasta"
                 [label]="'Fecha de Alta Hasta'"
               ></app-date-form-field>
-            </form>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-6">
-            <form [formGroup]="form">
+          <div class="row">
+            <div class="col-6">
               <app-combo
                 formControlName="idChofer"
                 type="ComboChoferes"
                 [label]="'Chofer'"
               ></app-combo>
-            </form>
-          </div>
-          <div class="col-6">
-            <form [formGroup]="form">
+            </div>
+            <div class="col-6">
               <app-combo
                 formControlName="idCamion"
                 type="ComboCamiones"
                 [label]="'Camion'"
               ></app-combo>
-            </form>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-6">
-            <form [formGroup]="form">
+          <div class="row">
+            <div class="col-6">
               <app-viaje-mask
                 formControlName="nroViaje"
                 [label]="'Nro. Viaje'"
               ></app-viaje-mask>
-            </form>
-          </div>
-          <div class="col-3">
-            <form [formGroup]="form">
+            </div>
+            <div class="col-3">
               <app-combo
                 formControlName="estado"
                 type="ComboEstadosViaje"
                 [label]="'Estado del Viaje'"
               ></app-combo>
-            </form>
-          </div>
-          <div class="col-3">
-            <form [formGroup]="form">
+            </div>
+            <div class="col-3">
               <app-combo
                 formControlName="idCliente"
                 type="ComboClientes"
                 [label]="'Cliente'"
               ></app-combo>
-            </form>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-6">
-            <form [formGroup]="form">
+          <div class="row">
+            <div class="col-6">
               <app-combo
-                formControlName="idLocalizacionProcedencia"
+                formControlName="idLocalidadProcedencia"
                 type="ComboDestinoProcedencias"
                 [label]="'Procedencia'"
               ></app-combo>
-            </form>
-          </div>
-          <div class="col-6">
-            <form [formGroup]="form">
+            </div>
+            <div class="col-6">
               <app-combo
-                formControlName="idLocalizacionDestino"
+                formControlName="idLocalidadDestino"
                 type="ComboDestinoProcedencias"
                 [label]="'Destino'"
               ></app-combo>
-            </form>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
       <div footer>
-        <button matFab extended (click)="onBuscar()">
-          <mat-icon>search</mat-icon>
-          Buscar
-        </button>
+        <app-button
+          (onClick)="onBuscar()"
+          [icon]="'search'"
+          label="Buscar"
+        ></app-button>
       </div>
     </app-filter>
+  </div>
+  <!--  -->
+  <div body>
     <!--  -->
-    <br style="margin: 20;">
-    <app-grid [dataService]="dataService" [config]="gridConfig" ></app-grid>
+    <br style="margin: 20" />
+    <app-grid [dataService]="dataService" [config]="gridConfig"></app-grid>
   </div>
 </app-core-view>
+<p style="color: gray; font-family: cursive;">gestion-viaje</p>

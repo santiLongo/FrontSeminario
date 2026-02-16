@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   Component,
   forwardRef,
@@ -5,10 +6,17 @@ import {
   ViewChild,
   ElementRef,
 } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { IMaskModule } from 'angular-imask';
 
 @Component({
-  standalone: false,
+  standalone: true,
   selector: 'app-number-form-field',
   templateUrl: './number-form-field.html',
   providers: [
@@ -18,6 +26,18 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
       multi: true,
     },
   ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    IMaskModule,
+  ]
 })
 export class NumberFormFieldComponent implements ControlValueAccessor {
   @Input({ required: true }) label!: string;
@@ -27,6 +47,7 @@ export class NumberFormFieldComponent implements ControlValueAccessor {
   inputRef!: ElementRef<HTMLInputElement>;
 
   value: number | null = null;
+  displayValue = '';
   disabled = false;
 
   private onChange = (_: any) => {};
@@ -34,6 +55,7 @@ export class NumberFormFieldComponent implements ControlValueAccessor {
 
   writeValue(value: number | null): void {
     this.value = value;
+    this.displayValue = value !== null ? this.format(value) : '';
   }
 
   registerOnChange(fn: any): void {
@@ -48,10 +70,24 @@ export class NumberFormFieldComponent implements ControlValueAccessor {
     this.disabled = isDisabled;
   }
 
-  onInput(value: string): void {
-    const parsed = value === '' ? null : Number(value);
+  onInput(raw: string): void {
+   const digits = raw.replace(/\D/g, '');
+
+    if (!digits) {
+      this.value = null;
+      this.displayValue = '';
+      this.onChange(null);
+      return;
+    }
+
+    const parsed = Number(digits);
     this.value = parsed;
+    this.displayValue = this.format(parsed);
     this.onChange(parsed);
+
+    queueMicrotask(() => {
+      this.inputRef.nativeElement.value = this.displayValue;
+    });
   }
 
   onBlur(): void {
@@ -60,8 +96,13 @@ export class NumberFormFieldComponent implements ControlValueAccessor {
 
   clear(): void {
     this.value = null;
+    this.displayValue = '';
     this.onChange(null);
     this.onTouched();
     queueMicrotask(() => this.inputRef?.nativeElement.focus());
+  }
+
+  private format(val: number): string {
+    return val.toLocaleString('es-AR');
   }
 }

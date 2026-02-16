@@ -1,20 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  CoreViewComponent,
-  InputFormsModule,
-  FilterComponent,
-  GridComponent,
-  GridConfig,
-} from 'lib-core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { CoreViewComponent, FilterComponent, GridComponent, GridConfig, ButtonComponent, DateFormFieldComponent, ComboComponent, ViajeMaskComponent } from 'lib-core';
 import {
   FormBuilder,
   FormGroup,
-  ɵInternalFormsSharedModule,
   ReactiveFormsModule,
 } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { GestionViajesDataService } from '../service/data.service';
 import { GestionViajesGridModel } from '../models/grid-model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -23,21 +17,25 @@ import { GestionViajesGridModel } from '../models/grid-model';
   providers: [GestionViajesDataService],
   imports: [
     CoreViewComponent,
-    InputFormsModule,
-    ɵInternalFormsSharedModule,
     ReactiveFormsModule,
     MatIconModule,
     FilterComponent,
     GridComponent,
-  ],
+    ButtonComponent,
+    DateFormFieldComponent,
+    ComboComponent,
+    ViajeMaskComponent
+],
 })
-export class GestionViajesComponent implements OnInit {
+export class GestionViajesComponent implements OnInit, AfterViewInit {
   public form: FormGroup;
   public gridConfig: GridConfig<GestionViajesGridModel>;
 
   constructor(
     private fb: FormBuilder,
     public dataService: GestionViajesDataService,
+    private router: Router,
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
@@ -46,36 +44,83 @@ export class GestionViajesComponent implements OnInit {
     this.gridSetup();
   }
 
+  ngAfterViewInit(): void {
+    this.onBuscar();
+  }
+
   formSetup() {
     this.form = this.fb.group({
       idCamion: [],
       idCliente: [],
       idChofer: [],
-      idLocalizacionDestino: [],
-      idLocalizacionProcedencia: [],
+      idLocalidadDestino: [],
+      idLocalidadProcedencia: [],
       nroViaje: [],
       fechaAltaDesde: [],
       fechaAltaHasta: [],
       estado: [],
+      decimal: []
     });
   }
 
   gridSetup() {
     this.gridConfig = {
       columns: [
-        { key: 'idViaje', title: 'ID Viaje', hidden: true },
-        { key: 'nroViaje', title: 'Nro. Viaje' },
-        { key: 'estado', title: 'Estado' },
-        { key: 'cliente', title: 'Cliente' },
-        { key: 'chofer', title: 'Chofer' },
-        { key: 'patenteCamion', title: 'Patente del Camion' },
-        { key: 'carga', title: 'Carga' },
-        { key: 'kilometros', title: 'Kilometros' },
-        { key: 'montoTotal', title: 'Monto Total' },
-        { key: 'fechaPartida', title: 'Fecha de Partida' },
-        { key: 'fechaDescarga', title: 'Fecha de Descarga' },
-        { key: 'userName', title: 'Nombre de Usuario' },
-        { key: 'userDateTime', title: 'Fecha de Usuario' },
+        { key: 'idViaje', title: 'ID Viaje', type: 'numeric', hidden: true },
+        { key: 'nroViaje', title: 'Nro. Viaje', type: 'text' },
+        { key: 'estado', title: 'Estado', type: 'text' },
+        { key: 'cliente', title: 'Cliente', type: 'text' },
+        { key: 'chofer', title: 'Chofer', type: 'text' },
+        { key: 'patente', title: 'Patente del Camion', type: 'text' },
+        { key: 'carga', title: 'Carga', type: 'text' },
+        {
+          key: 'kilometros',
+          title: 'Kilometros',
+          type: 'numeric',
+          format: '{0:2}',
+        },
+        {
+          key: 'montoTotal',
+          title: 'Monto Total',
+          type: 'numeric',
+          format: '{0:2}',
+        },
+        {
+          key: 'fechaPartida',
+          title: 'Fecha de Partida',
+          type: 'date',
+          format: 'ddMMyyyy',
+        },
+        {
+          key: 'fechaDescarga',
+          title: 'Fecha de Descarga',
+          type: 'date',
+          format: 'ddMMyyyy',
+        },
+        { key: 'userName', title: 'Nombre de Usuario', type: 'text' },
+        {
+          key: 'userDateTime',
+          title: 'Fecha de Usuario',
+          type: 'date',
+          format: 'ddMMyyyy hh:MM:ss',
+        },
+      ],
+      menuActions: [
+        {
+          key: 'edit',
+          label: 'Editar',
+          icon: 'edit',
+          onClick: (row) => this.editar(row),
+        },
+      ],
+      toolBarActions: [
+        {
+          key: 'new',
+          label: 'Nuevo Viaje',
+          type: 'success',
+          icon: 'local_shipping',
+          onClick: () => this.nuevo(),
+        },
       ],
     };
   }
@@ -83,5 +128,13 @@ export class GestionViajesComponent implements OnInit {
   onBuscar() {
     this.dataService.filterSub$.next(this.form.value);
     this.dataService.search();
+  }
+
+  editar(row: GestionViajesGridModel) {
+    console.log('Editar', row);
+  }
+
+  nuevo() {
+    this.router.navigate(['./formulario'], { relativeTo: this.route });
   }
 }

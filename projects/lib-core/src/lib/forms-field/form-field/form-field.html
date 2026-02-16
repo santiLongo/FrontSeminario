@@ -1,6 +1,5 @@
 <mat-form-field
-  appearance="outline"
-  class="example-full-width"
+  appearance="fill"
   style="width: 100%"
 >
   <mat-label>{{ label }}</mat-label>
@@ -16,7 +15,7 @@
     (blur)="onBlur()"
   />
 
-  @if (value) {
+  @if (value && !readonly) {
     <button
       matSuffix
       mat-icon-button

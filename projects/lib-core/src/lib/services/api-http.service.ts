@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { finalize, Observable } from 'rxjs';
 import { LoadingService } from './loading.service';
+import { GridState, PagedResult } from 'lib-core';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +25,20 @@ export class ApiHttpService {
     return this.http.get<T>(url, {
       headers: this.getHeaders(),
       params: this.buildParams(params),
+    });
+  }
+
+  getState<T>(url: string, params: any, state: GridState): Observable<PagedResult<T>> {
+    const httpParams = this.buildParams({
+      ...params,
+      page: state.page,
+      pageSize: state.pageSize,
+      sort: state.sort
+    });
+
+    return this.http.get<PagedResult<T>>(url, {
+      headers: this.getHeaders(),
+      params: httpParams
     });
   }
 
