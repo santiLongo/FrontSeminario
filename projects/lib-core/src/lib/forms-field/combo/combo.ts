@@ -1,5 +1,10 @@
 import { Component, Input, forwardRef, OnInit, ViewChild } from '@angular/core';
-import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  FormsModule,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { ComboType } from './models/combo-type';
 import { ComboHttpService } from './services/combo-http.service';
@@ -34,19 +39,19 @@ import { IMaskModule } from 'angular-imask';
     MatNativeDateModule,
     MatDatepickerModule,
     IMaskModule,
-  ]
+  ],
 })
 export class ComboComponent implements ControlValueAccessor, OnInit {
-
   @Input({ required: true }) label!: string;
   @Input() type = '';
   @Input() isLocal = false;
   @Input() data: ComboType[] = [];
+  @Input() readonly = false;
 
   data$!: Observable<ComboType[]>;
 
   value: string | number | null = null;
-  disabled = false;
+  disabled = this.readonly;
 
   private onChange = (_: any) => {};
   private onTouched = () => {};
@@ -88,4 +93,11 @@ export class ComboComponent implements ControlValueAccessor, OnInit {
   compareByNumero = (a: any, b: any): boolean => {
     return a === b;
   };
+
+  getDescripcion(items: ComboType[] | null): string {
+    if (!items) return '';
+
+    const found = items.find((x) => x.numero === this.value);
+    return found?.descripcion ?? '';
+  }
 }

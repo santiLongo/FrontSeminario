@@ -9,7 +9,7 @@ import { error } from '@ant-design/icons-angular';
 export class ReponseDialogService {
   constructor(private dialog: MatDialog) {}
 
-  showError(message: string) {
-    this.dialog.open(ShowErrorDialogComponent, { data: { error: message }, width: '400px' });
+  showError(message: string, status: number = 500) {
+    this.dialog.open(ShowErrorDialogComponent, { data: { error: message, status: status }, width: '600px' });
   }
 }

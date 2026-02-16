@@ -14,7 +14,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
+import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { IMaskModule } from 'angular-imask';
 
 @Component({
@@ -42,18 +42,22 @@ import { IMaskModule } from 'angular-imask';
   ],
 })
 export class MultipleComboComponent implements ControlValueAccessor, OnInit {
+  @ViewChild(MatSelect) matSelect!: MatSelect;
   @Input({ required: true }) label!: string;
   @Input() type = '';
   @Input() isLocal = false;
   @Input() data: ComboType[] = [];
+  @Input() readonly = false;
 
   data$!: Observable<ComboType[]>;
 
   value: (string | number)[] = [];
-  disabled = false;
+  disabled = this.readonly;
 
   search = '';
   filteredData$!: Observable<ComboType[]>;
+
+  private pendingValue: any[] = [];
 
   private onChange = (_: any) => {};
   private onTouched = () => {};
@@ -73,7 +77,13 @@ export class MultipleComboComponent implements ControlValueAccessor, OnInit {
   }
 
   writeValue(value: any): void {
-    this.value = value;
+    this.value = value ?? [];
+
+    queueMicrotask(() => {
+      if (this.matSelect) {
+        this.matSelect.writeValue(this.value);
+      }
+    });
   }
 
   registerOnChange(fn: any): void {
@@ -111,5 +121,13 @@ export class MultipleComboComponent implements ControlValueAccessor, OnInit {
         ),
       ),
     );
+  }
+
+  getDescripcion(items: ComboType[] | null): string {
+    if (!items || !this.value?.length) return '';
+
+    const seleccionados = items.filter(x => this.value.includes(x.numero));
+
+    return seleccionados.map(x => x.descripcion).join(', ');
   }
 }

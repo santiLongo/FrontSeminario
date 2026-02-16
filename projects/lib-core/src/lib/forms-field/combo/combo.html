@@ -1,20 +1,44 @@
 <mat-form-field appearance="fill" style="width: 100%;">
   <mat-label>{{ label }}</mat-label>
 
-  <mat-select
+  <!-- <mat-select
     [value]="value"
     [disabled]="disabled"
     [compareWith]="compareByNumero"
     (selectionChange)="onSelectionChange($event.value)"
+    (openedChange)="readonly && $event ? $event = false : null"
   >
     @for (item of data$ | async; track item.numero) {
       <mat-option [value]="item.numero">
         {{ item.descripcion }}
       </mat-option>
     }
-  </mat-select>
+  </mat-select> -->
 
-  @if (value && !disabled) {
+    @if (!readonly) {
+      <mat-select
+        [value]="value"
+        [disabled]="disabled"
+        [compareWith]="compareByNumero"
+        (selectionChange)="onSelectionChange($event.value)"
+      >
+        @for (item of data$ | async; track item.numero) {
+          <mat-option [value]="item.numero">
+            {{ item.descripcion }}
+          </mat-option>
+        }
+      </mat-select>
+    } @else {
+      @let items = (data$ | async);
+
+      <input
+        matInput
+        [value]="getDescripcion(items)"
+        readonly
+      />
+    }
+
+  @if (value && !readonly) {
     <button
       matSuffix
       mat-icon-button

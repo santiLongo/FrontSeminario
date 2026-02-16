@@ -2,6 +2,7 @@ export interface GridConfig<T> {
   columns: GridColumn<T>[];
   menuActions?: GridMenuAction<T>[];
   toolBarActions?: GridToolBarAction<T>[];
+  selectableSettings: SelectebleSettings<T>;
 }
 
 export class GridColumn<T> {
@@ -38,9 +39,15 @@ export class GridToolBarAction<T> {
   icon?: string;
   type: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' = 'primary';
   hidden?: boolean;
+  disabledOnEmptyRows?: boolean = false
   disabled?: (rows: T[]) => boolean;
-
   onClick: (rows: T[]) => void;
+}
+
+export class SelectebleSettings<T>{
+  type: 'multiple' | 'single'
+  selectable: boolean
+  esSelectable?: (row: T) => boolean
 }
 
 export interface PagedResult<T> {

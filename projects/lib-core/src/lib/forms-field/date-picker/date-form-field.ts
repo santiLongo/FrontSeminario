@@ -52,7 +52,12 @@ export class DateFormFieldComponent implements ControlValueAccessor {
   onTouched = () => {};
 
   writeValue(value: Date | null): void {
-    this.value = value;
+     this.value = value;
+
+    // sincroniza el input real del datepicker
+    if (this.datepickerInput) {
+      this.datepickerInput.value = value;
+    }
   }
 
   registerOnChange(fn: any): void {
@@ -74,8 +79,8 @@ export class DateFormFieldComponent implements ControlValueAccessor {
 
   clear(): void {
     this.value = null;
-  this.datepickerInput.value = null;
-  this.onChange(null);
-  this.onTouched();
+    this.datepickerInput.value = null;
+    this.onChange(null);
+    this.onTouched();
   }
 }

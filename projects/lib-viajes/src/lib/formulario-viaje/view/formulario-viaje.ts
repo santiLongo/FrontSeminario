@@ -7,12 +7,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { FormularioDataViaje } from '../models/formulario-data';
+import { FormularioDataViaje, FormularioGetDataViaje } from '../models/formulario-data';
 import { FormularioViajeHttpService } from '../services/http.service';
 import { MatStepper, MatStepperModule } from '@angular/material/stepper';
-import { CoreViewComponent, DateFormFieldComponent, ComboComponent, FormFieldComponent, DecimalFormFieldComponent, NumberFormFieldComponent, ButtonComponent, MultipleComboComponent } from 'lib-core';
+import { CoreViewComponent, DateFormFieldComponent, ComboComponent, FormFieldComponent, DecimalFormFieldComponent, NumberFormFieldComponent, ButtonComponent, MultipleComboComponent, AlertService } from 'lib-core';
 import { Subject, switchMap, takeUntil, tap } from 'rxjs';
-import { MapToAltaModel } from '../helpers/alta-mapper';
+import { MapToAltaModel, MapToUpdateModel } from '../helpers/mappers';
 import { Location } from '@angular/common';
 
 @Component({
@@ -34,7 +34,7 @@ import { Location } from '@angular/common';
 export class FormularioViajeComponent implements OnInit, OnDestroy {
   @ViewChild('stepper', { static: true }) stepper: MatStepper;
   idViaje: number;
-  data: FormularioDataViaje;
+  data: FormularioGetDataViaje;
   readonly: boolean = false;
   formulario: FormGroup;
   isLinear = true;
@@ -45,6 +45,7 @@ export class FormularioViajeComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private httpService: FormularioViajeHttpService,
     private fb: FormBuilder,
+    private alertService: AlertService,
     private location: Location
   ) {
     this.idViaje = +this.route.snapshot.params['idViaje'];
@@ -58,7 +59,11 @@ export class FormularioViajeComponent implements OnInit, OnDestroy {
       this.isLinear = false;
       this.httpService.get(this.idViaje).subscribe((res) => {
         this.data = res;
-        this.formulario.patchValue(this.data);
+        this.formulario.patchValue({
+          ...this.data,
+          datosDestino: this.data.datosDestino?.map(x => x.idDestino),
+          datosProcedencias: this.data.datosProcedencias?.map(x => x.idProcedencia),
+        });
       });
     }
     //
@@ -172,31 +177,47 @@ export class FormularioViajeComponent implements OnInit, OnDestroy {
     this.formulario.markAllAsTouched();
 
     if(this.formulario.invalid){
-      alert("Algunos campos contienen errores");
+      this.alertService.error$("Algunos campos contienen errores").subscribe();
       return;
     }
 
-    this.data = this.formulario.getRawValue();
+    const data: FormularioDataViaje = this.formulario.getRawValue();
 
+    const command = MapToUpdateModel(data);
+    command.idViaje = this.idViaje;
 
+    this.alertService.info$('Esta seguro?', 'Desea modificar el siguiente viaje?').subscribe((i) => {
+      if(i)[
+        this.httpService.update(command).subscribe(() => {
+          this.alertService.success$('Exito', 'Se actualizo el viaje con exito').subscribe(() => {
+            this.salir()
+          })
+        })
+      ]
+    })
   }
 
   alta(){
     this.formulario.markAllAsTouched();
 
     if(this.formulario.invalid){
-      alert("Algunos campos contienen errores");
+      this.alertService.error$("Algunos campos contienen errores").subscribe();
       return;
     }
 
-    this.data = this.formulario.getRawValue();
+    const data: FormularioDataViaje = this.formulario.getRawValue();
 
-    const command = MapToAltaModel(this.data);
+    const command = MapToAltaModel(data);
 
-    this.httpService.add(command).subscribe((res) => {
-      console.log(res);
-      this.salir();
-    });
+    this.alertService.info$('Esta seguro?', 'Desea confirmar el siguiente viaje?').subscribe((i) => {
+      if(i)[
+        this.httpService.add(command).subscribe((res) => {
+          this.alertService.success$('Exito', 'Se creo el viaje' + res.NroViaje + ' con exito.').subscribe(() => {
+            this.salir()
+          })
+        })
+      ]
+    })
   }
 
   get datosPrincipales() {

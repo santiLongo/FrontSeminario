@@ -7,6 +7,15 @@ export interface FormularioDataViaje {
   datosProcedencias: number[];
 }
 
+export interface FormularioGetDataViaje {
+  datosPrincipales: DatosPrincipalesViaje;
+  datosChofer: DatosChoferViaje;
+  datosCliente: DatosClienteViaje;
+  datosCamion: DatosCamionViaje;
+  datosDestino: DatosUbicacion[];
+  datosProcedencias: DatosUbicacion[];
+}
+
 // =======================
 // PRINCIPALES
 // =======================
@@ -68,7 +77,7 @@ export interface DatosCamionViaje {
 // =======================
 
 export interface DatosUbicacion {
-  idDestino?: number;
-  idProcedencia?: number;
+  idDestino: number;
+  idProcedencia: number;
   localidad: string;
 }

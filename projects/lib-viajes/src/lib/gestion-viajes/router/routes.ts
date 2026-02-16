@@ -13,6 +13,10 @@ export const GestionViajesRoutes : Routes = [
             {
                 path: 'formulario',
                 loadChildren: () => import('../../formulario-viaje/router/routes').then(m => m.FormularioViajesRoutes),
+            },
+            {
+                path: 'formulario/:idViaje/:readonly',
+                loadChildren: () => import('../../formulario-viaje/router/routes').then(m => m.FormularioViajesRoutes),
             }
         ]
     }

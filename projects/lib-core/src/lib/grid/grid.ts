@@ -11,6 +11,7 @@ import {
   GridConfig,
   GridMenuAction,
   GridToolBarAction,
+  SelectebleSettings,
 } from './models/model';
 import { Subject, takeUntil } from 'rxjs';
 import { BaseGridService } from './services/base-grid.service';
@@ -49,9 +50,14 @@ export class GridComponent<T extends Record<string, any>>
   columns: GridColumn<T>[] = [];
   menuActions: GridMenuAction<T>[] = [];
   toolbarButtons: GridToolBarAction<T>[] = [];
+  selectableSettings?: SelectebleSettings<T>;
+  checked = false;
+  indeterminate = false;
   loading = false;
-  selectedRows: T[] = [];
   total = 10;
+  
+  selectedRows: T[] = [];
+  private selectedSet = new Set<T>();
 
   private destroy$ = new Subject<void>();
 
@@ -59,10 +65,14 @@ export class GridComponent<T extends Record<string, any>>
     this.columns = this.config.columns;
     this.menuActions = this.config.menuActions ?? [];
     this.toolbarButtons = this.config.toolBarActions ?? [];
+    this.selectableSettings = this.config.selectableSettings;
 
     this.dataService.data$
       .pipe(takeUntil(this.destroy$))
-      .subscribe((data) => (this.data = data));
+      .subscribe((data) => {
+        this.data = data;
+        this.refreshSelectionStatus();
+      });
 
     this.dataService.loading$
       .pipe(takeUntil(this.destroy$))
@@ -78,16 +88,65 @@ export class GridComponent<T extends Record<string, any>>
     this.destroy$.complete();
   }
 
-  onRowSelect(row: T, checked: boolean) {
-    if (checked) {
-      this.selectedRows.push(row);
-    } else {
-      this.selectedRows = this.selectedRows.filter((r) => r !== row);
-    }
-  }
-
   onPageSizeChange(size: number) {
     this.dataService.pageSize = size;
     this.dataService.search(1);
+  }
+
+  //Metodos para seleccionar
+
+  isChecked(row: T): boolean {
+    return this.selectedSet.has(row);
+  }
+
+  onRowChecked(row: T, checked: boolean) {
+    if (!this.selectableSettings?.selectable) return;
+
+    if (this.selectableSettings.type === 'single') {
+      if (checked) {
+        this.selectedSet.clear();
+        this.selectedSet.add(row);
+      } else {
+        this.selectedSet.delete(row);
+      }
+    } else {
+      checked ? this.selectedSet.add(row) : this.selectedSet.delete(row);
+    }
+
+    this.refreshSelectionStatus();
+  }
+
+  onAllChecked(checked: boolean) {
+    if (!this.selectableSettings?.selectable) return;
+
+    const selectableRows = this.data.filter(r => this.isRowSelectable(r));
+
+    if (this.selectableSettings.type === 'single') {
+      this.selectedSet.clear();
+    } else {
+      selectableRows.forEach(row => {
+        checked ? this.selectedSet.add(row) : this.selectedSet.delete(row);
+      });
+    }
+
+    this.refreshSelectionStatus();
+  }
+
+  private refreshSelectionStatus() {
+    const pageData = this.data;
+
+    const selectedOnPage = pageData.filter(r => this.selectedSet.has(r)).length;
+
+    this.checked = selectedOnPage > 0 && selectedOnPage === pageData.length;
+    this.indeterminate =
+      selectedOnPage > 0 && selectedOnPage < pageData.length;
+
+    this.selectedRows = Array.from(this.selectedSet);
+  }
+
+  public isRowSelectable(row: T): boolean {
+    if (!this.selectableSettings?.selectable) return false;
+    if (!this.selectableSettings.esSelectable) return true;
+    return this.selectableSettings.esSelectable(row);
   }
 }

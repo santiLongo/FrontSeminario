@@ -108,9 +108,11 @@ export class GestionViajesComponent implements OnInit, AfterViewInit {
       menuActions: [
         {
           key: 'edit',
-          label: 'Editar',
-          icon: 'edit',
-          onClick: (row) => this.editar(row),
+          label: 'Ver',
+          icon: 'search',
+          onClick: (row) => {
+            this.ver(row)
+          },
         },
       ],
       toolBarActions: [
@@ -121,7 +123,19 @@ export class GestionViajesComponent implements OnInit, AfterViewInit {
           icon: 'local_shipping',
           onClick: () => this.nuevo(),
         },
+        {
+          key: 'update',
+          label: 'Modificar Viaje',
+          type: 'info',
+          icon: 'edit',
+          disabledOnEmptyRows: true,
+          onClick: (rows) => this.editar(rows[0]),
+        },
       ],
+      selectableSettings: {
+        type: 'single',
+        selectable: true,
+      }
     };
   }
 
@@ -131,10 +145,14 @@ export class GestionViajesComponent implements OnInit, AfterViewInit {
   }
 
   editar(row: GestionViajesGridModel) {
-    console.log('Editar', row);
+    this.router.navigate(['./formulario', row.idViaje, false], { relativeTo: this.route });
   }
 
   nuevo() {
     this.router.navigate(['./formulario'], { relativeTo: this.route });
+  }
+
+  ver(row: GestionViajesGridModel){
+    this.router.navigate(['./formulario', row.idViaje, true], { relativeTo: this.route });
   }
 }

@@ -1,0 +1,26 @@
+<nz-result
+  nzTitle="Ocurrio un error"
+  [nzStatus]="type"
+  [nzTitle]="title"
+  [nzSubTitle]="subtitle"
+>
+  <div nz-result-extra>
+    @switch (type) {
+        @case ('warning') {
+            <button nz-button nzType="primary" (click)="onAceptar()">Aceptar</button>
+            <button nz-button nzType="dashed" (click)="onSalir()">Salir</button>
+        }
+        @case ('error') {
+            <button nz-button nzType="primary" (click)="onSalir()">Salir</button>
+        }
+        @case ('info') {
+            <button nz-button nzType="primary" (click)="onAceptar()">Aceptar</button>
+            <button nz-button nzType="dashed" (click)="onSalir()">Salir</button>
+        }
+        @case ('success') {
+            <button nz-button nzType="primary" (click)="onAceptar()">Aceptar</button>
+        }
+    }
+    
+  </div>
+</nz-result>

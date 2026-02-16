@@ -22,12 +22,14 @@
                   <app-date-form-field
                     formControlName="fechaPartida"
                     [label]="'Fecha de Partida'"
+                    [readonly]="readonly"
                   ></app-date-form-field>
                 </div>
                 <div class="col-6">
                   <app-form-field
                     formControlName="carga"
                     [label]="'Carga'"
+                    [readonly]="readonly"
                   ></app-form-field>
                 </div>
               </div>
@@ -37,6 +39,7 @@
                     formControlName="kilos"
                     [label]="'Kilos Netos'"
                     [decimals]="2"
+                    [readonly]="readonly"
                   ></app-decimal-form-field>
                 </div>
                 <div class="col-6">
@@ -44,6 +47,7 @@
                     formControlName="kilometros"
                     [label]="'Kilometros'"
                     [decimals]="2"
+                    [readonly]="readonly"
                   ></app-decimal-form-field>
                 </div>
               </div>
@@ -53,6 +57,7 @@
                     formControlName="montoTotal"
                     [label]="'Monto Total'"
                     [decimals]="2"
+                    [readonly]="readonly"
                   ></app-decimal-form-field>
                 </div>
                 <div class="col-6">
@@ -60,6 +65,7 @@
                     formControlName="idMoneda"
                     [type]="'ComboMoneda'"
                     [label]="'Moneda'"
+                    [readonly]="readonly || idViaje > 0"
                   ></app-combo>
                 </div>
               </div>
@@ -68,6 +74,7 @@
                   <app-decimal-form-field
                     formControlName="precioKm"
                     [label]="'Precio x KM'"
+                    [readonly]="readonly"
                   ></app-decimal-form-field>
                 </div>
               </div>
@@ -83,6 +90,7 @@
                     formControlName="idCliente"
                     [type]="'ComboClientes'"
                     [label]="'Cliente'"
+                    [readonly]="readonly || idViaje > 0"
                   ></app-combo>
                 </div>
                 <div class="col-6">
@@ -90,6 +98,7 @@
                     formControlName="cuit"
                     [label]="'Cuit Cliente'"
                     [readonly]="true"
+                    [readonly]="readonly"
                   ></app-form-field>
                 </div>
               </div>
@@ -109,6 +118,7 @@
                     formControlName="idChofer"
                     [type]="'ComboChoferes'"
                     [label]="'Chofer'"
+                    [readonly]="readonly"
                   ></app-combo>
                 </div>
                 <div class="col-6">
@@ -140,6 +150,7 @@
                     formControlName="idCamion"
                     [type]="'ComboCamiones'"
                     [label]="'Camion'"
+                    [readonly]="readonly"
                   ></app-combo>
                 </div>
                 <div class="col-6">
@@ -163,6 +174,7 @@
                     [label]="'Procedencias'"
                     [type]="'ComboDestinoProcedencias'"
                     formControlName="datosProcedencias"
+                    [readonly]="readonly"
                   ></app-multiple-combo>
                 </div>
                 <div class="col-6">
@@ -170,6 +182,7 @@
                     [label]="'Destinos'"
                     [type]="'ComboDestinoProcedencias'"
                     formControlName="datosDestino"
+                    [readonly]="readonly"
                   ></app-multiple-combo>
                 </div>
               </div>
@@ -186,12 +199,14 @@
                   <app-date-form-field
                     formControlName="fechaPartida"
                     [label]="'Fecha de Partida'"
+                    [readonly]="true"
                   ></app-date-form-field>
                 </div>
                 <div class="col-6">
                   <app-form-field
                     formControlName="carga"
                     [label]="'Carga'"
+                    [readonly]="true"
                   ></app-form-field>
                 </div>
               </div>
@@ -201,6 +216,7 @@
                     formControlName="kilos"
                     [label]="'Kilos Netos'"
                     [decimals]="2"
+                    [readonly]="true"
                   ></app-decimal-form-field>
                 </div>
                 <div class="col-6">
@@ -208,6 +224,7 @@
                     formControlName="kilometros"
                     [label]="'Kilometros'"
                     [decimals]="2"
+                    [readonly]="true"
                   ></app-decimal-form-field>
                 </div>
               </div>
@@ -217,6 +234,7 @@
                     formControlName="montoTotal"
                     [label]="'Monto Total'"
                     [decimals]="2"
+                    [readonly]="true"
                   ></app-decimal-form-field>
                 </div>
                 <div class="col-6">
@@ -224,6 +242,7 @@
                     formControlName="idMoneda"
                     [type]="'ComboMoneda'"
                     [label]="'Moneda'"
+                    [readonly]="true"
                   ></app-combo>
                 </div>
               </div>
@@ -232,6 +251,7 @@
                   <app-decimal-form-field
                     formControlName="precioKm"
                     [label]="'Precio x KM'"
+                    [readonly]="true"
                   ></app-decimal-form-field>
                 </div>
               </div>
@@ -247,6 +267,7 @@
                     formControlName="idCliente"
                     [type]="'ComboClientes'"
                     [label]="'Cliente'"
+                    [readonly]="true"
                   ></app-combo>
                 </div>
                 <div class="col-6">
@@ -268,6 +289,7 @@
                     formControlName="idChofer"
                     [type]="'ComboChoferes'"
                     [label]="'Chofer'"
+                    [readonly]="true"
                   ></app-combo>
                 </div>
                 <div class="col-6">
@@ -299,6 +321,7 @@
                     formControlName="idCamion"
                     [type]="'ComboCamiones'"
                     [label]="'Camion'"
+                    [readonly]="true"
                   ></app-combo>
                 </div>
                 <div class="col-6">
@@ -322,6 +345,7 @@
                     [label]="'Procedencias'"
                     [type]="'ComboDestinoProcedencias'"
                     formControlName="datosProcedencias"
+                    [readonly]="true"
                   ></app-multiple-combo>
                 </div>
                 <div class="col-6">
@@ -329,6 +353,7 @@
                     [label]="'Destinos'"
                     [type]="'ComboDestinoProcedencias'"
                     formControlName="datosDestino"
+                    [readonly]="true"
                   ></app-multiple-combo>
                 </div>
               </div>
@@ -361,20 +386,20 @@
               ></app-button>
             }
 
-            @if (stepper.selectedIndex === 2 && idViaje) {
-              <app-button
-                [label]="'Guardar'"
-                (onClick)="guardar()"
-                [type]="'success'"
-              ></app-button>
-            }
-
-            @if (stepper.selectedIndex === 2 && !idViaje) {
-              <app-button
-                [label]="'Guardar'"
-                (onClick)="alta()"
-                [type]="'success'"
-              ></app-button>
+            @if (!readonly) {
+              @if (stepper.selectedIndex === 2 && idViaje) {
+                <app-button
+                  [label]="'Guardar'"
+                  (onClick)="guardar()"
+                  [type]="'success'"
+                ></app-button>
+              } @else if (stepper.selectedIndex === 2) {
+                <app-button
+                  [label]="'Guardar'"
+                  (onClick)="alta()"
+                  [type]="'success'"
+                ></app-button>
+              }
             }
           </div>
         </div>

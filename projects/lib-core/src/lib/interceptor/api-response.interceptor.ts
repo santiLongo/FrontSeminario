@@ -59,7 +59,7 @@ export const apiResponseInterceptor: HttpInterceptorFn = (
         error.message ||
         'Error inesperado del servidor';
 
-      dialogService.showError(message);
+      dialogService.showError(message, error.status);
       return throwError(() => error);
     })
   );

@@ -4,14 +4,15 @@
   <input
     matInput
     [matDatepicker]="picker"
+    [value]="value"
     [disabled]="disabled"
     [readonly]="true"
     (dateChange)="onDateChange($event.value)"
     (blur)="onTouched()"
   />
 
-  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-  <mat-datepicker #picker></mat-datepicker>
+  <mat-datepicker-toggle matIconSuffix [for]="picker" [disabled]="readonly"></mat-datepicker-toggle>
+  <mat-datepicker [disabled]="readonly" #picker></mat-datepicker>
 
   @if (value && !readonly) {
     <button
