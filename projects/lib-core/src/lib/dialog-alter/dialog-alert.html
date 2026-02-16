@@ -7,18 +7,18 @@
   <div nz-result-extra>
     @switch (type) {
         @case ('warning') {
-            <button nz-button nzType="primary" (click)="onAceptar()">Aceptar</button>
-            <button nz-button nzType="dashed" (click)="onSalir()">Salir</button>
+            <button nz-button nzType="primary" (click)="onAceptar(true)">Aceptar</button>
+            <button nz-button nzType="dashed" (click)="onSalir(false)">Salir</button>
         }
         @case ('error') {
-            <button nz-button nzType="primary" (click)="onSalir()">Salir</button>
+            <button nz-button nzType="primary" (click)="onSalir(true)">Salir</button>
         }
         @case ('info') {
-            <button nz-button nzType="primary" (click)="onAceptar()">Aceptar</button>
-            <button nz-button nzType="dashed" (click)="onSalir()">Salir</button>
+            <button nz-button nzType="primary" (click)="onAceptar(true)">Aceptar</button>
+            <button nz-button nzType="dashed" (click)="onSalir(false)">Salir</button>
         }
         @case ('success') {
-            <button nz-button nzType="primary" (click)="onAceptar()">Aceptar</button>
+            <button nz-button nzType="primary" (click)="onAceptar(true)">Aceptar</button>
         }
     }
     

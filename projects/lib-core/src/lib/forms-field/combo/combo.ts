@@ -1,4 +1,4 @@
-import { Component, Input, forwardRef, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, forwardRef, OnInit, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import {
   ControlValueAccessor,
   FormsModule,
@@ -41,12 +41,13 @@ import { IMaskModule } from 'angular-imask';
     IMaskModule,
   ],
 })
-export class ComboComponent implements ControlValueAccessor, OnInit {
+export class ComboComponent implements ControlValueAccessor, OnInit, OnChanges {
   @Input({ required: true }) label!: string;
   @Input() type = '';
   @Input() isLocal = false;
   @Input() data: ComboType[] = [];
   @Input() readonly = false;
+  @Input() extraParams: any;
 
   data$!: Observable<ComboType[]>;
 
@@ -59,7 +60,23 @@ export class ComboComponent implements ControlValueAccessor, OnInit {
   constructor(private http: ComboHttpService) {}
 
   ngOnInit(): void {
-    this.data$ = this.isLocal ? of(this.data) : this.http.getCombo(this.type);
+    this.loadData();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['extraParams'] && !changes['extraParams'].firstChange) {
+      this.loadData();
+    }
+
+    if (changes['type'] && !changes['type'].firstChange) {
+      this.loadData();
+    }
+  }
+
+  private loadData() {
+    this.data$ = this.isLocal
+      ? of(this.data)
+      : this.http.getCombo(this.type, this.extraParams);
   }
 
   writeValue(value: any): void {

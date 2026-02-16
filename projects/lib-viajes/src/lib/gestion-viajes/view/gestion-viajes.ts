@@ -1,14 +1,22 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { CoreViewComponent, FilterComponent, GridComponent, GridConfig, ButtonComponent, DateFormFieldComponent, ComboComponent, ViajeMaskComponent } from 'lib-core';
 import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-} from '@angular/forms';
+  CoreViewComponent,
+  FilterComponent,
+  GridComponent,
+  GridConfig,
+  ButtonComponent,
+  DateFormFieldComponent,
+  ComboComponent,
+  ViajeMaskComponent,
+} from 'lib-core';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { GestionViajesDataService } from '../service/data.service';
 import { GestionViajesGridModel } from '../models/grid-model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ForzarEstadoDialog } from '../dialogs/forzar-estado/forzar-estado-dialog';
+import { InformarDescargaDialog } from '../dialogs/informar-descarga/informar-descarga-dialog';
 
 @Component({
   standalone: true,
@@ -24,8 +32,8 @@ import { ActivatedRoute, Router } from '@angular/router';
     ButtonComponent,
     DateFormFieldComponent,
     ComboComponent,
-    ViajeMaskComponent
-],
+    ViajeMaskComponent,
+  ],
 })
 export class GestionViajesComponent implements OnInit, AfterViewInit {
   public form: FormGroup;
@@ -36,6 +44,7 @@ export class GestionViajesComponent implements OnInit, AfterViewInit {
     public dataService: GestionViajesDataService,
     private router: Router,
     private route: ActivatedRoute,
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -59,7 +68,7 @@ export class GestionViajesComponent implements OnInit, AfterViewInit {
       fechaAltaDesde: [],
       fechaAltaHasta: [],
       estado: [],
-      decimal: []
+      decimal: [],
     });
   }
 
@@ -111,7 +120,7 @@ export class GestionViajesComponent implements OnInit, AfterViewInit {
           label: 'Ver',
           icon: 'search',
           onClick: (row) => {
-            this.ver(row)
+            this.ver(row);
           },
         },
       ],
@@ -131,11 +140,27 @@ export class GestionViajesComponent implements OnInit, AfterViewInit {
           disabledOnEmptyRows: true,
           onClick: (rows) => this.editar(rows[0]),
         },
+        {
+          key: 'descarga',
+          label: 'Informar Descarga',
+          type: 'secondary',
+          icon: 'assignment_add',
+          disabledOnEmptyRows: true,
+          onClick: (rows) => this.informarDescarga(rows[0]),
+        },
+        {
+          key: 'estado',
+          label: 'Forzar Estado',
+          type: 'warning',
+          icon: 'quick_reference',
+          disabledOnEmptyRows: true,
+          onClick: (rows) => this.forzarEstado(rows[0]),
+        },
       ],
       selectableSettings: {
         type: 'single',
         selectable: true,
-      }
+      },
     };
   }
 
@@ -145,14 +170,34 @@ export class GestionViajesComponent implements OnInit, AfterViewInit {
   }
 
   editar(row: GestionViajesGridModel) {
-    this.router.navigate(['./formulario', row.idViaje, false], { relativeTo: this.route });
+    this.router.navigate(['./formulario', row.idViaje, false], {
+      relativeTo: this.route,
+    });
   }
 
   nuevo() {
     this.router.navigate(['./formulario'], { relativeTo: this.route });
   }
 
-  ver(row: GestionViajesGridModel){
-    this.router.navigate(['./formulario', row.idViaje, true], { relativeTo: this.route });
+  ver(row: GestionViajesGridModel) {
+    this.router.navigate(['./formulario', row.idViaje, true], {
+      relativeTo: this.route,
+    });
+  }
+
+  forzarEstado(row: GestionViajesGridModel) {
+    this.dialog.open(ForzarEstadoDialog, { data: { idViaje: row.idViaje }, width: '800px' })
+    .afterClosed()
+    .subscribe(() => {
+      this.onBuscar()
+    });
+  }
+
+  informarDescarga(row: GestionViajesGridModel) {
+    this.dialog.open(InformarDescargaDialog, { data: { idViaje: row.idViaje }, width: '800px' })
+    .afterClosed()
+    .subscribe(() => {
+      this.onBuscar()
+    });
   }
 }

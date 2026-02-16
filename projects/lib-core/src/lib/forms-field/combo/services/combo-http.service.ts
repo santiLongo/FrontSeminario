@@ -1,21 +1,29 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { CoreLibService } from "lib-core";
-import { Observable } from "rxjs";
-import { ComboType } from "../models/combo-type";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { ApiHttpService, CoreLibService } from 'lib-core';
+import { Observable } from 'rxjs';
+import { ComboType } from '../models/combo-type';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
-export class ComboHttpService{
-    private url = '';
+export class ComboHttpService {
+  private url = '';
 
-    constructor(private http: HttpClient, private config: CoreLibService) {
-        this.url = config.loginUrl + 'v1/combo/';
-    }
+  constructor(
+    private http: ApiHttpService,
+    private config: CoreLibService,
+  ) {
+    this.url = config.loginUrl + 'v1/combo/';
+  }
 
-    getCombo(type: string): Observable<ComboType[]>{
-        const fullUrl = this.url + 'get' 
-        return this.http.get<ComboType[]>(fullUrl, {params: { type }})
-    }
+  getCombo(type: string, extraParams?: any): Observable<ComboType[]> {
+    const fullUrl = this.url + 'get';
+
+    const params = {
+      type,
+      ...(extraParams ?? {}),
+    };
+    return this.http.get<ComboType[]>(fullUrl, params);
+  }
 }

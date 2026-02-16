@@ -36,11 +36,11 @@ export class AlertDialogComponent {
     this.subtitle = data.subtitle;
   }
 
-  onSalir() {
-    this.dialogRef.close();
+  onSalir(b: boolean) {
+    this.dialogRef.close(b);
   }
 
-  onAceptar() {
-    this.dialogRef.close(true);
+  onAceptar(b: boolean) {
+    this.dialogRef.close(b);
   }
 }

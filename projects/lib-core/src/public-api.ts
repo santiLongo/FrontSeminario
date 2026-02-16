@@ -16,3 +16,4 @@ export * from './lib/grid/services/base-grid.service';
 export * from './lib/button/button';
 export * from './lib/forms-field/index';
 export * from './lib/services/alert.service'
+export * from './lib/basic-dialog/basic-dialog'

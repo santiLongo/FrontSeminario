@@ -4,6 +4,8 @@ import { ViajesLibService } from "lib-viajes";
 import { GestionViajesFilterModel } from "../models/filter-model";
 import { Observable } from "rxjs";
 import { GestionViajesGridModel } from "../models/grid-model";
+import { ForzarEstadoModel } from "../dialogs/forzar-estado/models/forzar-estado-model";
+import { InformarDescargaModel } from "../dialogs/informar-descarga/models/informar-descarga-model";
 
 @Injectable({
     providedIn: "root",
@@ -18,5 +20,15 @@ export class GestionViajesHttpService {
     getAll(command: GestionViajesFilterModel, state: GridState): Observable<PagedResult<GestionViajesGridModel>> {
         const fullUrl = this.url + 'getAll';
         return this.http.getState(fullUrl, command, state);
+    }
+
+    forzarEstado(command: ForzarEstadoModel): Observable<void> {
+        const fullUrl = this.url + 'forzar-estado';
+        return this.http.postWithBlock(fullUrl, command);
+    }
+
+    informarDescarga(command: InformarDescargaModel): Observable<void> {
+        const fullUrl = this.url + 'cargar-descarga';
+        return this.http.postWithBlock(fullUrl, command);
     }
 }

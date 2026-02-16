@@ -126,6 +126,26 @@ export class TreeMenuV3Component implements OnInit {
         ],
       },
       {
+        key: 10,
+        label: 'Generales',
+        children: [
+          {
+            key: 11,
+            label: 'Maestro de Localidades',
+            onClick: () => {
+              this.router.navigate(['generales/gestion-localidad']);
+            },
+          },
+          {
+            key: 12,
+            label: 'Maestro de Provincias',
+            onClick: () => {
+              this.router.navigate(['generales/gestion-provincia']);
+            },
+          },
+        ],
+      },
+      {
         key: 14,
         label: 'Configuraciones',
         icon: 'setting',

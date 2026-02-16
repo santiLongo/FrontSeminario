@@ -1,0 +1,50 @@
+<h2 mat-dialog-title>Forzar Estado del Viaje</h2>
+<mat-dialog-content>
+  <form [formGroup]="formulario">
+    <div class="row">
+      <div class="col-12">
+        <app-form-field
+            label="Nombre de la Localidad"
+            formControlName="descripcion"
+        ></app-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <app-combo
+          [label]="'Pais'"
+          formControlName="idPais"
+          [type]="'ComboPais'"
+        >
+        </app-combo>
+      </div>
+      <div class="col-6">
+        <app-combo
+          [label]="'Provincia'"
+          formControlName="idProvincia"
+          [type]="'ComboProvincia'"
+          [extraParams]="{ pais: pais.value }"
+        >
+        </app-combo>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <div style="display: flex; width: 100%;">
+    <div style="margin-right: auto">
+    </div>
+    <div style="margin-left: auto; display: flex; gap: 10px">
+      <app-button
+        [label]="'Cancelar'"
+        [type]="'danger'"
+        (onClick)="salir()"
+      ></app-button>
+      <app-button
+        [label]="'Guardar'"
+        [type]="'success'"
+        (onClick)="guardar()"
+      ></app-button>
+    </div>
+  </div>
+</mat-dialog-actions>

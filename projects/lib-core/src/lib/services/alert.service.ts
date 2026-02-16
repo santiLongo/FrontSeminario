@@ -9,11 +9,11 @@ import { AlertDialogComponent } from '../dialog-alter/dialog-alert';
 export class AlertService {
   constructor(private dialog: MatDialog) {}
 
-  error$(title: string, subtitle?: string): Observable<void> {
+  error$(title: string, subtitle?: string): Observable<boolean> {
     return this.dialog.open(AlertDialogComponent, { data: { type: 'error', title, subtitle }, width: '600px' }).afterClosed();
   }
 
-  success$(title: string, subtitle?: string): Observable<void> {
+  success$(title: string, subtitle?: string): Observable<boolean> {
     return this.dialog.open(AlertDialogComponent, { data: { type: 'success', title, subtitle }, width: '600px' }).afterClosed();
   }
 
