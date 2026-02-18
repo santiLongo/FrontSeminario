@@ -1,3 +1,5 @@
+import { IconKey } from "../../types/icons";
+
 export interface GridConfig<T> {
   columns: GridColumn<T>[];
   menuActions?: GridMenuAction<T>[];
@@ -25,7 +27,7 @@ export class GridColumn<T> {
 export class GridMenuAction<T> {
   key: string;
   label: string;
-  icon?: string;
+  icon?: IconKey;
 
   hidden?: (row: T) => boolean;
   disabled?: (row: T) => boolean;
@@ -36,7 +38,7 @@ export class GridMenuAction<T> {
 export class GridToolBarAction<T> {
   key: string;
   label: string;
-  icon?: string;
+  icon?: IconKey;
   type: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' = 'primary';
   hidden?: boolean;
   disabledOnEmptyRows?: boolean = false

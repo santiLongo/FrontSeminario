@@ -1,0 +1,59 @@
+<app-core-view title="Gestion de Viajes">
+  <div header>
+    <app-filter>
+      <div body>
+        <form [formGroup]="formulario">
+          <div class="row">
+            <div class="col-6">
+              <app-combo
+                formControlName="marca"
+                [type]="'ComboMarcaCamion'"
+                [label]="'Marca'"
+              ></app-combo>
+            </div>
+            <div class="col-6">
+              <app-combo
+                formControlName="modelo"
+                [type]="'ComboModeloCamion'"
+                [label]="'Modelo'"
+                [extraParams]="{ marca: marca.value }"
+              ></app-combo>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <app-combo
+                formControlName="tipoCamion"
+                [type]="'ComboTipoCamion'"
+                [label]="'Camion'"
+              ></app-combo>
+            </div>
+            <div class="col-6">
+              
+              <app-combo
+                formControlName="camion"
+                [type]="'ComboCamiones'"
+                [label]="'Camion'"
+                [extraParams]="{ marca: marca.value, modelo: modelo.value, tipoCamion: tipoCamion.value }"
+              ></app-combo>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div footer>
+        <app-button
+          (onClick)="onBuscar()"
+          [icon]="'search'"
+          label="Buscar"
+        ></app-button>
+      </div>
+    </app-filter>
+  </div>
+  
+  <div body>
+     
+    <br style="margin: 20" />
+    <app-grid [dataService]="dataService" [config]="gridConfig"></app-grid>
+  </div>
+</app-core-view>
+<p style="color: gray; font-family: cursive;">maestro-camiones</p>

@@ -119,13 +119,14 @@ export class LocalidadComponent implements OnInit {
           type: 'success',
           onClick: () => this.add(),
         },
-        {
-          key: 'remove',
-          label: 'Eliminar Localidad',
-          type: 'danger',
-          disabledOnEmptyRows: true,
-          onClick: (rows) => this.remove(rows[0]),
-        },
+        // {
+        //   key: 'remove',
+        //   label: 'Eliminar Localidad',
+        //   type: 'danger',
+        //   disabledOnEmptyRows: true,
+        //   onClick: (rows) => this.remove(rows[0]),
+        // },
+        //Comento el boton porque no se si me conviene que eliminen localidades, ya que puedo perder trazabilidad.
       ],
     };
   }

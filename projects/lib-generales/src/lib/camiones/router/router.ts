@@ -2,8 +2,8 @@ import { Component } from "@angular/core";
 import { RouterOutlet } from "@angular/router";
 
 @Component({
-    selector: 'app-provincia-router',
+    selector: 'app-camion-router',
     template: '<router-outlet>',
     imports: [RouterOutlet]
 })
-export class ProvinciaRouterComponent{}
+export class CamionRouterComponent{}

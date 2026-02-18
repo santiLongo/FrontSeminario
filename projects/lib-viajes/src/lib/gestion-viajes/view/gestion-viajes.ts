@@ -129,7 +129,7 @@ export class GestionViajesComponent implements OnInit, AfterViewInit {
           key: 'new',
           label: 'Nuevo Viaje',
           type: 'success',
-          icon: 'local_shipping',
+          icon: 'truck',
           onClick: () => this.nuevo(),
         },
         {
@@ -152,7 +152,7 @@ export class GestionViajesComponent implements OnInit, AfterViewInit {
           key: 'estado',
           label: 'Forzar Estado',
           type: 'warning',
-          icon: 'quick_reference',
+          icon: 'warning',
           disabledOnEmptyRows: true,
           onClick: (rows) => this.forzarEstado(rows[0]),
         },

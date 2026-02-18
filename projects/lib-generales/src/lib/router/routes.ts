@@ -13,9 +13,9 @@ export const GeneralesRoutes: Routes = [
           import('../localidades/router/routes').then((m) => m.LocalidadRoutes),
       },
       {
-        path: 'gestion-provincia',
+        path: 'gestion-camiones',
         loadChildren: () =>
-          import('../provincias/router/routes').then((m) => m.ProvinciaRoutes),
+          import('../camiones/router/routes').then((m) => m.CamionesRoutes),
       },
     ],
   },

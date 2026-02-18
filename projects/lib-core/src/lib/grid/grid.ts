@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   Component,
   Input,
   OnDestroy,
@@ -23,6 +22,7 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { ButtonComponent } from '../button/button';
 import { MatMenuModule } from '@angular/material/menu';
+import { ICONS } from '../types/icons';
 
 @Component({
   standalone: true,
@@ -38,7 +38,7 @@ import { MatMenuModule } from '@angular/material/menu';
     MatIconModule,
     ButtonComponent,
     MatMenuModule,
-  ],
+],
 })
 export class GridComponent<T extends Record<string, any>>
   implements OnInit, OnDestroy
@@ -55,6 +55,7 @@ export class GridComponent<T extends Record<string, any>>
   indeterminate = false;
   loading = false;
   total = 10;
+  ICONS = ICONS;
   
   selectedRows: T[] = [];
   private selectedSet = new Set<T>();

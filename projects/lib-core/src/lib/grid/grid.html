@@ -83,12 +83,12 @@
               <mat-icon>menu</mat-icon>
             </button>
 
-            <mat-menu #menu="matMenu">
+            <mat-menu #menu="matMenu" style="width: auto;">
               @for (action of menuActions; track action.key) {
                 @if (!action.hidden || !action.hidden(row)) {
-                  <button mat-menu-item (click)="action.onClick(row)">
+                  <button mat-menu-item (click)="action.onClick(row)" >
                     @if (action.icon) {
-                      <mat-icon [fontIcon]="action.icon"></mat-icon>
+                      <mat-icon style="margin-right: 8px;">{{ ICONS[action.icon] }}</mat-icon>
                     }
                     {{ action.label }}
                   </button>

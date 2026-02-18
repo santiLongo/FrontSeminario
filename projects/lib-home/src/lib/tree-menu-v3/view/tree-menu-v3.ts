@@ -138,9 +138,9 @@ export class TreeMenuV3Component implements OnInit {
           },
           {
             key: 12,
-            label: 'Maestro de Provincias',
+            label: 'Maestro de Camiones',
             onClick: () => {
-              this.router.navigate(['generales/gestion-provincia']);
+              this.router.navigate(['generales/gestion-camiones']);
             },
           },
         ],

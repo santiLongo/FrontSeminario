@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { ButtonProps } from "./model/botton-prop";
-import { MatIconModule } from "@angular/material/icon";
 import { NgClass } from '@angular/common';
 import { ButtonType } from "./types/types";
+import { IconKey, ICONS } from "../types/icons";
+import { MatIcon } from "@angular/material/icon";
 
 
 @Component({
@@ -10,16 +11,18 @@ import { ButtonType } from "./types/types";
     selector: 'app-button',
     templateUrl: './button.html',
     styleUrl: './button.css',
-    imports: [MatIconModule, NgClass],
+    imports: [NgClass, MatIcon],
 })
 export class ButtonComponent implements OnInit{
     @Input() key: string;
     @Input() label: string;
-    @Input() icon?: string;
+    @Input() icon?: IconKey;
     @Input() type: ButtonType = 'primary';
     @Input() disabled?: boolean = false;
     @Input() hidden?: boolean = false;
     @Input() props?: ButtonProps;
+
+    ICONS = ICONS;
 
     public types: Record<ButtonType, string> = {
         primary: "btn btn-primary",

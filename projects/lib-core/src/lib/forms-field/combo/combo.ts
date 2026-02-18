@@ -14,7 +14,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
+import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { IMaskModule } from 'angular-imask';
 
 @Component({
@@ -42,6 +42,7 @@ import { IMaskModule } from 'angular-imask';
   ],
 })
 export class ComboComponent implements ControlValueAccessor, OnInit, OnChanges {
+  @ViewChild(MatSelect) matSelect!: MatSelect;
   @Input({ required: true }) label!: string;
   @Input() type = '';
   @Input() isLocal = false;
@@ -80,7 +81,13 @@ export class ComboComponent implements ControlValueAccessor, OnInit, OnChanges {
   }
 
   writeValue(value: any): void {
-    this.value = value;
+   this.value = value;
+
+    queueMicrotask(() => {
+      if (this.matSelect) {
+        this.matSelect.writeValue(this.value);
+      }
+    });
   }
 
   registerOnChange(fn: any): void {
