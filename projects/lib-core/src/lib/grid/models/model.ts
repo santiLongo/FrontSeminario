@@ -22,6 +22,7 @@ export class GridColumn<T> {
     | 'ddMM';
   filter?: boolean = false;
   hidden?: boolean = false;
+  sortable?: boolean = true;
 }
 
 export class GridMenuAction<T> {
@@ -60,5 +61,10 @@ export interface PagedResult<T> {
 export interface GridState {
   page: number;
   pageSize: number;
-  sort?: string;
+  sort?: {
+    field: string;
+    direction: 'asc' | 'desc';
+  };
+
+  filters?: Record<string, any>;
 }

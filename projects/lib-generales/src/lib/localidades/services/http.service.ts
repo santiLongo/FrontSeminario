@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ApiHttpService, GridState, PagedResult } from 'lib-core';
-import { GeneralesLibService } from 'lib-generales';
 import { Observable } from 'rxjs';
 import { LocalidadGridModel } from '../models/localidad-grid-model';
 import { LocalidadFilterModel } from '../models/localidad-filter-model';
 import { UpsertLocalidadModel } from '../dialog/models/upsert-model';
+import { GeneralesLibService } from '../../config/generales.service';
 
 @Injectable({
   providedIn: 'root',

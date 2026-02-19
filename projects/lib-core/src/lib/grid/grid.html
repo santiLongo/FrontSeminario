@@ -22,8 +22,8 @@
   [nzLoading]="loading"
   [nzFrontPagination]="false"
   [nzTotal]="total"
-  [nzPageSize]="dataService.pageSize"
-  [nzPageIndex]="dataService.page"
+  [nzPageSize]="dataService.state.pageSize"
+  [nzPageIndex]="dataService.state.page"
   [nzShowSizeChanger]="true"
   [nzPageSizeOptions]="[10, 20, 50]"
   (nzPageSizeChange)="onPageSizeChange($event)"
@@ -48,9 +48,56 @@
         <th style="font-size: 14px">Acciones</th>
       }
       @for (column of columns; track column.key) {
-        <th style="font-size: 14px" [hidden]="column.hidden">
-          {{ column.title }}
-        </th>
+        @if (column.filter) {
+          @if (column.sortable) {
+            <th
+              nzCustomFilter
+              style="font-size: 14px"
+              [hidden]="column.hidden"
+              [nzSortFn]="true"
+              [nzSortOrder]="getSortOrder(column.key)"
+              (nzSortOrderChange)="onSort(column.key, $event)"
+            >
+              {{ column.title }}
+              <nz-filter-trigger
+                [(nzVisible)]="filterVisible[column.key.toString()]"
+                [nzActive]="hasFilter(column.key)"
+                [nzDropdownMenu]="filterMenu"
+                (nzVisibleChange)="onFilterVisibleChange($event, column)"
+              >
+                <nz-icon nzType="search" />
+              </nz-filter-trigger>
+            </th>
+          } @else {
+            <th nzCustomFilter style="font-size: 14px" [hidden]="column.hidden">
+              {{ column.title }}
+              <nz-filter-trigger
+                [(nzVisible)]="filterVisible[column.key.toString()]"
+                [nzActive]="hasFilter(column.key)"
+                [nzDropdownMenu]="filterMenu"
+                (nzVisibleChange)="onFilterVisibleChange($event, column)"
+              >
+                <nz-icon nzType="search" />
+              </nz-filter-trigger>
+            </th>
+          }
+        } @else {
+          @if (column.sortable) {
+            <th
+              style="font-size: 14px"
+              [hidden]="column.hidden"
+              [nzSortFn]="true"
+              [nzSortOrder]="getSortOrder(column.key)"
+              (nzSortOrderChange)="onSort(column.key, $event)"
+            >
+              {{ column.title }}
+            </th>
+          } @else {
+            <th style="font-size: 14px" [hidden]="column.hidden">
+              {{ column.title }}
+            </th>
+          }
+        }
       }
     </tr>
   </thead>
@@ -83,12 +130,14 @@
               <mat-icon>menu</mat-icon>
             </button>
 
-            <mat-menu #menu="matMenu" style="width: auto;">
+            <mat-menu #menu="matMenu" style="width: auto">
               @for (action of menuActions; track action.key) {
                 @if (!action.hidden || !action.hidden(row)) {
-                  <button mat-menu-item (click)="action.onClick(row)" >
+                  <button mat-menu-item (click)="action.onClick(row)">
                     @if (action.icon) {
-                      <mat-icon style="margin-right: 8px;">{{ ICONS[action.icon] }}</mat-icon>
+                      <mat-icon style="margin-right: 8px">{{
+                        ICONS[action.icon]
+                      }}</mat-icon>
                     }
                     {{ action.label }}
                   </button>
@@ -107,4 +156,43 @@
       </tr>
     }
   </tbody>
+  <br />
+  @if (!hiddenRefresh) {
+    <div style="width: 100%">
+    <button type="button" class="btn btn-outline-secondary" style="display: flex;" (click)="dataService.search()">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
+  }
 </nz-table>
+
+<nz-dropdown-menu #filterMenu="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <input
+        type="text"
+        nz-input
+        placeholder="Search name"
+        [formControl]="searchValue"
+      />
+      <button
+        nz-button
+        nzSize="small"
+        nzType="primary"
+        nzClickHide="false"
+        (click)="applyFilter(activeFilterColumn!)"
+        class="search-button"
+      >
+        Buscar
+      </button>
+      <button
+        nz-button
+        nzSize="small"
+        nzClickHide="false"
+        (click)="resetFilter(activeFilterColumn!)"
+      >
+        Limpiar
+      </button>
+    </div>
+  </div>
+</nz-dropdown-menu>

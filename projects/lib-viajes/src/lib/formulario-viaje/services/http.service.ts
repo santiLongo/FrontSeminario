@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { ApiHttpService } from 'lib-core';
-import { ViajesLibService } from 'lib-viajes';
 import { FormularioDataViaje, FormularioGetDataViaje } from '../models/formulario-data';
 import { Observable } from 'rxjs';
 import { BuscoChoferResponse } from '../models/busco-chofer-response';
 import { FormularioAddCommand } from '../models/formulario-add-command';
 import { FormularioUpdateCommand } from '../models/formulario-update-command';
+import { ViajesLibService } from '../../config/viajes.service';
 
 @Injectable({
   providedIn: 'root',

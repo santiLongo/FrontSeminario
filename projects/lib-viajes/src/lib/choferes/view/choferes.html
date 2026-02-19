@@ -1,0 +1,45 @@
+<app-core-view title="Gestion de Viajes">
+  <!-- <div header>
+    <app-filter>
+      <div body>
+        <form [formGroup]="formulario">
+          <div class="row">
+            <div class="col-6">
+              <app-combo
+                formControlName="pais"
+                [type]="'ComboPais'"
+                [label]="'Pais'"
+              ></app-combo>
+            </div>
+            <div class="col-6">
+              <app-combo
+                formControlName="provincia"
+                [type]="'ComboProvincia'"
+                [label]="'Provincia'"
+                [extraParams]="{ pais: pais.value }"
+              ></app-combo>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div footer>
+        <app-button
+          (onClick)="onBuscar()"
+          [icon]="'search'"
+          label="Buscar"
+        ></app-button>
+      </div>
+    </app-filter>
+  </div> -->
+  <!--  -->
+  <div body>
+    <!--  -->
+    <mat-button-toggle-group [hideSingleSelectionIndicator]="true" (change)="dataService.search()" [formControl]="dataService.estado" style="margin-bottom: 20px;">
+        <mat-button-toggle [value]="1">Activos</mat-button-toggle>
+        <mat-button-toggle [value]="2">Inactivos</mat-button-toggle>
+        <mat-button-toggle [value]="3">Todos</mat-button-toggle>
+    </mat-button-toggle-group>
+    <app-grid [dataService]="dataService" [config]="gridConfig"></app-grid>
+  </div>
+</app-core-view>
+<p style="color: gray; font-family: cursive;">maestro-localidad</p>

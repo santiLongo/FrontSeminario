@@ -57,9 +57,9 @@ export class TreeMenuV3Component implements OnInit {
           },
           {
             key: 4,
-            label: 'Reportes',
+            label: 'Choferes',
             onClick: () => {
-              this.router.navigate(['/reportes-viajes']);
+              this.router.navigate(['viajes/gestion-choferes']);
             },
           },
         ],

@@ -10,8 +10,11 @@ export abstract class BaseGridService<T> {
   total$ = this.totalSub$.asObservable();
   loading$ = this.loadingSub$.asObservable();
 
-  page = 1;
-  pageSize = 10;
+  state: GridState = {
+    page: 1,
+    pageSize: 10,
+    filters: {}
+  };
 
   protected setLoading(value: boolean) {
     this.loadingSub$.next(value);
@@ -22,16 +25,10 @@ export abstract class BaseGridService<T> {
     this.totalSub$.next(total);
   }
 
-  public search(page: number = this.page): void {
-    this.page = page;
+  public search(): void {
     this.setLoading(true);
     //
-    const state: GridState = {
-      page: this.page,
-      pageSize: this.pageSize
-    };
-    //
-    this.getData(state)
+    this.getData(this.state)
       .pipe(finalize(() => this.setLoading(false)))
       .subscribe((res) => {
         this.setData(res.items, res.total);
@@ -39,4 +36,22 @@ export abstract class BaseGridService<T> {
   }
 
   abstract getData(state: GridState): Observable<PagedResult<T>>;
+
+  public setSort(field: string, direction: 'asc' | 'desc' | null) {
+    if (!direction) {
+      this.state.sort = undefined;
+    } else {
+      this.state.sort = { field, direction };
+    }
+    this.search();
+  }
+
+  public setFilter(field: string, value: any) {
+    if (!this.state.filters) this.state.filters = {};
+
+    if (!value) delete this.state.filters[field];
+    else this.state.filters[field] = value;
+
+    this.search();
+  }
 }

@@ -64,7 +64,7 @@ export class CamionComponent implements OnInit, AfterViewInit {
     this.gridConfig = {
       columns: [
         { key: 'id', title: 'ID', type: 'numeric', hidden: true },
-        { key: 'patente', title: 'Patente', type: 'text' },
+        { key: 'patente', title: 'Patente', type: 'text', filter: true, sortable: true },
         { key: 'marca', title: 'Marca', type: 'text' },
         { key: 'modelo', title: 'Modelo', type: 'text' },
         { key: 'nroChasis', title: 'Nro Chasis', type: 'text' },

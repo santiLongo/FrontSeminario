@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { ApiHttpService, GridState, PagedResult } from "lib-core";
-import { GeneralesLibService } from "lib-generales";
 import { CamionesFilterModel } from "../models/camiones-filter-model";
 import { Observable } from "rxjs";
 import { CamionesGridModel } from "../models/camiones-grid-model";
 import { UpsertCamionModel } from "../dialog/models/upsert-model";
+import { GeneralesLibService } from "../../config/generales.service";
 
 @Injectable({
     providedIn: 'root'

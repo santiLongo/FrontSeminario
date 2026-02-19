@@ -52,6 +52,7 @@ export class TipoCamionDialogComponent implements OnInit {
           key: 'tipo',
           title: 'Tipo de Camion',
           type: 'text',
+          filter: true,
         },
       ],
       selectableSettings: {

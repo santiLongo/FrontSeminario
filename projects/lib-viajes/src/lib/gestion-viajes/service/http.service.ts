@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
 import { ApiHttpService, GridState, PagedResult } from "lib-core";
-import { ViajesLibService } from "lib-viajes";
 import { GestionViajesFilterModel } from "../models/filter-model";
 import { Observable } from "rxjs";
 import { GestionViajesGridModel } from "../models/grid-model";
 import { ForzarEstadoModel } from "../dialogs/forzar-estado/models/forzar-estado-model";
 import { InformarDescargaModel } from "../dialogs/informar-descarga/models/informar-descarga-model";
+import { ViajesLibService } from "../../config/viajes.service";
 
 @Injectable({
     providedIn: "root",

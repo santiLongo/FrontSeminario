@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { ApiHttpService, GridState, PagedResult } from "lib-core";
-import { GeneralesLibService } from "lib-generales";
 import { Observable } from "rxjs";
 import { TipoCamionGridModel } from "../model/grid-model";
 import { UpsertTipoCamionModel } from "../upsert/model/upsert-model";
+import { GeneralesLibService } from "../../../config/generales.service";
 
 @Injectable({
     providedIn: 'root'

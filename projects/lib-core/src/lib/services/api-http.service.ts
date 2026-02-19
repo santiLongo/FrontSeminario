@@ -28,17 +28,35 @@ export class ApiHttpService {
     });
   }
 
-  getState<T>(url: string, params: any, state: GridState): Observable<PagedResult<T>> {
-    const httpParams = this.buildParams({
+  getState<T>(
+    url: string,
+    params: any,
+    state: GridState,
+  ): Observable<PagedResult<T>> {
+    let finalParams: any = {
       ...params,
       page: state.page,
       pageSize: state.pageSize,
-      sort: state.sort
-    });
+    };
+
+    if (state.sort) {
+      finalParams['sort.field'] = state.sort.field;
+      finalParams['sort.direction'] = state.sort.direction;
+    }
+
+    if (state.filters) {
+      Object.entries(state.filters).forEach(([key, value]) => {
+        if (value !== null && value !== undefined && value !== '') {
+          finalParams[`filters[${key}]`] = value;
+        }
+      });
+    }
+
+    const httpParams = this.buildParams(finalParams);
 
     return this.http.get<PagedResult<T>>(url, {
       headers: this.getHeaders(),
-      params: httpParams
+      params: httpParams,
     });
   }
 

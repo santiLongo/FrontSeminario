@@ -10,6 +10,10 @@ export const ViajesRoutes: Routes = [
                 path: 'gestion-viajes',
                 loadChildren: () => import('../gestion-viajes/router/routes').then(m => m.GestionViajesRoutes),
             },
+            {
+                path: 'gestion-choferes',
+                loadChildren: () => import('../choferes/router/routes').then(m => m.ChoferesRoutes),
+            },
         ]
     }
 

@@ -1,10 +1,5 @@
-import {
-  Component,
-  Input,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
-import { NzTableModule } from 'ng-zorro-antd/table';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { NzTableModule, NzTableSortOrder } from 'ng-zorro-antd/table';
 import {
   GridColumn,
   GridConfig,
@@ -23,10 +18,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { ButtonComponent } from '../button/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { ICONS } from '../types/icons';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NzFloatButtonModule } from 'ng-zorro-antd/float-button';
 
 @Component({
   standalone: true,
   selector: 'app-grid',
+  styleUrl: './grid.css',
   templateUrl: './grid.html',
   imports: [
     NzTableModule,
@@ -38,13 +36,17 @@ import { ICONS } from '../types/icons';
     MatIconModule,
     ButtonComponent,
     MatMenuModule,
-],
+    FormsModule,
+    ReactiveFormsModule,
+    NzFloatButtonModule
+  ],
 })
 export class GridComponent<T extends Record<string, any>>
   implements OnInit, OnDestroy
 {
   @Input({ required: true }) dataService!: BaseGridService<T>;
   @Input({ required: true }) config!: GridConfig<T>;
+  @Input() hiddenRefresh = false;
 
   data: T[] = [];
   columns: GridColumn<T>[] = [];
@@ -56,7 +58,10 @@ export class GridComponent<T extends Record<string, any>>
   loading = false;
   total = 10;
   ICONS = ICONS;
-  
+  activeFilterColumn?: string;
+  searchValue = new FormControl('');
+  filterVisible: Record<string, boolean> = {};
+
   selectedRows: T[] = [];
   private selectedSet = new Set<T>();
 
@@ -68,12 +73,10 @@ export class GridComponent<T extends Record<string, any>>
     this.toolbarButtons = this.config.toolBarActions ?? [];
     this.selectableSettings = this.config.selectableSettings;
 
-    this.dataService.data$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data) => {
-        this.data = data;
-        this.refreshSelectionStatus();
-      });
+    this.dataService.data$.pipe(takeUntil(this.destroy$)).subscribe((data) => {
+      this.data = data;
+      this.refreshSelectionStatus();
+    });
 
     this.dataService.loading$
       .pipe(takeUntil(this.destroy$))
@@ -90,8 +93,8 @@ export class GridComponent<T extends Record<string, any>>
   }
 
   onPageSizeChange(size: number) {
-    this.dataService.pageSize = size;
-    this.dataService.search(1);
+    this.dataService.state.pageSize = size;
+    this.dataService.search();
   }
 
   //Metodos para seleccionar
@@ -120,12 +123,12 @@ export class GridComponent<T extends Record<string, any>>
   onAllChecked(checked: boolean) {
     if (!this.selectableSettings?.selectable) return;
 
-    const selectableRows = this.data.filter(r => this.isRowSelectable(r));
+    const selectableRows = this.data.filter((r) => this.isRowSelectable(r));
 
     if (this.selectableSettings.type === 'single') {
       this.selectedSet.clear();
     } else {
-      selectableRows.forEach(row => {
+      selectableRows.forEach((row) => {
         checked ? this.selectedSet.add(row) : this.selectedSet.delete(row);
       });
     }
@@ -136,11 +139,12 @@ export class GridComponent<T extends Record<string, any>>
   private refreshSelectionStatus() {
     const pageData = this.data;
 
-    const selectedOnPage = pageData.filter(r => this.selectedSet.has(r)).length;
+    const selectedOnPage = pageData.filter((r) =>
+      this.selectedSet.has(r),
+    ).length;
 
     this.checked = selectedOnPage > 0 && selectedOnPage === pageData.length;
-    this.indeterminate =
-      selectedOnPage > 0 && selectedOnPage < pageData.length;
+    this.indeterminate = selectedOnPage > 0 && selectedOnPage < pageData.length;
 
     this.selectedRows = Array.from(this.selectedSet);
   }
@@ -149,5 +153,46 @@ export class GridComponent<T extends Record<string, any>>
     if (!this.selectableSettings?.selectable) return false;
     if (!this.selectableSettings.esSelectable) return true;
     return this.selectableSettings.esSelectable(row);
+  }
+
+  // Filtros y ordenamiento
+
+  hasFilter(key: keyof T): boolean {
+    return !!this.dataService.state.filters?.[key as string];
+  }
+
+  onFilterVisibleChange(visible: boolean, column: GridColumn<T>) {
+  if (!visible) return;
+
+  this.activeFilterColumn = column.key.toString();
+  this.searchValue.setValue(
+    this.dataService.state.filters?.[column.key as string] ?? ''
+  );
+}
+  applyFilter(field: string) {
+    this.dataService.setFilter(field, this.searchValue.getRawValue());
+    this.filterVisible[field] = false;
+  }
+
+  resetFilter(field: string) {
+    this.dataService.setFilter(field, null);
+    this.filterVisible[field] = false;
+    this.searchValue.reset();
+  }
+
+  getSortOrder(key: keyof T): NzTableSortOrder {
+    const sort = this.dataService.state.sort;
+    if (!sort || sort.field !== key) return null;
+    return sort.direction === 'asc' ? 'ascend' : 'descend';
+  }
+
+  onSort(key: keyof T, order: NzTableSortOrder) {
+    if (!order) {
+      this.dataService.setSort(key as string, null);
+      return;
+    }
+
+    const direction = order === 'ascend' ? 'asc' : 'desc';
+    this.dataService.setSort(key as string, direction);
   }
 }

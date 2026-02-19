@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ApiHttpService, CoreLibService } from 'lib-core';
+import { ApiHttpService } from 'lib-core';
 import { Observable } from 'rxjs';
 import { ComboType } from '../models/combo-type';
+import { CoreLibService } from '../../../config/core.service';
 
 @Injectable({
   providedIn: 'root',
