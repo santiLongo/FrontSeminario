@@ -40,14 +40,14 @@
                 [label]="'Nro. Viaje'"
               ></app-viaje-mask>
             </div>
-            <div class="col-3">
+            <!-- <div class="col-3">
               <app-combo
                 formControlName="estado"
                 type="ComboEstadosViaje"
                 [label]="'Estado del Viaje'"
               ></app-combo>
-            </div>
-            <div class="col-3">
+            </div> -->
+            <div class="col-6">
               <app-combo
                 formControlName="idCliente"
                 type="ComboClientes"
@@ -85,7 +85,13 @@
   <!--  -->
   <div body>
     <!--  -->
-    <br style="margin: 20" />
+    <mat-button-toggle-group [hideSingleSelectionIndicator]="true" (change)="onBuscar()" [formControl]="estado" style="margin-bottom: 20px;">
+        <mat-button-toggle [value]="1">En Viaje</mat-button-toggle>
+        <mat-button-toggle [value]="2">Finalizado</mat-button-toggle>
+        <mat-button-toggle [value]="3">Suspendido</mat-button-toggle>
+        <mat-button-toggle [value]="4">Cobrado</mat-button-toggle>
+        <mat-button-toggle [value]="null">Todos</mat-button-toggle>
+    </mat-button-toggle-group>
     <app-grid [dataService]="dataService" [config]="gridConfig"></app-grid>
   </div>
 </app-core-view>

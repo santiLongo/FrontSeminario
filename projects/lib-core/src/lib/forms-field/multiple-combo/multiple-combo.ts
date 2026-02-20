@@ -1,8 +1,20 @@
-import { Component, Input, forwardRef, OnInit, ViewChild, SimpleChanges, OnChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  forwardRef,
+  OnInit,
+  ViewChild,
+  SimpleChanges,
+  OnChanges,
+  Optional,
+  Self,
+} from '@angular/core';
 import {
   ControlValueAccessor,
+  FormControl,
   FormsModule,
   NG_VALUE_ACCESSOR,
+  NgControl,
   ReactiveFormsModule,
 } from '@angular/forms';
 import { map, Observable, of } from 'rxjs';
@@ -11,7 +23,7 @@ import { ComboHttpService } from '../combo/services/combo-http.service';
 import { CommonModule } from '@angular/common';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatError, MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
@@ -21,13 +33,13 @@ import { IMaskModule } from 'angular-imask';
   standalone: true,
   selector: 'app-multiple-combo',
   templateUrl: './multiple-combo.html',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => MultipleComboComponent),
-      multi: true,
-    },
-  ],
+  // providers: [
+  //   {
+  //     provide: NG_VALUE_ACCESSOR,
+  //     useExisting: forwardRef(() => MultipleComboComponent),
+  //     multi: true,
+  //   },
+  // ],
   imports: [
     CommonModule,
     FormsModule,
@@ -38,10 +50,12 @@ import { IMaskModule } from 'angular-imask';
     MatIconModule,
     MatNativeDateModule,
     MatDatepickerModule,
-    IMaskModule,
+    IMaskModule
   ],
 })
-export class MultipleComboComponent implements ControlValueAccessor, OnInit, OnChanges {
+export class MultipleComboComponent
+  implements ControlValueAccessor, OnInit, OnChanges
+{
   @ViewChild(MatSelect) matSelect!: MatSelect;
   @Input({ required: true }) label!: string;
   @Input() type = '';
@@ -63,7 +77,14 @@ export class MultipleComboComponent implements ControlValueAccessor, OnInit, OnC
   private onChange = (_: any) => {};
   private onTouched = () => {};
 
-  constructor(private http: ComboHttpService) {}
+  constructor(
+    private http: ComboHttpService,
+    @Self() @Optional() public ngControl: NgControl,
+  ) {
+    if (this.ngControl) {
+      this.ngControl.valueAccessor = this;
+    }
+  }
 
   ngOnInit(): void {
     this.loadData();
@@ -143,8 +164,34 @@ export class MultipleComboComponent implements ControlValueAccessor, OnInit, OnC
   getDescripcion(items: ComboType[] | null): string {
     if (!items || !this.value?.length) return '';
 
-    const seleccionados = items.filter(x => this.value.includes(x.numero));
+    const seleccionados = items.filter((x) => this.value.includes(x.numero));
 
-    return seleccionados.map(x => x.descripcion).join(', ');
+    return seleccionados.map((x) => x.descripcion).join(', ');
+  }
+
+  get control() {
+    return this.ngControl?.control as FormControl;
+  }
+
+  get showError(): boolean {
+    return !!this.control && this.control.invalid && this.control.touched;
+  }
+
+  get errorMessage(): string | null {
+    const errors = this.control?.errors;
+    if (!errors) return null;
+
+    if (errors['required']) return `${this.label} es obligatorio`;
+    if (errors['email']) return `Formato inválido`;
+    if (errors['maxlength'])
+      return `Máximo ${errors['maxlength'].requiredLength} caracteres`;
+    if (errors['minlength'])
+      return `Mínimo ${errors['minlength'].requiredLength} caracteres`;
+    if (errors['max'])
+      return `Máximo ${errors['maxlength'].requiredLength} numeros`;
+    if (errors['min'])
+      return `Mínimo ${errors['minlength'].requiredLength} numeros`;
+
+    return 'Valor inválido';
   }
 }

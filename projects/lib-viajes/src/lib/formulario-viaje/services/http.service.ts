@@ -24,7 +24,7 @@ export class FormularioViajeHttpService {
 
   get(idViaje: number): Observable<FormularioGetDataViaje> {
     const fullUrl = this.url + 'get';
-    return this.http.get(fullUrl, { idViaje });
+    return this.http.getWithBlock(fullUrl, { idViaje });
   }
 
   add(command: FormularioAddCommand): Observable<any> {

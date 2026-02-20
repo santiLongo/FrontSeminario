@@ -21,4 +21,12 @@ export class ChoferesDataService extends BaseGridService<ChoferesGridModel> {
         };
         return this.httpService.getAll(command, state);
     }
+
+    baja(idChofer: number): Observable<void> {
+        return this.httpService.baja(idChofer);
+    }
+
+    alta(idChofer: number): Observable<void> {
+        return this.httpService.alta(idChofer);
+    }
 }

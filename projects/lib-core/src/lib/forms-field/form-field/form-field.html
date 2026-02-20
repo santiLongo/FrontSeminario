@@ -1,7 +1,4 @@
-<mat-form-field
-  appearance="fill"
-  style="width: 100%"
->
+<mat-form-field appearance="fill" style="width: 100%">
   <mat-label>{{ label }}</mat-label>
 
   <input
@@ -11,6 +8,7 @@
     [value]="value"
     [readonly]="readonly"
     [disabled]="disabled"
+    [formControl]="control"
     (input)="onInput($any($event.target).value)"
     (blur)="onBlur()"
   />
@@ -22,8 +20,13 @@
       type="button"
       (click)="clear()"
       style="border-color: transparent; background-color: transparent"
+      tabindex="-1"
     >
       <mat-icon>close</mat-icon>
     </button>
+  }
+
+  @if (showError) {
+    <mat-error>{{ errorMessage }}</mat-error>
   }
 </mat-form-field>

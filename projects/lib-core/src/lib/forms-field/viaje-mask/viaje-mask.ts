@@ -5,12 +5,21 @@ import {
   ElementRef,
   forwardRef,
   Input,
+  Optional,
+  Self,
   ViewChild,
 } from '@angular/core';
-import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  FormControl,
+  FormsModule,
+  NG_VALUE_ACCESSOR,
+  NgControl,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatError, MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -21,13 +30,13 @@ import IMask, { InputMask } from 'imask';
   standalone: true,
   selector: 'app-viaje-mask',
   templateUrl: './viaje-mask.html',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => ViajeMaskComponent),
-      multi: true,
-    },
-  ],
+  // providers: [
+  //   {
+  //     provide: NG_VALUE_ACCESSOR,
+  //     useExisting: forwardRef(() => ViajeMaskComponent),
+  //     multi: true,
+  //   },
+  // ],
   imports: [
     CommonModule,
     FormsModule,
@@ -38,12 +47,10 @@ import IMask, { InputMask } from 'imask';
     MatIconModule,
     MatNativeDateModule,
     MatDatepickerModule,
-    IMaskModule,
-  ]
+    IMaskModule
+  ],
 })
-export class ViajeMaskComponent
-  implements ControlValueAccessor, AfterViewInit
-{
+export class ViajeMaskComponent implements ControlValueAccessor, AfterViewInit {
   @Input({ required: true }) label!: string;
   @Input() readonly = false;
 
@@ -57,6 +64,12 @@ export class ViajeMaskComponent
 
   private onChange = (_: any) => {};
   private onTouched = () => {};
+
+  constructor(@Self() @Optional() public ngControl: NgControl) {
+    if (this.ngControl) {
+      this.ngControl.valueAccessor = this;
+    }
+  }
 
   ngAfterViewInit(): void {
     queueMicrotask(() => {
@@ -108,5 +121,31 @@ export class ViajeMaskComponent
     this.onChange(null);
     this.onTouched();
     queueMicrotask(() => this.inputRef.nativeElement.focus());
+  }
+
+  get control() {
+    return this.ngControl?.control as FormControl;
+  }
+
+  get showError(): boolean {
+    return !!this.control && this.control.invalid && this.control.touched;
+  }
+
+  get errorMessage(): string | null {
+    const errors = this.control?.errors;
+    if (!errors) return null;
+
+    if (errors['required']) return `${this.label} es obligatorio`;
+    if (errors['email']) return `Formato inválido`;
+    if (errors['maxlength'])
+      return `Máximo ${errors['maxlength'].requiredLength} caracteres`;
+    if (errors['minlength'])
+      return `Mínimo ${errors['minlength'].requiredLength} caracteres`;
+    if (errors['max'])
+      return `Máximo ${errors['maxlength'].requiredLength} numeros`;
+    if (errors['min'])
+      return `Mínimo ${errors['minlength'].requiredLength} numeros`;
+
+    return 'Valor inválido';
   }
 }

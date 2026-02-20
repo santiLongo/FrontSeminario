@@ -1,1 +1,21 @@
-<h1>Not Found</h1>
+<div
+  style="
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  "
+>
+  <nz-result nzStatus="404" nzTitle="Ups..." nzSubTitle="Pagina no encontrada">
+    <div nz-result-extra>
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        (click)="onClick()"
+      >
+        Volver al inicio
+      </button>
+    </div>
+  </nz-result>
+</div>

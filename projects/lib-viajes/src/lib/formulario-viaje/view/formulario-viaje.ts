@@ -114,6 +114,15 @@ export class FormularioViajeComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe(() => this.calcularPrecioKm());
+    //
+    this.stepper.selectedIndexChange.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe((value) => {
+      if(value === 2){
+        const values = this.formulario.getRawValue();
+        this.formulario.patchValue(values);
+      }
+    })
   }
 
   ngOnDestroy(): void {

@@ -75,7 +75,7 @@ export class GridComponent<T extends Record<string, any>>
 
     this.dataService.data$.pipe(takeUntil(this.destroy$)).subscribe((data) => {
       this.data = data;
-      this.refreshSelectionStatus();
+      this.resetSelectionStatus();
     });
 
     this.dataService.loading$
@@ -148,6 +148,14 @@ export class GridComponent<T extends Record<string, any>>
 
     this.selectedRows = Array.from(this.selectedSet);
   }
+
+  private resetSelectionStatus(): void {
+    this.selectedSet.clear();
+    this.selectedRows = [];
+    this.checked = false;
+    this.indeterminate = false;
+  }
+
 
   public isRowSelectable(row: T): boolean {
     if (!this.selectableSettings?.selectable) return false;

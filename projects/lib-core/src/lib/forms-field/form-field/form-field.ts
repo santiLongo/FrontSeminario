@@ -4,12 +4,23 @@ import {
   ElementRef,
   forwardRef,
   Input,
+  Optional,
+  Self,
   ViewChild,
 } from '@angular/core';
-import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
-import { MatNativeDateModule } from '@angular/material/core';
+import {
+  ControlValueAccessor,
+  FormControl,
+  FormGroupDirective,
+  FormsModule,
+  NG_VALUE_ACCESSOR,
+  NgControl,
+  NgForm,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { ErrorStateMatcher, MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatError, MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -19,13 +30,13 @@ import { IMaskModule } from 'angular-imask';
   standalone: true,
   selector: 'app-form-field',
   templateUrl: './form-field.html',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => FormFieldComponent),
-      multi: true,
-    },
-  ],
+  // providers: [
+  //   {
+  //     provide: NG_VALUE_ACCESSOR,
+  //     useExisting: forwardRef(() => FormFieldComponent),
+  //     multi: true,
+  //   },
+  // ],
   imports: [
     CommonModule,
     FormsModule,
@@ -36,8 +47,8 @@ import { IMaskModule } from 'angular-imask';
     MatIconModule,
     MatNativeDateModule,
     MatDatepickerModule,
-    IMaskModule,
-  ]
+    IMaskModule
+  ],
 })
 export class FormFieldComponent implements ControlValueAccessor {
   @Input({ required: true }) label!: string;
@@ -51,6 +62,12 @@ export class FormFieldComponent implements ControlValueAccessor {
 
   private onChange = (_: any) => {};
   private onTouched = () => {};
+
+  constructor(@Self() @Optional() public ngControl: NgControl) {
+    if (this.ngControl) {
+      this.ngControl.valueAccessor = this;
+    }
+  }
 
   writeValue(value: string | null): void {
     this.value = value;
@@ -82,5 +99,30 @@ export class FormFieldComponent implements ControlValueAccessor {
     this.onChange(null);
     this.onTouched();
     queueMicrotask(() => this.inputRef?.nativeElement.focus());
+  }
+
+  get control() {
+    return this.ngControl?.control as FormControl;
+  }
+
+  get showError(): boolean {
+    return !!this.control && this.control.invalid && this.control.touched;
+  }
+
+  get errorMessage(): string | null {
+    const errors = this.control?.errors;
+    if (!errors) return null;
+
+    if (errors['required']) return `${this.label} es obligatorio`;
+    if (errors['email']) return `Formato inválido`;
+    if (errors['maxlength'])
+      return `Máximo ${errors['maxlength'].requiredLength} caracteres`;
+    if (errors['minlength'])
+      return `Mínimo ${errors['minlength'].requiredLength} caracteres`;
+    if (errors['max']) return `Máximo ${errors['max'].max} números`;
+    if (errors['min']) return `Mínimo ${errors['min'].min} números`;
+
+
+    return 'Valor inválido';
   }
 }

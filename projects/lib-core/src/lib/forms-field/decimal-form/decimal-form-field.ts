@@ -4,6 +4,8 @@ import {
   ElementRef,
   forwardRef,
   Input,
+  Optional,
+  Self,
   ViewChild,
 } from '@angular/core';
 import {
@@ -11,8 +13,10 @@ import {
   NG_VALUE_ACCESSOR,
   FormsModule,
   ReactiveFormsModule,
+  NgControl,
+  FormControl,
 } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatError, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -20,20 +24,20 @@ import { MatIconModule } from '@angular/material/icon';
   standalone: true,
   selector: 'app-decimal-form-field',
   templateUrl: './decimal-form-field.html',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => DecimalFormFieldComponent),
-      multi: true,
-    },
-  ],
+  // providers: [
+  //   {
+  //     provide: NG_VALUE_ACCESSOR,
+  //     useExisting: forwardRef(() => DecimalFormFieldComponent),
+  //     multi: true,
+  //   },
+  // ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatIconModule,
+    MatIconModule
   ],
 })
 export class DecimalFormFieldComponent implements ControlValueAccessor {
@@ -51,6 +55,12 @@ export class DecimalFormFieldComponent implements ControlValueAccessor {
   private onChange = (_: any) => {};
   private onTouched = () => {};
 
+  constructor(@Self() @Optional() public ngControl: NgControl) {
+    if (this.ngControl) {
+      this.ngControl.valueAccessor = this;
+    }
+  }
+
   writeValue(value: number | null): void {
     this.value = value;
     this.display = value !== null ? this.format(value) : '';
@@ -67,12 +77,17 @@ export class DecimalFormFieldComponent implements ControlValueAccessor {
   }
 
   onInput(raw: string) {
-    const cleaned = raw.replace(/[^\d.,]/g, '');
-    const parts = cleaned.split(',');
+    const normalized = raw
+      .replace(/\s/g, '')
+      .replace(/\./g, '')
+      .replace(',', '.')
+      .replace(/[^\d.]/g, '')
+      .replace(/[^\d.-]/g, '');
+
+    const parts = normalized.split('.');
     let integer = parts[0] ?? '';
     let decimal = parts[1] ?? '';
 
-    integer = integer.replace(/\./g, '');
     decimal = decimal.slice(0, this.decimals);
 
     const numericString = decimal ? `${integer}.${decimal}` : integer;
@@ -81,29 +96,23 @@ export class DecimalFormFieldComponent implements ControlValueAccessor {
     if (!isNaN(parsed)) {
       this.value = parsed;
       this.onChange(parsed);
-    }
 
-    // mostrar lo que el usuario tipeó, sin formatear
-    this.display = cleaned;
+      // 👇 ACÁ está la magia
+      this.display = this.formatPartial(integer, decimal);
+    } else {
+      this.display = raw;
+    }
   }
 
   onBlur() {
     this.onTouched();
 
-    if (!this.display) {
+    if (this.value === null) {
       this.clear();
       return;
     }
 
-    const parsed = this.parse(this.display);
-    if (parsed === null) {
-      this.clear();
-      return;
-    }
-
-    this.value = parsed;
-    this.display = this.format(parsed);
-    this.onChange(parsed);
+    this.display = this.format(this.value);
   }
 
   clear() {
@@ -128,5 +137,41 @@ export class DecimalFormFieldComponent implements ControlValueAccessor {
       minimumFractionDigits: this.decimals,
       maximumFractionDigits: this.decimals,
     });
+  }
+
+  private formatPartial(integer: string, decimal: string): string {
+    if (!integer) return '';
+
+    const intNumber = Number(integer);
+
+    const formattedInt = intNumber.toLocaleString('es-AR');
+
+    return decimal ? `${formattedInt},${decimal}` : formattedInt;
+  }
+
+  get control() {
+    return this.ngControl?.control as FormControl;
+  }
+
+  get showError(): boolean {
+    return !!this.control && this.control.invalid && this.control.touched;
+  }
+
+  get errorMessage(): string | null {
+    const errors = this.control?.errors;
+    if (!errors) return null;
+
+    if (errors['required']) return `${this.label} es obligatorio`;
+    if (errors['email']) return `Formato inválido`;
+    if (errors['maxlength'])
+      return `Máximo ${errors['maxlength'].requiredLength} caracteres`;
+    if (errors['minlength'])
+      return `Mínimo ${errors['minlength'].requiredLength} caracteres`;
+    if (errors['max'])
+      return `Máximo ${errors['maxlength'].requiredLength} numeros`;
+    if (errors['min'])
+      return `Mínimo ${errors['minlength'].requiredLength} numeros`;
+
+    return 'Valor inválido';
   }
 }

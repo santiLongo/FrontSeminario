@@ -5,9 +5,11 @@
     #input
     matInput
     type="text"
+    inputmode="numeric"
     [value]="display"
     [readonly]="readonly"
     [disabled]="disabled"
+    [formControl]="control"
     (input)="onInput($any($event.target).value)"
     (blur)="onBlur()"
   />
@@ -19,8 +21,13 @@
       type="button"
       (click)="clear()"
       style="border-color: transparent; background: transparent"
+      tabindex="-1"
     >
       <mat-icon>close</mat-icon>
     </button>
+  }
+
+  @if (showError) {
+    <mat-error>{{ errorMessage }}</mat-error>
   }
 </mat-form-field>

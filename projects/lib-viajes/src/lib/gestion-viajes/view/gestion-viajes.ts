@@ -9,7 +9,7 @@ import {
   ComboComponent,
   ViajeMaskComponent,
 } from 'lib-core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { GestionViajesDataService } from '../service/data.service';
 import { GestionViajesGridModel } from '../models/grid-model';
@@ -17,6 +17,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ForzarEstadoDialog } from '../dialogs/forzar-estado/forzar-estado-dialog';
 import { InformarDescargaDialog } from '../dialogs/informar-descarga/informar-descarga-dialog';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @Component({
   standalone: true,
@@ -33,6 +34,7 @@ import { InformarDescargaDialog } from '../dialogs/informar-descarga/informar-de
     DateFormFieldComponent,
     ComboComponent,
     ViajeMaskComponent,
+    MatButtonToggleModule
   ],
 })
 export class GestionViajesComponent implements OnInit, AfterViewInit {
@@ -67,8 +69,7 @@ export class GestionViajesComponent implements OnInit, AfterViewInit {
       nroViaje: [],
       fechaAltaDesde: [],
       fechaAltaHasta: [],
-      estado: [],
-      decimal: [],
+      estado: [1],
     });
   }
 
@@ -146,6 +147,7 @@ export class GestionViajesComponent implements OnInit, AfterViewInit {
           type: 'secondary',
           icon: 'assignment_add',
           disabledOnEmptyRows: true,
+          disabled: (rows) => rows[0].estado !== 'En Viaje',
           onClick: (rows) => this.informarDescarga(rows[0]),
         },
         {
@@ -199,5 +201,9 @@ export class GestionViajesComponent implements OnInit, AfterViewInit {
     .subscribe(() => {
       this.onBuscar()
     });
+  }
+
+  get estado() {
+    return this.form.get('estado') as FormControl;
   }
 }
