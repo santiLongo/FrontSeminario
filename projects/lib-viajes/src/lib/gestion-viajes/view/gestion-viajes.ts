@@ -8,6 +8,7 @@ import {
   DateFormFieldComponent,
   ComboComponent,
   ViajeMaskComponent,
+  DialogService,
 } from 'lib-core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -18,6 +19,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ForzarEstadoDialog } from '../dialogs/forzar-estado/forzar-estado-dialog';
 import { InformarDescargaDialog } from '../dialogs/informar-descarga/informar-descarga-dialog';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { InformarCobroDialog } from '../dialogs/informar-cobro/informar-cobro';
 
 @Component({
   standalone: true,
@@ -47,6 +49,7 @@ export class GestionViajesComponent implements OnInit, AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
+    private dialogService: DialogService
   ) {}
 
   ngOnInit(): void {
@@ -158,6 +161,15 @@ export class GestionViajesComponent implements OnInit, AfterViewInit {
           disabledOnEmptyRows: true,
           onClick: (rows) => this.forzarEstado(rows[0]),
         },
+        {
+          key: 'cobrar',
+          label: 'Informar Cobro',
+          type: 'success',
+          icon: 'info',
+          disabled: (rows) => rows[0].estado === 'Cobrado',
+          disabledOnEmptyRows: true,
+          onClick: (rows) => this.informarCobro(rows[0]),
+        },
       ],
       selectableSettings: {
         type: 'single',
@@ -197,6 +209,14 @@ export class GestionViajesComponent implements OnInit, AfterViewInit {
 
   informarDescarga(row: GestionViajesGridModel) {
     this.dialog.open(InformarDescargaDialog, { data: { idViaje: row.idViaje }, width: '800px' })
+    .afterClosed()
+    .subscribe(() => {
+      this.onBuscar()
+    });
+  }
+
+  informarCobro(row: GestionViajesGridModel) {
+    this.dialogService.open(InformarCobroDialog, { data: { idViaje: row.idViaje }, size: 'xl' })
     .afterClosed()
     .subscribe(() => {
       this.onBuscar()

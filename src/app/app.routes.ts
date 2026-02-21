@@ -29,6 +29,14 @@ export const routes: Routes = [
                 path: 'generales',
                 loadChildren: () => import('lib-generales').then(m => m.GeneralesRoutes),
             },
+            {
+                path: 'mantenimiento',
+                loadChildren: () => import('lib-mantenimiento').then(m => m.MantenimientoRoutes),
+            },
+            {
+                path: 'finanzas',
+                loadChildren: () => import('lib-finanzas').then(m => m.FinanzasRoutes),
+            },
             // {
             //     path: 'configuracion',
             //     loadChildren: () => import('lib-home').then(m => m.ConfiguracionRoutes)

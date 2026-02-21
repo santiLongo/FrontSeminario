@@ -2,7 +2,7 @@
  * Public API Surface of lib-core
  */
 export * from './lib/core-view/core-view';
-export * from './lib/config/index';
+export * from './lib/config/core-config';
 export * from './lib/filter/filter';
 export * from './lib/spinner/global-spinner';
 export * from './lib/services/api-http.service';

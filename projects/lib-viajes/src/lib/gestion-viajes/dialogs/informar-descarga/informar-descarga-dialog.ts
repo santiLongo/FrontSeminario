@@ -61,7 +61,7 @@ export class InformarDescargaDialog implements OnInit {
     });
   }
 
-  forzarEstado() {
+  guardar() {
     this.formulario.markAllAsTouched();
 
     if (this.formulario.invalid) {

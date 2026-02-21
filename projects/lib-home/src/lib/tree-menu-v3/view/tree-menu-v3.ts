@@ -113,7 +113,7 @@ export class TreeMenuV3Component implements OnInit {
             key: 12,
             label: 'Gestion de Cobros',
             onClick: () => {
-              this.router.navigate(['/gestion-cobros']);
+              this.router.navigate(['finanzas/gestion-cobros']);
             },
           },
           {

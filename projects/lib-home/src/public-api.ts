@@ -8,4 +8,4 @@ export * from './lib/not-found/view/not-found.component'
 export * from './lib/breadcrumb/breadcrumb'
 export * from './lib/tree-menu/tree-menu'
 export * from './lib/tree-menu-v3/view/tree-menu-v3'
-export * from './lib/config/index';
+export * from './lib/config/home-config';

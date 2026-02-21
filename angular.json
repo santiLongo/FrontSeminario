@@ -220,6 +220,66 @@
           }
         }
       }
+    },
+    "lib-finanzas": {
+      "projectType": "library",
+      "root": "projects/lib-finanzas",
+      "sourceRoot": "projects/lib-finanzas/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/lib-finanzas/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/lib-finanzas/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "projects/lib-finanzas/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
+    },
+    "lib-mantenimiento": {
+      "projectType": "library",
+      "root": "projects/lib-mantenimiento",
+      "sourceRoot": "projects/lib-mantenimiento/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/lib-mantenimiento/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/lib-mantenimiento/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "projects/lib-mantenimiento/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
     }
   }
 }

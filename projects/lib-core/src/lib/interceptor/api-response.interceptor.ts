@@ -54,10 +54,13 @@ export const apiResponseInterceptor: HttpInterceptorFn = (
     }),
 
     catchError((error: HttpErrorResponse) => {
-      const message =
+      let message =
         error.error?.message ||
         error.message ||
         'Error inesperado del servidor';
+
+      if(error.statusText === 'OK' && error.status === 404 && error.message.includes('Http failure response'))
+        message = 'Error al comunicarse con el servidor'
 
       dialogService.showError(message, error.status);
       return throwError(() => error);

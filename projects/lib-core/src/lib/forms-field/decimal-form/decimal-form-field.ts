@@ -19,6 +19,8 @@ import {
 import { MatError, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { InputMask, InputMaskElement } from 'imask';
+import { IMaskModule, IMaskPipe } from 'angular-imask';
 
 @Component({
   standalone: true,
@@ -37,7 +39,8 @@ import { MatIconModule } from '@angular/material/icon';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    IMaskModule,
   ],
 })
 export class DecimalFormFieldComponent implements ControlValueAccessor {
@@ -46,14 +49,17 @@ export class DecimalFormFieldComponent implements ControlValueAccessor {
 
   @Input({ required: true }) label!: string;
   @Input() readonly = false;
+  @Input() disabled = false;
   @Input() decimals = 2;
 
   value: number | null = null;
-  display = '';
-  disabled = false;
+
+  private maskRef: any;
 
   private onChange = (_: any) => {};
   private onTouched = () => {};
+
+  maskOptions: any;
 
   constructor(@Self() @Optional() public ngControl: NgControl) {
     if (this.ngControl) {
@@ -61,92 +67,73 @@ export class DecimalFormFieldComponent implements ControlValueAccessor {
     }
   }
 
+  ngAfterViewInit() {
+    this.maskOptions = {
+      mask: Number,
+      scale: this.decimals,
+      signed: false,
+      thousandsSeparator: '.',
+      radix: ',',
+      mapToRadix: ['.'],
+      normalizeZeros: true,
+    };
+  }
+
+  onAccept(e: string) {
+    const raw = e as string; // tu valor actual
+
+    const normalized = raw
+      .replace(/\./g, '') // sacar miles
+      .replace(',', '.'); // decimal a punto
+
+    const value = Number(normalized);
+
+    this.value = value;
+    this.onChange(value);
+  }
+
   writeValue(value: number | null): void {
     this.value = value;
-    this.display = value !== null ? this.format(value) : '';
+
+    // setear valor en IMask
+    const input = this.inputRef?.nativeElement;
+    if (!input) return;
+
+    if (value == null) {
+      input.value = '';
+      return;
+    }
+
+    // formatear manualmente para IMask
+    const formatted = value.toFixed(this.decimals).replace('.', ',');
+
+    input.value = formatted;
   }
 
   registerOnChange(fn: any) {
     this.onChange = fn;
   }
+
   registerOnTouched(fn: any) {
     this.onTouched = fn;
   }
+
   setDisabledState(isDisabled: boolean) {
     this.disabled = isDisabled;
   }
 
-  onInput(raw: string) {
-    const normalized = raw
-      .replace(/\s/g, '')
-      .replace(/\./g, '')
-      .replace(',', '.')
-      .replace(/[^\d.]/g, '')
-      .replace(/[^\d.-]/g, '');
-
-    const parts = normalized.split('.');
-    let integer = parts[0] ?? '';
-    let decimal = parts[1] ?? '';
-
-    decimal = decimal.slice(0, this.decimals);
-
-    const numericString = decimal ? `${integer}.${decimal}` : integer;
-    const parsed = Number(numericString);
-
-    if (!isNaN(parsed)) {
-      this.value = parsed;
-      this.onChange(parsed);
-
-      // 👇 ACÁ está la magia
-      this.display = this.formatPartial(integer, decimal);
-    } else {
-      this.display = raw;
-    }
-  }
-
-  onBlur() {
-    this.onTouched();
-
-    if (this.value === null) {
-      this.clear();
-      return;
-    }
-
-    this.display = this.format(this.value);
-  }
-
   clear() {
     this.value = null;
-    this.display = '';
     this.onChange(null);
+
+    const el = this.inputRef.nativeElement as any;
+    if (el?.maskRef) {
+      el.maskRef.value = '';
+    }
+  }
+
+  handleBlur() {
     this.onTouched();
-  }
-
-  private parse(raw: string): number | null {
-    const normalized = raw
-      .replace(/\s/g, '')
-      .replace(/\./g, '')
-      .replace(',', '.');
-
-    const n = Number(normalized);
-    return isNaN(n) ? null : n;
-  }
-
-  private format(val: number): string {
-    return val.toLocaleString('es-AR', {
-      minimumFractionDigits: this.decimals,
-      maximumFractionDigits: this.decimals,
-    });
-  }
-
-  private formatPartial(integer: string, decimal: string): string {
-    if (!integer) return '';
-
-    const intNumber = Number(integer);
-
-    const formattedInt = intNumber.toLocaleString('es-AR');
-
-    return decimal ? `${formattedInt},${decimal}` : formattedInt;
   }
 
   get control() {
@@ -154,7 +141,9 @@ export class DecimalFormFieldComponent implements ControlValueAccessor {
   }
 
   get showError(): boolean {
-    return !!this.control && this.control.invalid && this.control.touched;
+    // return !!this.control && this.control.invalid && this.control.touched;
+    const c = this.control;
+    return !!c && c.invalid && (c.touched || c.dirty);
   }
 
   get errorMessage(): string | null {

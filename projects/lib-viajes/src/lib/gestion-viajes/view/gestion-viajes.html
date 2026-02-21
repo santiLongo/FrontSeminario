@@ -88,8 +88,8 @@
     <mat-button-toggle-group [hideSingleSelectionIndicator]="true" (change)="onBuscar()" [formControl]="estado" style="margin-bottom: 20px;">
         <mat-button-toggle [value]="1">En Viaje</mat-button-toggle>
         <mat-button-toggle [value]="2">Finalizado</mat-button-toggle>
-        <mat-button-toggle [value]="3">Suspendido</mat-button-toggle>
         <mat-button-toggle [value]="4">Cobrado</mat-button-toggle>
+        <mat-button-toggle [value]="3">Suspendido</mat-button-toggle>
         <mat-button-toggle [value]="null">Todos</mat-button-toggle>
     </mat-button-toggle-group>
     <app-grid [dataService]="dataService" [config]="gridConfig"></app-grid>

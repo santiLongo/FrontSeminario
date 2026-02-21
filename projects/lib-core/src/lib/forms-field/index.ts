@@ -6,3 +6,4 @@ export * from './number-form/number-form-field';
 export * from './textarea/textarea-form-field';
 export * from './viaje-mask/viaje-mask';
 export * from './multiple-combo/multiple-combo';
+export * from './cuit-mask/cuit-mask'

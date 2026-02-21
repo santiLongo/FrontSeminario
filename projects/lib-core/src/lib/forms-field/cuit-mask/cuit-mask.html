@@ -5,14 +5,16 @@
     #input
     matInput
     type="text"
+    [value]="value"
     [readonly]="readonly"
     [disabled]="disabled"
-    [imask]="maskOptions"
+    [formControl]="control"
+    [imask]="mask"
     (accept)="onAccept($event)"
-    (blur)="handleBlur()"
+    (blur)="onBlur()"
   />
 
-  @if (value && !readonly) {
+ @if (value && !readonly) {
     <button
       matSuffix
       mat-icon-button
