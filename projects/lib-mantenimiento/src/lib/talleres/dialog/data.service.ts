@@ -15,4 +15,8 @@ export class UpsertDataService extends LocalGridService<UpsertEspecialidadTaller
         this.items = [...this.items,...datos];
         this.search();
     }
+
+    get data(): UpsertEspecialidadTaller[] {
+        return this.items.map<UpsertEspecialidadTaller>(m => m.data);
+    }
 }

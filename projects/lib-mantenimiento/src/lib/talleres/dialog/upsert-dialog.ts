@@ -82,12 +82,12 @@ export class UpsertLocalidadDialogComponent implements OnInit {
         ,
         Validators.compose([Validators.required, Validators.maxLength(50)]),
       ],
-      cuit: [, Validators.compose([Validators.max(11)])],
+      cuit: [,Validators.compose([Validators.maxLength(11)])],
       direccion: [
         ,
         Validators.compose([Validators.required, Validators.maxLength(50)]),
       ],
-      telefono: [, Validators.compose([Validators.max(11)])],
+      telefono: [, Validators.compose([Validators.maxLength(11)])],
       responsable: [, Validators.compose([Validators.maxLength(50)])],
       mail: [, Validators.compose([Validators.maxLength(50)])],
       idLocalidad: [, Validators.required],
@@ -154,6 +154,12 @@ export class UpsertLocalidadDialogComponent implements OnInit {
 
     const command = this.formulario.getRawValue() as UpsertTallerModel;
     command.idTaller = this.idTaller;
+    command.especialidades = this.dataService.data;
+
+    if(command.especialidades.length <= 0){
+      this.alertService.error$('Tiene que cargar al menos una especialidad').subscribe();
+      return;
+    }
 
     this.alertService
       .info$('Seguro que desea actualizar el taller?')

@@ -16,7 +16,7 @@ export class TalleresHttpService {
     private config: MantenimientoLibService,
     private http: ApiHttpService,
   ) {
-    this.url = config.apiUrl + 'v1/ubicacion/';
+    this.url = config.apiUrl + 'v1/taller/';
   }
 
   getAll(

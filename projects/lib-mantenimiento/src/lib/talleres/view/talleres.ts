@@ -105,14 +105,6 @@ export class TalleresComponent implements OnInit {
         selectable: true,
         type: 'single',
       },
-      menuActions: [
-        {
-          key: 'edit',
-          label: 'Editar',
-          icon: 'edit',
-          onClick: (row) => this.update(row),
-        },
-      ],
       toolBarActions: [
         {
           key: 'add',

@@ -119,8 +119,11 @@ export class FormFieldComponent implements ControlValueAccessor {
       return `Máximo ${errors['maxlength'].requiredLength} caracteres`;
     if (errors['minlength'])
       return `Mínimo ${errors['minlength'].requiredLength} caracteres`;
-    if (errors['max']) return `Máximo ${errors['max'].max} números`;
-    if (errors['min']) return `Mínimo ${errors['min'].min} números`;
+    if (errors['max'])
+      return `Máximo ${errors['max'].requiredLength}`;
+    if (errors['min'])
+      return `Mínimo ${errors['min'].requiredLength}`;
+
 
 
     return 'Valor inválido';

@@ -157,9 +157,10 @@ export class DecimalFormFieldComponent implements ControlValueAccessor {
     if (errors['minlength'])
       return `Mínimo ${errors['minlength'].requiredLength} caracteres`;
     if (errors['max'])
-      return `Máximo ${errors['maxlength'].requiredLength} numeros`;
+      return `Máximo ${errors['max'].requiredLength}`;
     if (errors['min'])
-      return `Mínimo ${errors['minlength'].requiredLength} numeros`;
+      return `Mínimo ${errors['min'].requiredLength}`;
+
 
     return 'Valor inválido';
   }
