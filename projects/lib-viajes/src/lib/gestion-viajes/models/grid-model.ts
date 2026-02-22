@@ -7,6 +7,7 @@ export interface GestionViajesGridModel {
     chofer: string;
     kilometros: number;
     montoTotal: number;
+    cobrado: number;
     estado: string;
     fechaPartida: Date;
     fechaDescarga: Date;

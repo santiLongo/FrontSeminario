@@ -84,8 +84,7 @@ export class InformarCobroDialog implements OnInit, OnDestroy {
         nroCheque: [],
         cuitEmisor: [],
         idBanco: [],
-        fechaEmision: [hoy],
-        fechaDeposito: []
+        fechaCobro: []
       })
     });
   }

@@ -3,17 +3,9 @@
   <form [formGroup]="formulario">
     <div class="row">
       <div class="col-6">
-        <app-date-form-field
-          [label]="'Fecha de Recibido'"
-          formControlName="fechaRecibido"
-        ></app-date-form-field>
-      </div>
-      <div class="col-6">
         <app-decimal-form-field label="Monto" formControlName="monto">
         </app-decimal-form-field>
       </div>
-    </div>
-    <div class="row">
       <div class="col-6">
         <app-combo
           [label]="'Moneda'"
@@ -21,6 +13,8 @@
           formControlName="idMoneda"
         ></app-combo>
       </div>
+    </div>
+    <div class="row">
       <div class="col-6">
         <app-decimal-form-field
           label="Tipo de Cambio"
@@ -29,9 +23,7 @@
         >
         </app-decimal-form-field>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-12">
+      <div class="col-6">
         <app-combo
           [label]="'Forma de pago'"
           [type]="'ComboFormaPago'"
@@ -87,7 +79,7 @@
       <app-button
         [label]="'Guardar'"
         [type]="'success'"
-        (onClick)="forzarEstado()"
+        (onClick)="guardar()"
       ></app-button>
     </div>
   </div>

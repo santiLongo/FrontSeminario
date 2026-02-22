@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { NzTableModule, NzTableSortOrder } from 'ng-zorro-antd/table';
 import {
   GridColumn,
@@ -47,6 +47,7 @@ export class GridComponent<T extends Record<string, any>>
   @Input({ required: true }) dataService!: BaseGridService<T>;
   @Input({ required: true }) config!: GridConfig<T>;
   @Input() hiddenRefresh = false;
+  @Input() isLocal = false;
 
   data: T[] = [];
   columns: GridColumn<T>[] = [];
@@ -62,7 +63,8 @@ export class GridComponent<T extends Record<string, any>>
   searchValue = new FormControl('');
   filterVisible: Record<string, boolean> = {};
 
-  selectedRows: T[] = [];
+  @Input() selectedRows: T[] = [];
+  @Output() selectedRowsChange = new EventEmitter<T[]>();
   private selectedSet = new Set<T>();
 
   private destroy$ = new Subject<void>();
@@ -147,6 +149,7 @@ export class GridComponent<T extends Record<string, any>>
     this.indeterminate = selectedOnPage > 0 && selectedOnPage < pageData.length;
 
     this.selectedRows = Array.from(this.selectedSet);
+    this.selectedRowsChange.emit(this.selectedRows);
   }
 
   private resetSelectionStatus(): void {
@@ -154,6 +157,7 @@ export class GridComponent<T extends Record<string, any>>
     this.selectedRows = [];
     this.checked = false;
     this.indeterminate = false;
+    this.selectedRowsChange.emit(this.selectedRows);
   }
 
 

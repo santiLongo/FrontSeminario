@@ -1,4 +1,4 @@
-<mat-form-field #mat appearance="fill" style="width: 100%">
+<mat-form-field #mat appearance="fill" style="width: 100%" (click)="handleClick()">
   <mat-label>{{ label }}</mat-label>
 
   <!-- <mat-select
@@ -22,6 +22,7 @@
       [compareWith]="compareByNumero"
       [formControl]="control"
       (selectionChange)="onSelectionChange($event.value)"
+      (click)="handleClick()"
     >
       @for (item of data$ | async; track item.numero) {
         <mat-option [value]="item.numero">

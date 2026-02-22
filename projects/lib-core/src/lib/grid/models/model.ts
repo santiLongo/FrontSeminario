@@ -48,7 +48,7 @@ export class GridToolBarAction<T> {
 }
 
 export class SelectebleSettings<T>{
-  type: 'multiple' | 'single'
+  type: 'multiple' | 'single' = 'single'
   selectable: boolean
   esSelectable?: (row: T) => boolean
 }

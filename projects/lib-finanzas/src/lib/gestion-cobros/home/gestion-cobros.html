@@ -1,0 +1,60 @@
+<app-core-view title="Gestion de Viajes">
+  <div header>
+    <app-filter>
+      <div body>
+        <form [formGroup]="formulario">
+          <div class="row">
+            <div class="col-6">
+              <app-viaje-mask
+                formControlName="nroViaje"
+                [label]="'Nro. Viaje'"
+              ></app-viaje-mask>
+            </div>
+            <div class="col-6">
+              <app-combo
+                formControlName="formaPago"
+                [type]="'ComboFormaPago'"
+                [label]="'Forma de Pago'"
+              ></app-combo>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+             <app-date-form-field
+                [label]="'Fecha Recibido Desde'"
+                formControlName="fechaDesde"
+             >
+             </app-date-form-field>
+            </div>
+            <div class="col-6">
+              <app-date-form-field
+                [label]="'Fecha Recibido Hasta'"
+                formControlName="fechaHasta"
+             >
+             </app-date-form-field>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div footer>
+        <app-button
+          (onClick)="onBuscar()"
+          [icon]="'search'"
+          label="Buscar"
+        ></app-button>
+      </div>
+    </app-filter>
+  </div>
+  <!--  -->
+  <div body>
+    <!--  -->
+    <mat-button-toggle-group [hideSingleSelectionIndicator]="true" (change)="onBuscar()" [formControl]="estado" style="margin-bottom: 20px;">
+        <mat-button-toggle [value]="4">Todos</mat-button-toggle>
+        <mat-button-toggle [value]="1">Cobrados</mat-button-toggle>
+        <mat-button-toggle [value]="2">Pendiente</mat-button-toggle>
+        <mat-button-toggle [value]="3">Anulados</mat-button-toggle>
+    </mat-button-toggle-group>
+    <app-grid [dataService]="dataService" [config]="gridConfig"></app-grid>
+  </div>
+</app-core-view>
+<p style="color: gray; font-family: cursive;">maestro-localidad</p>

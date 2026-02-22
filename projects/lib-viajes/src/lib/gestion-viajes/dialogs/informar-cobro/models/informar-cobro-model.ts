@@ -12,6 +12,5 @@ export interface DatosCheques {
     nroCheque: number;
     cuitEmisor: number;
     idBanco: number;
-    fechaEmision: Date;
-    fechaDeposito: Date;
+    fechaCobro: Date;
 }

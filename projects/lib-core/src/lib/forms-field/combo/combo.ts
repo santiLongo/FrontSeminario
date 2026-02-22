@@ -8,6 +8,7 @@ import {
   SimpleChanges,
   Optional,
   Self,
+  NgZone,
 } from '@angular/core';
 import {
   ControlValueAccessor,
@@ -17,7 +18,7 @@ import {
   NgControl,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { Observable, of } from 'rxjs';
+import { Observable, of, take } from 'rxjs';
 import { ComboType } from './models/combo-type';
 import { ComboHttpService } from './services/combo-http.service';
 import { CommonModule } from '@angular/common';
@@ -50,7 +51,7 @@ import { IMaskModule } from 'angular-imask';
     MatIconModule,
     MatNativeDateModule,
     MatDatepickerModule,
-    IMaskModule
+    IMaskModule,
   ],
 })
 export class ComboComponent implements ControlValueAccessor, OnInit, OnChanges {
@@ -67,11 +68,15 @@ export class ComboComponent implements ControlValueAccessor, OnInit, OnChanges {
   value: string | number | null = null;
   disabled = this.readonly;
 
+  private loaded = false;
+  private loading = false;
+
   private onChange = (_: any) => {};
   private onTouched = () => {};
 
   constructor(
     private http: ComboHttpService,
+    private zone: NgZone,
     @Self() @Optional() public ngControl: NgControl,
   ) {
     if (this.ngControl) {
@@ -80,15 +85,17 @@ export class ComboComponent implements ControlValueAccessor, OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.loadData();
+    // this.control..
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['extraParams'] && !changes['extraParams'].firstChange) {
+      this.loaded = false;
       this.loadData();
     }
 
     if (changes['type'] && !changes['type'].firstChange) {
+      this.loaded = false;
       this.loadData();
     }
   }
@@ -125,6 +132,29 @@ export class ComboComponent implements ControlValueAccessor, OnInit, OnChanges {
     this.value = value;
     this.onChange(value);
     this.onTouched();
+  }
+
+  handleClick() {
+    if (this.loaded || this.loading) return;
+
+    this.loading = true;
+
+    const obs = this.isLocal
+      ? of(this.data)
+      : this.http.getCombo(this.type, this.extraParams);
+
+    obs.subscribe((data) => {
+      this.data$ = of(data);
+      this.loaded = true;
+      this.loading = false;
+
+      // 🔥 esperar a que Angular termine de renderizar
+      this.zone.onStable.pipe(take(1)).subscribe(() => {
+        if (!this.matSelect.panelOpen) {
+          this.matSelect.open();
+        }
+      });
+    });
   }
 
   clear(): void {

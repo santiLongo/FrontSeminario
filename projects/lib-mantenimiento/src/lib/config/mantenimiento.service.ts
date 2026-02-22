@@ -2,7 +2,7 @@ import { Inject, Injectable } from "@angular/core";
 import { LIB_MANTENIMIENTO_CONFIG, LibMantenimientoConfig } from "./mantenimiento-config";
 
 @Injectable({ providedIn: 'root' })
-export class FinanzasLibService{
+export class MantenimientoLibService{
   private _apiUrl = 'NO VALUE';
   private _loginUrl = 'NO VALUE';
   

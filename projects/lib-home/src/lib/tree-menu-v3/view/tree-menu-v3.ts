@@ -16,14 +16,17 @@ import { TreeMenuV3Service } from '../services/tree-menu-v3.service';
         width: 240px;
         overflow-x: hidden;
       }
-    `
+    `,
   ],
   imports: [NzMenuModule, CommonModule],
 })
 export class TreeMenuV3Component implements OnInit {
   @Input() items: TreeMenuItem[] = [];
 
-  constructor(private router: Router, private service: TreeMenuV3Service) {}
+  constructor(
+    private router: Router,
+    private service: TreeMenuV3Service,
+  ) {}
 
   trackByKey(_: number, item: TreeMenuItem) {
     return item.key;
@@ -36,122 +39,97 @@ export class TreeMenuV3Component implements OnInit {
   itemsSetup() {
     this.items = [
       {
-        key: 1,
+        key: 'viajes',
         label: 'Viajes',
         icon: 'truck',
         children: [
           {
-            key: 2,
+            key: 'viajes-gestion',
             label: 'Gestion de Viajes',
             icon: 'truck',
-            onClick: () => {
-              this.router.navigate(['viajes/gestion-viajes']);
-            },
+            onClick: () => this.router.navigate(['viajes/gestion-viajes']),
           },
           {
-            key: 3,
+            key: 'viajes-clientes',
             label: 'Clientes',
-            onClick: () => {
-              this.router.navigate(['/gestion-clientes']);
-            },
+            onClick: () => this.router.navigate(['/gestion-clientes']),
           },
           {
-            key: 4,
+            key: 'viajes-choferes',
             label: 'Choferes',
-            onClick: () => {
-              this.router.navigate(['viajes/gestion-choferes']);
-            },
+            onClick: () => this.router.navigate(['viajes/gestion-choferes']),
           },
         ],
       },
       {
-        key: 5,
+        key: 'mantenimiento',
         label: 'Mantenimiento',
         children: [
           {
-            key: 6,
+            key: 'mantenimiento-gestion',
             label: 'Gestion de Mantenimiento',
-            onClick: () => {
-              this.router.navigate(['/gestion-mantenimiento']);
-            },
+            onClick: () => this.router.navigate(['/gestion-mantenimiento']),
           },
           {
-            key: 7,
+            key: 'mantenimiento-repuestos',
             label: 'Compra de Repuestos',
-            onClick: () => {
-              this.router.navigate(['/compra-repuestos']);
-            },
+            onClick: () => this.router.navigate(['/compra-repuestos']),
           },
           {
-            key: 8,
+            key: 'mantenimiento-talleres',
             label: 'Talleres',
-            onClick: () => {
-              this.router.navigate(['/talleres']);
-            },
+            onClick: () => this.router.navigate(['mantenimiento/talleres']),
           },
           {
-            key: 9,
+            key: 'mantenimiento-proveedores',
             label: 'Proveedores',
-            onClick: () => {
-              this.router.navigate(['/proveedores']);
-            },
+            onClick: () => this.router.navigate(['/proveedores']),
           },
         ],
       },
       {
-        key: 10,
+        key: 'finanzas',
         label: 'Finanzas',
         children: [
           {
-            key: 11,
+            key: 'finanzas-pagos',
             label: 'Gestion de Pagos',
-            onClick: () => {
-              this.router.navigate(['/gestion-pagos']);
-            },
+            onClick: () => this.router.navigate(['/gestion-pagos']),
           },
           {
-            key: 12,
+            key: 'finanzas-cobros',
             label: 'Gestion de Cobros',
-            onClick: () => {
-              this.router.navigate(['finanzas/gestion-cobros']);
-            },
+            onClick: () => this.router.navigate(['finanzas/gestion-cobros']),
           },
           {
-            key: 13,
+            key: 'finanzas-cheques',
             label: 'Cheques Emitidos',
-            onClick: () => {
-              this.router.navigate(['/cheques-emitidos']);
-            },
+            onClick: () => this.router.navigate(['/cheques-emitidos']),
           },
         ],
       },
       {
-        key: 10,
+        key: 'generales',
         label: 'Generales',
         children: [
           {
-            key: 11,
+            key: 'generales-localidades',
             label: 'Maestro de Localidades',
-            onClick: () => {
-              this.router.navigate(['generales/gestion-localidad']);
-            },
+            onClick: () =>
+              this.router.navigate(['generales/gestion-localidad']),
           },
           {
-            key: 12,
+            key: 'generales-camiones',
             label: 'Maestro de Camiones',
-            onClick: () => {
-              this.router.navigate(['generales/gestion-camiones']);
-            },
+            onClick: () => this.router.navigate(['generales/gestion-camiones']),
           },
         ],
       },
       {
-        key: 14,
+        key: 'configuracion',
         label: 'Configuraciones',
         icon: 'setting',
-        onClick: () => {
-          this.router.navigate(['/configuracion']);
-        },
+        onClick: () => this.router.navigate(['/configuracion']),
       },
     ];
   }

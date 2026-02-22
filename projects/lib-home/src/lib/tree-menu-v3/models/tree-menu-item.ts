@@ -1,5 +1,5 @@
 export interface TreeMenuItem {
-  key: number;
+  key: string;
   label: string;
   icon?: string;
   onClick?: () => void;

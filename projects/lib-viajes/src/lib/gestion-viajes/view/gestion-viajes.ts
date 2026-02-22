@@ -99,6 +99,12 @@ export class GestionViajesComponent implements OnInit, AfterViewInit {
           format: '{0:2}',
         },
         {
+          key: 'cobrado',
+          title: 'Cobrado',
+          type: 'numeric',
+          format: '{0:2}',
+        },
+        {
           key: 'fechaPartida',
           title: 'Fecha de Partida',
           type: 'date',
