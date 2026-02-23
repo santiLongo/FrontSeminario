@@ -10,7 +10,15 @@ export const MantenimientoRoutes : Routes = [
         children: [
             {
                 path: 'talleres',
-                loadChildren: () => import('../talleres/router/routes').then(m => m.LocalidadRoutes)
+                loadChildren: () => import('../talleres/router/routes').then(m => m.TalleresRoutes)
+            },
+            {
+                path: 'proveedores',
+                loadChildren: () => import('../proveedores/router/routes').then(m => m.ProveedoresRoutes)
+            },
+            {
+                path: 'gestion-mantenimiento',
+                loadChildren: () => import('../mantenimiento/router/routes').then(m => m.MantenimientoRoutes)
             }
         ]
     }

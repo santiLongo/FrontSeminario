@@ -1,9 +1,14 @@
-import { BaseGridService, GridState, InternalItem, PagedResult } from "lib-core";
-import { Observable, of } from "rxjs";
+import {
+  BaseGridService,
+  GridState,
+  InternalItem,
+  PagedResult,
+} from 'lib-core';
+import { Observable, of } from 'rxjs';
 
 export abstract class LocalGridService<T extends Record<string, any>>
-  extends BaseGridService<T> {
-
+  extends BaseGridService<T>
+{
   protected items: InternalItem<T>[] = [];
 
   constructor(initialData: InternalItem<T>[] = []) {
@@ -16,7 +21,7 @@ export abstract class LocalGridService<T extends Record<string, any>>
   }
 
   protected unwrap(items: InternalItem<T>[]): T[] {
-    return items.map(i => i.data);
+    return items.map((i) => i.data);
   }
 
   override getData(state: GridState): Observable<PagedResult<T>> {
@@ -29,7 +34,10 @@ export abstract class LocalGridService<T extends Record<string, any>>
 
         data = data.filter(({ data }) => {
           const v = data[key];
-          return v?.toString().toLowerCase().includes(value.toString().toLowerCase());
+          return v
+            ?.toString()
+            .toLowerCase()
+            .includes(value.toString().toLowerCase());
         });
       });
     }
@@ -56,7 +64,7 @@ export abstract class LocalGridService<T extends Record<string, any>>
 
     return of({
       items: this.unwrap(page),
-      total
+      total,
     });
   }
 
@@ -69,20 +77,20 @@ export abstract class LocalGridService<T extends Record<string, any>>
 
   remove(item: T) {
     const id = this.findId(item);
-    this.items = this.items.filter(i => i.__uuid !== id);
+    this.items = this.items.filter((i) => i.__uuid !== id);
     this.search();
   }
 
   update(item: T) {
     const id = this.findId(item);
-    this.items = this.items.map(i =>
-      i.__uuid === id ? { ...i, data: item } : i
+    this.items = this.items.map((i) =>
+      i.__uuid === id ? { ...i, data: item } : i,
     );
     this.search();
   }
 
   setAll(data: T[]) {
-    this.items = data.map(d => this.wrap(d));
+    this.items = data.map((d) => this.wrap(d));
     this.search();
   }
 
@@ -90,10 +98,10 @@ export abstract class LocalGridService<T extends Record<string, any>>
     this.items = [];
     this.search();
   }
-  
+
   private findId(item: T): string {
-    const found = this.items.find(i => i.data === item);
-    if (!found) throw new Error("Item no encontrado en LocalGridService");
+    const found = this.items.find((i) => i.data === item);
+    if (!found) throw new Error('Item no encontrado en LocalGridService');
     return found.__uuid;
   }
 }

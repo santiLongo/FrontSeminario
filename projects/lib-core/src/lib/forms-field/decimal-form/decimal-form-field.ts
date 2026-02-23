@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   forwardRef,
   Input,
+  OnInit,
   Optional,
   Self,
   ViewChild,
@@ -43,7 +45,7 @@ import { IMaskModule, IMaskPipe } from 'angular-imask';
     IMaskModule,
   ],
 })
-export class DecimalFormFieldComponent implements ControlValueAccessor {
+export class DecimalFormFieldComponent implements ControlValueAccessor, OnInit, AfterViewInit {
   @ViewChild('input', { static: true })
   inputRef!: ElementRef<HTMLInputElement>;
 
@@ -52,7 +54,7 @@ export class DecimalFormFieldComponent implements ControlValueAccessor {
   @Input() disabled = false;
   @Input() decimals = 2;
 
-  value: number | null = null;
+  @Input() value: number | null = null;
 
   private maskRef: any;
 
@@ -62,6 +64,9 @@ export class DecimalFormFieldComponent implements ControlValueAccessor {
   maskOptions: any;
 
   constructor(@Self() @Optional() public ngControl: NgControl) {
+  }
+
+  ngOnInit(): void {
     if (this.ngControl) {
       this.ngControl.valueAccessor = this;
     }

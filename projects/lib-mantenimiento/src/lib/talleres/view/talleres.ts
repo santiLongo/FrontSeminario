@@ -19,7 +19,7 @@ import {
 } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
-import { UpsertLocalidadDialogComponent } from '../dialog/upsert-dialog';
+import { UpsertTallerDialogComponent } from '../dialog/upsert-dialog';
 import { filter, switchMap } from 'rxjs';
 import { TalleresGridModel } from '../models/talleres-grid-model';
 import { TalleresDataService } from '../services/data.service';
@@ -84,6 +84,7 @@ export class TalleresComponent implements OnInit {
           key: 'cuit',
           title: 'Cuit',
           type: 'numeric',
+          format: 'cuit'
         },
         {
           key: 'telefono',
@@ -125,14 +126,14 @@ export class TalleresComponent implements OnInit {
 
   update(row: TalleresGridModel) {
     this.dialog
-      .open(UpsertLocalidadDialogComponent, { data: { idTaller: row.idTaller }, size: 'xxl' })
+      .open(UpsertTallerDialogComponent, { data: { idTaller: row.idTaller }, size: 'xxl' })
       .afterClosed()
       .subscribe(() => this.onBuscar());
   }
 
   add() {
     this.dialog
-      .open(UpsertLocalidadDialogComponent, {size: 'xxl'})
+      .open(UpsertTallerDialogComponent, {size: 'xxl'})
       .afterClosed()
       .subscribe(() => this.onBuscar());
   }

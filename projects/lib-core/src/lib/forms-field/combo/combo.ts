@@ -109,10 +109,31 @@ export class ComboComponent implements ControlValueAccessor, OnInit, OnChanges {
   writeValue(value: any): void {
     this.value = value;
 
+    // 🔥 si viene valor y todavía no cargaste datos, cargalos
+    if (value != null && !this.loaded && !this.loading) {
+      this.loading = true;
+
+      const obs = this.isLocal
+        ? of(this.data)
+        : this.http.getCombo(this.type, this.extraParams);
+
+      obs.pipe(take(1)).subscribe((data) => {
+        this.data$ = of(data);
+        this.loaded = true;
+        this.loading = false;
+
+        // esperar render para que mat-select tome el valor
+        queueMicrotask(() => {
+          this.matSelect?.writeValue(this.value);
+        });
+      });
+
+      return;
+    }
+
+    // caso normal
     queueMicrotask(() => {
-      if (this.matSelect) {
-        this.matSelect.writeValue(this.value);
-      }
+      this.matSelect?.writeValue(this.value);
     });
   }
 
@@ -192,11 +213,8 @@ export class ComboComponent implements ControlValueAccessor, OnInit, OnChanges {
       return `Máximo ${errors['maxlength'].requiredLength} caracteres`;
     if (errors['minlength'])
       return `Mínimo ${errors['minlength'].requiredLength} caracteres`;
-    if (errors['max'])
-      return `Máximo ${errors['max'].requiredLength}`;
-    if (errors['min'])
-      return `Mínimo ${errors['min'].requiredLength}`;
-
+    if (errors['max']) return `Máximo ${errors['max'].requiredLength}`;
+    if (errors['min']) return `Mínimo ${errors['min'].requiredLength}`;
 
     return 'Valor inválido';
   }

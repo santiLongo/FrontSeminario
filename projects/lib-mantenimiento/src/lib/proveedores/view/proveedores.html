@@ -1,0 +1,48 @@
+<app-core-view title="Proveedores">
+  <div header>
+    <app-filter>
+      <div body>
+        <form [formGroup]="formulario">
+          <div class="row">
+            <div class="col-3">
+              <app-combo
+                formControlName="provincia"
+                [type]="'ComboProvincia'"
+                [label]="'Provincia'"
+              ></app-combo>
+            </div>
+            <div class="col-3">
+              <app-combo
+                formControlName="localidad"
+                [type]="'ComboDestinoProcedencias'"
+                [label]="'Localidad'"
+                [extraParams]="{ provincia: provincia.value }"
+              ></app-combo>
+            </div>
+            <div class="col-6">
+              <app-combo
+                formControlName="especialidad"
+                [type]="'ComboEspecialidad'"
+                [label]="'Especialidad'"
+              ></app-combo>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div footer>
+        <app-button
+          (onClick)="onBuscar()"
+          [icon]="'search'"
+          label="Buscar"
+        ></app-button>
+      </div>
+    </app-filter>
+  </div>
+  <!--  -->
+  <div body>
+    <!--  -->
+    <br style="margin: 20" />
+    <app-grid [dataService]="dataService" [config]="gridConfig"></app-grid>
+  </div>
+</app-core-view>
+<p style="color: gray; font-family: cursive;">proveedores</p>

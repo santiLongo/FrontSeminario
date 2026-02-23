@@ -1,0 +1,58 @@
+<app-core-view title="Gestion de Mantenimientos">
+  <div header>
+    <app-filter>
+      <div body>
+        <form [formGroup]="formulario">
+          <div class="row">
+            <div class="col-3">
+              <app-combo
+                formControlName="camion"
+                [type]="'ComboCamiones'"
+                [label]="'Camion'"
+              ></app-combo>
+            </div>
+            <div class="col-3">
+              <app-combo
+                formControlName="taller"
+                [type]="'ComboTalleres'"
+                [label]="'Taller'"
+              ></app-combo>
+            </div>
+            <div class="col-3">
+              <app-date-form-field
+                label="Fecha de Entrada Desde"
+                formControlName="fechaEntradaDesde"
+              ></app-date-form-field>
+            </div>
+            <div class="col-3">
+              <app-date-form-field
+                label="Fecha de Entrada Hasta"
+                formControlName="fechaEntradaHasta"
+              ></app-date-form-field>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div footer>
+        <app-button
+          (onClick)="onBuscar()"
+          [icon]="'search'"
+          label="Buscar"
+        ></app-button>
+      </div>
+    </app-filter>
+  </div>
+  <!--  -->
+  <div body>
+    <!--  -->
+    <mat-button-toggle-group [hideSingleSelectionIndicator]="true" (change)="onBuscar()" [formControl]="estado" style="margin-bottom: 20px;">
+        <mat-button-toggle [value]="1">En Mantenimiento</mat-button-toggle>
+        <mat-button-toggle [value]="2">Pendiente de Pago</mat-button-toggle>
+        <mat-button-toggle [value]="3">Pagado</mat-button-toggle>
+        <mat-button-toggle [value]="4">Suspendido</mat-button-toggle>
+        <mat-button-toggle [value]="5">Todos</mat-button-toggle>
+    </mat-button-toggle-group>
+    <app-grid [dataService]="dataService" [config]="gridConfig"></app-grid>
+  </div>
+</app-core-view>
+<p style="color: gray; font-family: cursive;">mantenimiento</p>

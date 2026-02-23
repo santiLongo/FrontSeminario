@@ -68,7 +68,7 @@ export class TreeMenuV3Component implements OnInit {
           {
             key: 'mantenimiento-gestion',
             label: 'Gestion de Mantenimiento',
-            onClick: () => this.router.navigate(['/gestion-mantenimiento']),
+            onClick: () => this.router.navigate(['mantenimiento/gestion-mantenimiento']),
           },
           {
             key: 'mantenimiento-repuestos',
@@ -83,7 +83,7 @@ export class TreeMenuV3Component implements OnInit {
           {
             key: 'mantenimiento-proveedores',
             label: 'Proveedores',
-            onClick: () => this.router.navigate(['/proveedores']),
+            onClick: () => this.router.navigate(['mantenimiento/proveedores']),
           },
         ],
       },

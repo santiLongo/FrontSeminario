@@ -140,6 +140,7 @@ export class GestionViajesComponent implements OnInit, AfterViewInit {
           label: 'Nuevo Viaje',
           type: 'success',
           icon: 'truck',
+          position: 'right',
           onClick: () => this.nuevo(),
         },
         {
@@ -147,6 +148,7 @@ export class GestionViajesComponent implements OnInit, AfterViewInit {
           label: 'Modificar Viaje',
           type: 'info',
           icon: 'edit',
+          position: 'right',
           disabledOnEmptyRows: true,
           onClick: (rows) => this.editar(rows[0]),
         },

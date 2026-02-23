@@ -87,20 +87,19 @@ export class CuitMaskComponent implements ControlValueAccessor {
       return;
     }
 
-    // 1️⃣ limpiar guiones
     const limpio = masked.replace(/\D/g, '');
 
     this.value = masked;
-    this.onChange(limpio); // guardás sin guiones
 
-    // 2️⃣ validar CUIT real
+    const numero = limpio ? Number(limpio) : null;
+    this.onChange(numero);
+
     if (limpio.length === 11) {
       const valido = this.validarCUIT(limpio);
 
       if (!valido) {
         this.control?.setErrors({ cuitInvalido: true });
       } else {
-        // mantener otros errores
         const errors = this.control?.errors;
         if (errors) {
           delete errors['cuitInvalido'];

@@ -30,7 +30,6 @@ import {
 } from './models/upsert-model';
 import { UpsertDataService } from './data.service';
 import { EspecialidadDialogComponent } from '../../shared/especialidad/especialidad';
-import { EspecialidadGridModel } from '../../shared/especialidad/models/especialidad-grid';
 
 @Component({
   selector: 'app-upsert-localidad-dialog',
@@ -47,13 +46,13 @@ import { EspecialidadGridModel } from '../../shared/especialidad/models/especial
   ],
   providers: [UpsertDataService],
 })
-export class UpsertLocalidadDialogComponent implements OnInit {
+export class UpsertTallerDialogComponent implements OnInit {
   public idTaller?: number;
   public formulario: FormGroup;
   public config: GridConfig<UpsertEspecialidadTaller>;
 
   constructor(
-    private dialogRef: MatDialogRef<UpsertLocalidadDialogComponent>,
+    private dialogRef: MatDialogRef<UpsertTallerDialogComponent>,
     @Inject(MAT_DIALOG_DATA) data: { idTaller?: number },
     private fb: FormBuilder,
     private alertService: AlertService,
@@ -71,7 +70,16 @@ export class UpsertLocalidadDialogComponent implements OnInit {
     //
     if (this.idTaller) {
       this.httpService.get(this.idTaller).subscribe((res) => {
-        this.formulario.patchValue(res);
+        this.dataService.addAll(res.especialidades);
+        this.formulario.patchValue({
+          nombre: res.nombre,
+          cuit: res.cuit.toString(),
+          direccion: res.direccion,
+          telefono: res.telefono,
+          responsable: res.responsable,
+          mail: res.mail,
+          idLocalidad: res.idLocalidad,
+        });
       });
     }
   }
@@ -82,7 +90,7 @@ export class UpsertLocalidadDialogComponent implements OnInit {
         ,
         Validators.compose([Validators.required, Validators.maxLength(50)]),
       ],
-      cuit: [,Validators.compose([Validators.maxLength(11)])],
+      cuit: [, Validators.compose([Validators.maxLength(11)])],
       direccion: [
         ,
         Validators.compose([Validators.required, Validators.maxLength(50)]),
@@ -118,8 +126,7 @@ export class UpsertLocalidadDialogComponent implements OnInit {
           key: 'add',
           label: 'Agregar Especialidad',
           type: 'success',
-          onClick: () =>
-            this.agregarEspecialidades()
+          onClick: () => this.agregarEspecialidades(),
         },
         {
           key: 'eliminar',
@@ -132,12 +139,16 @@ export class UpsertLocalidadDialogComponent implements OnInit {
   }
 
   agregarEspecialidades() {
-    this.dialog.open(EspecialidadDialogComponent, {
-      data: { esSelecteable: true }, size: 'xxl'
-    }).afterClosed().subscribe((esp: UpsertEspecialidadTaller[]) => {
-      const data = esp;
-      this.dataService.addAll(data);
-    });
+    this.dialog
+      .open(EspecialidadDialogComponent, {
+        data: { esSelecteable: true },
+        size: 'xxl',
+      })
+      .afterClosed()
+      .subscribe((esp: UpsertEspecialidadTaller[]) => {
+        const data = esp;
+        this.dataService.addAll(data);
+      });
   }
 
   salir() {
@@ -156,8 +167,10 @@ export class UpsertLocalidadDialogComponent implements OnInit {
     command.idTaller = this.idTaller;
     command.especialidades = this.dataService.data;
 
-    if(command.especialidades.length <= 0){
-      this.alertService.error$('Tiene que cargar al menos una especialidad').subscribe();
+    if (command.especialidades.length <= 0) {
+      this.alertService
+        .error$('Tiene que cargar al menos una especialidad')
+        .subscribe();
       return;
     }
 

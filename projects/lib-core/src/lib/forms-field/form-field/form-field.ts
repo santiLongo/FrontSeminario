@@ -70,6 +70,8 @@ export class FormFieldComponent implements ControlValueAccessor {
   }
 
   writeValue(value: string | null): void {
+    if(!value) return;
+
     this.value = value;
   }
 

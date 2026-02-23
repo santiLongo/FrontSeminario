@@ -20,6 +20,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { ICONS } from '../types/icons';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NzFloatButtonModule } from 'ng-zorro-antd/float-button';
+import { EditableGridService } from './services/editable-grid.service'
+import { NgTemplateOutlet } from '@angular/common';
+import { FormFieldComponent } from "lib-core";
 
 @Component({
   standalone: true,
@@ -38,8 +41,10 @@ import { NzFloatButtonModule } from 'ng-zorro-antd/float-button';
     MatMenuModule,
     FormsModule,
     ReactiveFormsModule,
-    NzFloatButtonModule
-  ],
+    NzFloatButtonModule,
+    NgTemplateOutlet,
+    FormFieldComponent
+],
 })
 export class GridComponent<T extends Record<string, any>>
   implements OnInit, OnDestroy
@@ -62,6 +67,7 @@ export class GridComponent<T extends Record<string, any>>
   activeFilterColumn?: string;
   searchValue = new FormControl('');
   filterVisible: Record<string, boolean> = {};
+  editableService?: EditableGridService<T>;
 
   @Input() selectedRows: T[] = [];
   @Output() selectedRowsChange = new EventEmitter<T[]>();
@@ -75,8 +81,13 @@ export class GridComponent<T extends Record<string, any>>
     this.toolbarButtons = this.config.toolBarActions ?? [];
     this.selectableSettings = this.config.selectableSettings;
 
+    if (this.config.isEditable && this.isEditableService(this.dataService)) {
+      this.editableService = this.dataService;
+    }
+
     this.dataService.data$.pipe(takeUntil(this.destroy$)).subscribe((data) => {
       this.data = data;
+      this.buildEditCache();
       this.resetSelectionStatus();
     });
 
@@ -167,6 +178,14 @@ export class GridComponent<T extends Record<string, any>>
     return this.selectableSettings.esSelectable(row);
   }
 
+  get leftButtons() {
+    return this.config.toolBarActions?.filter(a => a.position !== 'right') ?? [];
+  }
+
+  get rightButtons() {
+    return this.config.toolBarActions?.filter(a => a.position === 'right') ?? [];
+  }
+
   // Filtros y ordenamiento
 
   hasFilter(key: keyof T): boolean {
@@ -206,5 +225,88 @@ export class GridComponent<T extends Record<string, any>>
 
     const direction = order === 'ascend' ? 'asc' : 'desc';
     this.dataService.setSort(key as string, direction);
+  }
+
+  // Para editable
+  private isEditableService(svc: any): svc is EditableGridService<T> {
+    return svc && typeof svc.getRowKey === 'function' && typeof svc.update === 'function';
+  }
+
+  editCache: Record<string, { edit: boolean; data: T }> = {};
+  editingId?: string;
+
+  private buildEditCache() {
+    if (!this.editableService) return;
+
+    const newCache: typeof this.editCache = {};
+
+    for (const row of this.data) {
+      const key = this.editableService.getRowKey(row);
+
+      newCache[key] = this.editCache[key] ?? {
+        edit: false,
+        data: structuredClone(row),
+      };
+    }
+
+    this.editCache = newCache;
+  }
+
+  startEdit(row: T) {
+    if (!this.editableService) return;
+    const key = this.editableService.getRowKey(row);
+    this.editingId = key;
+    this.editCache[key].edit = true;
+  }
+
+  cancelEdit(row: T) {
+    if (!this.editableService) return;
+
+    const key = this.editableService.getRowKey(row);
+    this.editCache[key].edit = false;
+    this.editCache[key].data = structuredClone(row);
+    this.editingId = undefined;
+  }
+
+  addRow() {
+    if (!this.editableService) return;
+
+    const newRow = {} as T;
+
+    this.editableService.add(newRow);
+
+     // esperar microtask para que data$ actualice
+    setTimeout(() => {
+      const added = this.data[0]; // porque usás unshift
+      this.startEdit(added);
+    });
+  }
+
+  saveEdit(row: T) {
+    if (!this.editableService) return;
+
+    const key = this.editableService.getRowKey(row);
+    const edited = this.editCache[key].data;
+
+    Object.assign(row, edited);
+
+    this.editableService.update(row);
+
+    this.editCache[key].edit = false;
+    this.editingId = undefined;
+  }
+
+  removeEdit(row: T) {
+    if (!this.editableService) return;
+
+    const key = this.editableService.getRowKey(row);
+    const edited = this.editCache[key].data;
+
+    Object.assign(row, edited);
+
+    this.editableService.remove(row);
+
+    this.editCache[key].edit = false;
+    this.editingId = undefined;
   }
 }

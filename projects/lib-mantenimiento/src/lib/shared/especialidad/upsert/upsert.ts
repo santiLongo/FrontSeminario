@@ -77,7 +77,7 @@ export class UpsertEspecialidadDialogComponent implements OnInit {
     command.idEspecialidad = this.idEspecialidad;
 
     this.alertService
-      .info$('Seguro que desea actualizar el tipo de camion?')
+      .info$('Seguro que desea actualizar la especialidad?')
       .pipe(
         filter(Boolean),
         switchMap(() => {
@@ -86,7 +86,7 @@ export class UpsertEspecialidadDialogComponent implements OnInit {
         switchMap(() => {
           return this.alertService.success$(
             'Exito',
-            'Se guardo el tipo de camion con exito',
+            'Se guardo la especialidad con exito',
           );
         }),
       )

@@ -1,4 +1,4 @@
-<app-core-view title="Gestion de Viajes">
+<app-core-view title="Talleres">
   <div header>
     <app-filter>
       <div body>
@@ -14,7 +14,7 @@
             <div class="col-3">
               <app-combo
                 formControlName="localidad"
-                [type]="'ComboLocalidad'"
+                [type]="'ComboDestinoProcedencias'"
                 [label]="'Localidad'"
                 [extraParams]="{ provincia: provincia.value }"
               ></app-combo>
@@ -45,4 +45,4 @@
     <app-grid [dataService]="dataService" [config]="gridConfig"></app-grid>
   </div>
 </app-core-view>
-<p style="color: gray; font-family: cursive;">maestro-localidad</p>
+<p style="color: gray; font-family: cursive;">talleres</p>

@@ -1,7 +1,18 @@
 <!-- TOOLBAR -->
-@if (toolbarButtons.length > 0) {
-  <div style="margin-bottom: 10px; display: flex; gap: 8px">
-    @for (action of toolbarButtons; track action.key) {
+<div class="grid-toolbar">
+  <!-- IZQUIERDA -->
+  <div class="toolbar-left">
+    @if (editableService) {
+      <button
+        type="button"
+        class="btn btn-outline-secondary toolbar-icon-btn"
+        (click)="addRow()"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+    }
+
+    @for (action of leftButtons; track action.key) {
       <app-button
         [hidden]="action.hidden"
         [disabled]="
@@ -12,10 +23,28 @@
         (onClick)="action.onClick(selectedRows)"
         [label]="action.label"
         [type]="action.type"
-      ></app-button>
+      />
     }
   </div>
-}
+
+  <!-- DERECHA -->
+  <div class="toolbar-right">
+    @for (action of rightButtons; track action.key) {
+      <app-button
+        [hidden]="action.hidden"
+        [disabled]="
+          (action.disabledOnEmptyRows && selectedRows.length === 0) ||
+          (action.disabled ? action.disabled(selectedRows) : false)
+        "
+        [icon]="action.icon"
+        (onClick)="action.onClick(selectedRows)"
+        [label]="action.label"
+        [type]="action.type"
+      />
+    }
+  </div>
+</div>
+
 <!-- TABLA -->
 <nz-table
   [nzData]="data"
@@ -42,6 +71,10 @@
         } @else {
           <th></th>
         }
+      }
+
+      @if (editableService) {
+        <th>Edición</th>
       }
 
       @if (menuActions.length > 0) {
@@ -115,6 +148,47 @@
           ></td>
         }
 
+        <!-- EditableService -->
+        @if (editableService) {
+          <td [width]="50">
+            @if (!editCache[editableService.getRowKey(row)].edit) {
+              <div style="display: flex; justify-content: space-between">
+                <button
+                  type="button"
+                  class="btn btn-link"
+                  (click)="startEdit(row)"
+                >
+                  Editar
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-link"
+                  (click)="removeEdit(row)"
+                >
+                  Remover
+                </button>
+              </div>
+            } @else {
+              <div style="display: flex; justify-content: space-between">
+                <button
+                  type="button"
+                  class="btn btn-link"
+                  (click)="saveEdit(row)"
+                >
+                  Guardar
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-link"
+                  (click)="cancelEdit(row)"
+                >
+                  Cancelar
+                </button>
+              </div>
+            }
+          </td>
+        }
+
         <!-- Menu de acciones para las filas -->
         @if (menuActions.length > 0) {
           <td>
@@ -150,7 +224,46 @@
         <!-- Columnas normales -->
         @for (column of columns; track column.key) {
           <td style="font-size: 12px" [hidden]="column.hidden">
-            {{ row[column.key] | dynamicFormat: column.type : column.format }}
+            @if (
+              editableService &&
+              column.editable &&
+              editCache[editableService.getRowKey(row)].edit
+            ) {
+              @if (column.editTemplate) {
+                <ng-container
+                  *ngTemplateOutlet="
+                    column.editTemplate;
+                    context: {
+                      $implicit: editCache[editableService.getRowKey(row)].data,
+                      row: editCache[editableService.getRowKey(row)].data,
+                    }
+                  "
+                />
+              } @else {
+                <app-form-field
+                  [label]="column.title"
+                  [(ngModel)]="
+                    editCache[editableService.getRowKey(row)].data[column.key]
+                  "
+                ></app-form-field>
+              }
+            } @else {
+              @if (column.template) {
+                <ng-container
+                  *ngTemplateOutlet="
+                    column.template;
+                    context: {
+                      $implicit: row,
+                      row: row,
+                    }
+                  "
+                />
+              } @else {
+                {{
+                  row[column.key] | dynamicFormat: column.type : column.format
+                }}
+              }
+            }
           </td>
         }
       </tr>
@@ -159,10 +272,15 @@
   <br />
   @if (!hiddenRefresh) {
     <div style="width: 100%">
-    <button type="button" class="btn btn-outline-secondary" style="display: flex;" (click)="dataService.search()">
-      <mat-icon>refresh</mat-icon>
-    </button>
-  </div>
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        style="display: flex"
+        (click)="dataService.search()"
+      >
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </div>
   }
 </nz-table>
 
