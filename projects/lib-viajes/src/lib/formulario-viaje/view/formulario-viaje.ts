@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterContentInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -7,18 +13,33 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { FormularioDataViaje, FormularioGetDataViaje } from '../models/formulario-data';
+import {
+  FormularioDataViaje,
+  FormularioGetDataViaje,
+} from '../models/formulario-data';
 import { FormularioViajeHttpService } from '../services/http.service';
 import { MatStepper, MatStepperModule } from '@angular/material/stepper';
-import { CoreViewComponent, DateFormFieldComponent, ComboComponent, FormFieldComponent, DecimalFormFieldComponent, NumberFormFieldComponent, ButtonComponent, MultipleComboComponent, AlertService } from 'lib-core';
+import {
+  CoreViewComponent,
+  DateFormFieldComponent,
+  ComboComponent,
+  FormFieldComponent,
+  DecimalFormFieldComponent,
+  NumberFormFieldComponent,
+  ButtonComponent,
+  MultipleComboComponent,
+  AlertService,
+} from 'lib-core';
 import { Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { MapToAltaModel, MapToUpdateModel } from '../helpers/mappers';
 import { Location } from '@angular/common';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   standalone: true,
   selector: 'app-formulario-viaje',
   templateUrl: './formulario-viaje.html',
+  styleUrl: './formulario-viaje.css',
   imports: [
     ReactiveFormsModule,
     CoreViewComponent,
@@ -28,16 +49,20 @@ import { Location } from '@angular/common';
     DecimalFormFieldComponent,
     MatStepperModule,
     ButtonComponent,
-    MultipleComboComponent
-],
+    MultipleComboComponent,
+    MatProgressSpinnerModule,
+  ],
 })
-export class FormularioViajeComponent implements OnInit, OnDestroy {
-  @ViewChild('stepper', { static: true }) stepper: MatStepper;
+export class FormularioViajeComponent
+  implements OnInit, OnDestroy, AfterContentInit
+{
+  @ViewChild('stepper') stepper: MatStepper;
   idViaje: number;
   data: FormularioGetDataViaje;
   readonly: boolean = false;
   formulario: FormGroup;
   isLinear = true;
+  loaded = false;
 
   private destroy$ = new Subject<void>();
 
@@ -46,7 +71,7 @@ export class FormularioViajeComponent implements OnInit, OnDestroy {
     private httpService: FormularioViajeHttpService,
     private fb: FormBuilder,
     private alertService: AlertService,
-    private location: Location
+    private location: Location,
   ) {
     this.idViaje = +this.route.snapshot.params['idViaje'];
   }
@@ -57,16 +82,28 @@ export class FormularioViajeComponent implements OnInit, OnDestroy {
     if (this.idViaje > 0) {
       this.readonly = this.route.snapshot.params['readonly'] === 'true';
       this.isLinear = false;
-      this.httpService.get(this.idViaje).subscribe((res) => {
-        this.data = res;
-        this.formulario.patchValue({
-          ...this.data,
-          datosDestino: this.data.datosDestino?.map(x => x.idDestino),
-          datosProcedencias: this.data.datosProcedencias?.map(x => x.idProcedencia),
-        });
+      this.httpService.get(this.idViaje).subscribe({
+        next: (res) => {
+          this.loaded = true;
+          this.data = res;
+          this.formulario.patchValue({
+            ...this.data,
+            datosDestino: this.data.datosDestino?.map((x) => x.idDestino),
+            datosProcedencias: this.data.datosProcedencias?.map(
+              (x) => x.idProcedencia,
+            ),
+          });
+        },
+        error: (error) => {
+          this.alertService.error$("Error",error.message).subscribe(() => this.salir())
+          }
       });
+    } else {
+      this.loaded = true;
     }
-    //
+  }
+
+  ngAfterContentInit(): void {
     this.chofer.valueChanges
       .pipe(
         takeUntil(this.destroy$),
@@ -98,31 +135,34 @@ export class FormularioViajeComponent implements OnInit, OnDestroy {
           return this.httpService.getUltimoMantenimiento(value);
         }),
         tap((res) => {
-          this.datosCamion.patchValue(res);
+          this.datosCamion.patchValue({
+            ultimoMantenimiento: res.ultimoMantenimiento,
+          });
+        }),
+      )
+      .subscribe();
+    //
+    this.semi.valueChanges
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap((value) => {
+          return this.httpService.getUltimoMantenimiento(value);
+        }),
+        tap((res) => {
+          this.datosCamion.patchValue({
+            ultimoMantenimientoSemi: res.ultimoMantenimiento,
+          });
         }),
       )
       .subscribe();
     //
     this.montoTotal.valueChanges
-      .pipe(
-        takeUntil(this.destroy$),
-      )
+      .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.calcularPrecioKm());
     //
     this.kilometros.valueChanges
-      .pipe(
-        takeUntil(this.destroy$),
-      )
+      .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.calcularPrecioKm());
-    //
-    this.stepper.selectedIndexChange.pipe(
-      takeUntil(this.destroy$)
-    ).subscribe((value) => {
-      if(value === 2){
-        const values = this.formulario.getRawValue();
-        this.formulario.patchValue(values);
-      }
-    })
   }
 
   ngOnDestroy(): void {
@@ -155,13 +195,22 @@ export class FormularioViajeComponent implements OnInit, OnDestroy {
       datosCamion: this.fb.group({
         idCamion: [, { validators: Validators.required, updateOn: 'blur' }],
         ultimoMantenimiento: [],
+        idSemi: [, { updateOn: 'blur' }],
+        ultimoMantenimientoSemi: [],
       }),
       datosDestino: this.fb.control<number[]>([], Validators.required),
       datosProcedencias: this.fb.control<number[]>([], Validators.required),
     });
   }
 
-  calcularPrecioKm(){
+  selectedIndexChange(value: number) {
+    if (value === 2) {
+      const values = this.formulario.getRawValue();
+      this.formulario.patchValue(values);
+    }
+  }
+
+  calcularPrecioKm() {
     const kilometros = this.kilometros.value;
     const montoTotal = this.montoTotal.value;
 
@@ -185,8 +234,8 @@ export class FormularioViajeComponent implements OnInit, OnDestroy {
   guardar() {
     this.formulario.markAllAsTouched();
 
-    if(this.formulario.invalid){
-      this.alertService.error$("Algunos campos contienen errores").subscribe();
+    if (this.formulario.invalid) {
+      this.alertService.error$('Algunos campos contienen errores').subscribe();
       return;
     }
 
@@ -195,22 +244,27 @@ export class FormularioViajeComponent implements OnInit, OnDestroy {
     const command = MapToUpdateModel(data);
     command.idViaje = this.idViaje;
 
-    this.alertService.info$('Esta seguro?', 'Desea modificar el siguiente viaje?').subscribe((i) => {
-      if(i)[
-        this.httpService.update(command).subscribe(() => {
-          this.alertService.success$('Exito', 'Se actualizo el viaje con exito').subscribe(() => {
-            this.salir()
-          })
-        })
-      ]
-    })
+    this.alertService
+      .info$('Esta seguro?', 'Desea modificar el siguiente viaje?')
+      .subscribe((i) => {
+        if (i)
+          [
+            this.httpService.update(command).subscribe(() => {
+              this.alertService
+                .success$('Exito', 'Se actualizo el viaje con exito')
+                .subscribe(() => {
+                  this.salir();
+                });
+            }),
+          ];
+      });
   }
 
-  alta(){
+  alta() {
     this.formulario.markAllAsTouched();
 
-    if(this.formulario.invalid){
-      this.alertService.error$("Algunos campos contienen errores").subscribe();
+    if (this.formulario.invalid) {
+      this.alertService.error$('Algunos campos contienen errores').subscribe();
       return;
     }
 
@@ -218,15 +272,23 @@ export class FormularioViajeComponent implements OnInit, OnDestroy {
 
     const command = MapToAltaModel(data);
 
-    this.alertService.info$('Esta seguro?', 'Desea confirmar el siguiente viaje?').subscribe((i) => {
-      if(i)[
-        this.httpService.add(command).subscribe((res) => {
-          this.alertService.success$('Exito', 'Se creo el viaje' + res.NroViaje + ' con exito.').subscribe(() => {
-            this.salir()
-          })
-        })
-      ]
-    })
+    this.alertService
+      .info$('Esta seguro?', 'Desea confirmar el siguiente viaje?')
+      .subscribe((i) => {
+        if (i)
+          [
+            this.httpService.add(command).subscribe((res) => {
+              this.alertService
+                .success$(
+                  'Exito',
+                  'Se creo el viaje' + res.NroViaje + ' con exito.',
+                )
+                .subscribe(() => {
+                  this.salir();
+                });
+            }),
+          ];
+      });
   }
 
   get datosPrincipales() {
@@ -252,6 +314,10 @@ export class FormularioViajeComponent implements OnInit, OnDestroy {
 
   get camion() {
     return this.datosCamion.get('idCamion') as FormControl;
+  }
+
+  get semi() {
+    return this.datosCamion.get('idSemi') as FormControl;
   }
 
   get montoTotal() {

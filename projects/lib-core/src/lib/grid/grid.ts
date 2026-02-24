@@ -21,7 +21,7 @@ import { ICONS } from '../types/icons';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NzFloatButtonModule } from 'ng-zorro-antd/float-button';
 import { EditableGridService } from './services/editable-grid.service'
-import { NgTemplateOutlet } from '@angular/common';
+import { CommonModule, NgTemplateOutlet } from '@angular/common';
 import { FormFieldComponent } from "lib-core";
 
 @Component({
@@ -43,7 +43,8 @@ import { FormFieldComponent } from "lib-core";
     ReactiveFormsModule,
     NzFloatButtonModule,
     NgTemplateOutlet,
-    FormFieldComponent
+    FormFieldComponent,
+    CommonModule
 ],
 })
 export class GridComponent<T extends Record<string, any>>

@@ -50,6 +50,15 @@ export const ICONS = {
   advanced: 'tune',
   close: 'close',
   assignment_add: 'assignment_add',
+  worker:'person_apron',
+  engineering: 'engineering',
+  caja_herr:'home_repair_service',
+  dolar: 'attach_money',
+  billete: 'payments',
+  billetera: 'wallet',
+  bank: 'account_balance',
+  apps: 'apps'
+
 } as const;
 
 export type IconKey = keyof typeof ICONS;

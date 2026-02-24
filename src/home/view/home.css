@@ -45,6 +45,7 @@ mat-sidenav {
   height: calc(100vh - 56px);
   width: 260px;
   overflow-y: auto;
+  border-radius: 0;
 }
 
 mat-sidenav-container {
@@ -59,6 +60,6 @@ mat-sidenav-container {
 mat-sidenav-content {
   height: 100%;
   overflow-y: auto;
-  background: white;
+  background: var(--color-dos);
   padding: 15px;
 }

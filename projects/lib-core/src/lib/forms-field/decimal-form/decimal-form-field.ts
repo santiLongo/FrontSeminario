@@ -28,13 +28,13 @@ import { IMaskModule, IMaskPipe } from 'angular-imask';
   standalone: true,
   selector: 'app-decimal-form-field',
   templateUrl: './decimal-form-field.html',
-  // providers: [
-  //   {
-  //     provide: NG_VALUE_ACCESSOR,
-  //     useExisting: forwardRef(() => DecimalFormFieldComponent),
-  //     multi: true,
-  //   },
-  // ],
+  viewProviders: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => DecimalFormFieldComponent),
+      multi: true,
+    },
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -63,13 +63,13 @@ export class DecimalFormFieldComponent implements ControlValueAccessor, OnInit, 
 
   maskOptions: any;
 
-  constructor(@Self() @Optional() public ngControl: NgControl) {
+  constructor(@Optional() @Self() public ngControl: NgControl) {
+  if (this.ngControl) {
+    this.ngControl.valueAccessor = this;
   }
+}
 
   ngOnInit(): void {
-    if (this.ngControl) {
-      this.ngControl.valueAccessor = this;
-    }
   }
 
   ngAfterViewInit() {
@@ -141,8 +141,8 @@ export class DecimalFormFieldComponent implements ControlValueAccessor, OnInit, 
     this.onTouched();
   }
 
-  get control() {
-    return this.ngControl?.control as FormControl;
+  get control(): FormControl | null {
+    return this.ngControl.control as FormControl | null;
   }
 
   get showError(): boolean {

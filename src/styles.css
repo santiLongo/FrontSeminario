@@ -20,3 +20,13 @@ input[type="number"]::-webkit-inner-spin-button{
 input[type="number"]{
   -moz-appearance: textfield;;
 }
+
+
+:root {
+    --color-uno: #44749d ;
+    --color-dos: #c6d4e1 ;
+    --color-tres: #ffffff ;
+    --color-cuatro: #ebe7e0;
+    --color-cinco: #bdb8ad; 
+    --color-texto: #000000;
+}

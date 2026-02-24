@@ -21,3 +21,5 @@ export * from './lib/forms-field/index';
 export * from './lib/services/alert.service'
 export * from './lib/basic-dialog/basic-dialog'
 export * from './lib/services/dialog.service';
+export * from './lib/dashboard/dashboard';
+export * from './lib/types/icons'

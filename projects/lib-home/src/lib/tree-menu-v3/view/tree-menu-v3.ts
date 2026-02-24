@@ -4,6 +4,8 @@ import { TreeMenuItem } from '../models/tree-menu-item';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { Router } from '@angular/router';
 import { TreeMenuV3Service } from '../services/tree-menu-v3.service';
+import { MatIconModule } from "@angular/material/icon";
+import { ICONS } from 'lib-core';
 
 @Component({
   standalone: true,
@@ -18,10 +20,11 @@ import { TreeMenuV3Service } from '../services/tree-menu-v3.service';
       }
     `,
   ],
-  imports: [NzMenuModule, CommonModule],
+  imports: [NzMenuModule, CommonModule, MatIconModule],
 })
 export class TreeMenuV3Component implements OnInit {
   @Input() items: TreeMenuItem[] = [];
+  ICONS = ICONS
 
   constructor(
     private router: Router,
@@ -52,11 +55,13 @@ export class TreeMenuV3Component implements OnInit {
           {
             key: 'viajes-clientes',
             label: 'Clientes',
+            icon: 'users',
             onClick: () => this.router.navigate(['/gestion-clientes']),
           },
           {
             key: 'viajes-choferes',
             label: 'Choferes',
+            icon: 'apps',
             onClick: () => this.router.navigate(['viajes/gestion-choferes']),
           },
         ],
@@ -70,11 +75,11 @@ export class TreeMenuV3Component implements OnInit {
             label: 'Gestion de Mantenimiento',
             onClick: () => this.router.navigate(['mantenimiento/gestion-mantenimiento']),
           },
-          {
-            key: 'mantenimiento-repuestos',
-            label: 'Compra de Repuestos',
-            onClick: () => this.router.navigate(['/compra-repuestos']),
-          },
+          // {
+          //   key: 'mantenimiento-repuestos',
+          //   label: 'Compra de Repuestos',
+          //   onClick: () => this.router.navigate(['/compra-repuestos']),
+          // },
           {
             key: 'mantenimiento-talleres',
             label: 'Talleres',
@@ -91,11 +96,11 @@ export class TreeMenuV3Component implements OnInit {
         key: 'finanzas',
         label: 'Finanzas',
         children: [
-          {
-            key: 'finanzas-pagos',
-            label: 'Gestion de Pagos',
-            onClick: () => this.router.navigate(['/gestion-pagos']),
-          },
+          // {
+          //   key: 'finanzas-pagos',
+          //   label: 'Gestion de Pagos',
+          //   onClick: () => this.router.navigate(['/gestion-pagos']),
+          // },
           {
             key: 'finanzas-cobros',
             label: 'Gestion de Cobros',
@@ -125,12 +130,12 @@ export class TreeMenuV3Component implements OnInit {
           },
         ],
       },
-      {
-        key: 'configuracion',
-        label: 'Configuraciones',
-        icon: 'setting',
-        onClick: () => this.router.navigate(['/configuracion']),
-      },
+      // {
+      //   key: 'configuracion',
+      //   label: 'Configuraciones',
+      //   icon: 'setting',
+      //   onClick: () => this.router.navigate(['/configuracion']),
+      // },
     ];
   }
 

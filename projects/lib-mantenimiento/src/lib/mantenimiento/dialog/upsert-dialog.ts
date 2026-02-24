@@ -40,6 +40,7 @@ export class UpsertProveedorDialogComponent implements OnInit {
   public idMantenimiento?: number;
   public formulario: FormGroup;
   public config: GridConfig<UpsertTareas>;
+  public costo: FormControl;
 
   constructor(
     private dialogRef: MatDialogRef<UpsertProveedorDialogComponent>,
@@ -53,6 +54,8 @@ export class UpsertProveedorDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.costo = this.fb.control([]);
+    //
     this.formSetup();
     //
     this.gridSetup();

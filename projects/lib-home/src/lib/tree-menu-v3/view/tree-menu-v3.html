@@ -1,33 +1,32 @@
-<ul
-  nz-menu
-  nzMode="inline"
-  class="menu-container"
->
+<ul nz-menu nzMode="inline" class="menu-container">
   @for (item of items; track item.key) {
     @if (item.children && item.children.length > 0) {
       <li nz-submenu [nzTitle]="item.label">
         <ul>
           @for (child of item.children; track child.key) {
-            <li nz-menu-item (click)="child.onClick?.()">
-              {{ child.label }}
+            <li nz-menu-item (click)="child.onClick?.()" class="menu-item-left">
+              @if (child.icon) {
+                <mat-icon class="menu-icon">{{ ICONS[child.icon] }}</mat-icon>
+              }
+              <span class="menu-label">{{ child.label }}</span>
             </li>
           }
         </ul>
       </li>
     } @else {
-      <li nz-menu-item (click)="item.onClick?.()">
-        <span title>
-          <span>{{ item.label }}</span>
-        </span>
+      <li nz-menu-item (click)="item.onClick?.()" class="menu-item-left">
+          @if (item.icon) {
+            <mat-icon class="menu-icon">{{ ICONS[item.icon] }}</mat-icon>
+          }
+          <span class="menu-label">{{ item.label }}</span>
       </li>
     }
   }
 
-   <li class="menu-spacer"></li>
+  <li class="menu-spacer"></li>
 
-  <li nz-menu-item (click)="logout()">
-    <span title>
-      <span>Salir</span>
-    </span>
+  <li nz-menu-item (click)="logout()" class="menu-item-left">
+    <mat-icon style="color: red" class="menu-icon">meeting_room</mat-icon>
+    <span class="menu-label">Salir</span>
   </li>
 </ul>

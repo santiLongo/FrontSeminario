@@ -18,8 +18,8 @@ export const routes: Routes = [
                 },
         children: [
             {
-                path: 'dashboard',
-                loadComponent: () => import('lib-home').then(m => m.DashboardHomeComponent),
+                path: '',
+                loadComponent: () => import('lib-home').then(m => m.BasicHomeComponent)
             },
             {
                 path: 'viajes',

@@ -30,13 +30,13 @@ import { IMaskModule } from 'angular-imask';
   standalone: true,
   selector: 'app-form-field',
   templateUrl: './form-field.html',
-  // providers: [
-  //   {
-  //     provide: NG_VALUE_ACCESSOR,
-  //     useExisting: forwardRef(() => FormFieldComponent),
-  //     multi: true,
-  //   },
-  // ],
+  viewProviders: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => FormFieldComponent),
+      multi: true,
+    },
+  ],
   imports: [
     CommonModule,
     FormsModule,

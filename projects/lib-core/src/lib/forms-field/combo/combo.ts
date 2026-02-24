@@ -34,13 +34,13 @@ import { IMaskModule } from 'angular-imask';
   standalone: true,
   selector: 'app-combo',
   templateUrl: './combo.html',
-  // providers: [
-  //   {
-  //     provide: NG_VALUE_ACCESSOR,
-  //     useExisting: forwardRef(() => ComboComponent),
-  //     multi: true,
-  //   },
-  // ],
+  viewProviders: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => ComboComponent),
+      multi: true,
+    },
+  ],
   imports: [
     CommonModule,
     FormsModule,

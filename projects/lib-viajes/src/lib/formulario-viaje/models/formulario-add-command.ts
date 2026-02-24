@@ -8,6 +8,7 @@ export interface FormularioAddCommand{
     fechaPartida: Date;
     chofer: number;
     camion: number;
+    semirremolque: number;
     carga: string;
     kilos: number
 }

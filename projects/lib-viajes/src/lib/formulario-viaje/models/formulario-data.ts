@@ -70,6 +70,8 @@ export interface DatosCamionViaje {
   patente: string;
   ultimoMantenimiento: Date;
   tipoCamion: string;
+  idSemi: number;
+  ultimoMantenimientoSemi: Date;
 }
 
 // =======================

@@ -28,13 +28,13 @@ import { IMaskModule } from 'angular-imask';
   standalone: true,
   selector: 'app-textarea-form-field',
   templateUrl: './textarea-form-field.html',
-  // providers: [
-  //   {
-  //     provide: NG_VALUE_ACCESSOR,
-  //     useExisting: forwardRef(() => TextareaFormFieldComponent),
-  //     multi: true,
-  //   },
-  // ],
+  viewProviders: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => TextareaFormFieldComponent),
+      multi: true,
+    },
+  ],
   imports: [
     CommonModule,
     FormsModule,

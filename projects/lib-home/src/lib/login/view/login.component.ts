@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
       this.authService.login(this.form.value).subscribe({
         next: (response) => {
           localStorage.setItem('token', response.token);
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/']);
         },
         error: (err) => {
           this.errorMessage = 'Credenciales inválidas: ' + err;

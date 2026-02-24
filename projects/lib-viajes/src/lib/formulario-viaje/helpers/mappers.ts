@@ -13,6 +13,7 @@ export const MapToAltaModel = (data: FormularioDataViaje): FormularioAddCommand 
     fechaPartida: data.datosPrincipales.fechaPartida,
     chofer: data.datosChofer.idChofer,
     camion: data.datosCamion.idCamion,
+    semirremolque: data.datosCamion.idSemi,
     carga: data.datosPrincipales.carga,
     kilos: data.datosPrincipales.kilos
     }
@@ -27,6 +28,7 @@ export const MapToUpdateModel = (data: FormularioDataViaje): FormularioUpdateCom
     montoTotal: data.datosPrincipales.montoTotal,
     chofer: data.datosChofer.idChofer,
     camion: data.datosCamion.idCamion,
+    semirremolque: data.datosCamion.idSemi,
     carga: data.datosPrincipales.carga,
     kilos: data.datosPrincipales.kilos
     }

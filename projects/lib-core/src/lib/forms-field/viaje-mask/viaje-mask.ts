@@ -30,13 +30,13 @@ import IMask, { InputMask } from 'imask';
   standalone: true,
   selector: 'app-viaje-mask',
   templateUrl: './viaje-mask.html',
-  // providers: [
-  //   {
-  //     provide: NG_VALUE_ACCESSOR,
-  //     useExisting: forwardRef(() => ViajeMaskComponent),
-  //     multi: true,
-  //   },
-  // ],
+  viewProviders: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => ViajeMaskComponent),
+      multi: true,
+    },
+  ],
   imports: [
     CommonModule,
     FormsModule,

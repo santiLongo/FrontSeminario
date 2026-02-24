@@ -31,13 +31,13 @@ import { IMaskModule } from 'angular-imask';
   standalone: true,
   selector: 'app-date-form-field',
   templateUrl: './date-form-field.html',
-  // providers: [
-  //   {
-  //     provide: NG_VALUE_ACCESSOR,
-  //     useExisting: forwardRef(() => DateFormFieldComponent),
-  //     multi: true,
-  //   },
-  // ],
+  viewProviders: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => DateFormFieldComponent),
+      multi: true,
+    },
+  ],
   imports: [
     CommonModule,
     FormsModule,

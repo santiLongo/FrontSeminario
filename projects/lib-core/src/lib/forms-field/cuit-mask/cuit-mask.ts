@@ -6,6 +6,7 @@ import {
   ElementRef,
   Optional,
   Self,
+  forwardRef,
 } from '@angular/core';
 import {
   ControlValueAccessor,
@@ -13,6 +14,7 @@ import {
   ReactiveFormsModule,
   NgControl,
   FormControl,
+  NG_VALUE_ACCESSOR,
 } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -26,6 +28,13 @@ import { IMaskModule } from 'angular-imask';
   standalone: true,
   selector: 'app-cuit-mask',
   templateUrl: './cuit-mask.html',
+  viewProviders: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => CuitMaskComponent),
+      multi: true,
+    },
+  ],
   imports: [
     CommonModule,
     FormsModule,

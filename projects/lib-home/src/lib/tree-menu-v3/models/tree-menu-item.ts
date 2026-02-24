@@ -1,7 +1,9 @@
+import { IconKey } from "lib-core";
+
 export interface TreeMenuItem {
   key: string;
   label: string;
-  icon?: string;
+  icon?: IconKey;
   onClick?: () => void;
   children?: TreeMenuItem[];
 }

@@ -6,6 +6,7 @@ export interface FormularioUpdateCommand{
     montoTotal: number;
     chofer: number;
     camion: number;
+    semirremolque: number;
     carga: string;
     kilos: number
 }

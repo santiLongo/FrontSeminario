@@ -136,7 +136,7 @@
   </thead>
 
   <tbody>
-    @for (row of data; track row) {
+    @for (row of data; track editableService?.getRowKey(row) ?? row) {
       <tr>
         <!-- CheckBox para seleccionar rows -->
         @if (selectableSettings?.selectable) {
@@ -235,7 +235,6 @@
                     column.editTemplate;
                     context: {
                       $implicit: editCache[editableService.getRowKey(row)].data,
-                      row: editCache[editableService.getRowKey(row)].data,
                     }
                   "
                 />
