@@ -44,3 +44,4 @@ Thumbs.db
 env/.env.development
 env/.env.production
 package-lock.json
+package-lock.json
