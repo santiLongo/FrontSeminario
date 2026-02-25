@@ -25,6 +25,8 @@ import { MantenimientoGridModel } from '../models/mantenimentos-grid-model';
 import { MantenimientoDataService } from '../services/data.service';
 import { MantenimientoFilterModel } from '../models/mantenimentos-filter-model';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { InformarSalidaDialogComponent } from '../informar-salida/informar-salida';
+import { InformarImporteDialogComponent } from '../informar-importe/informar-importe';
 
 @Component({
   selector: 'app-mantenimiento',
@@ -110,6 +112,12 @@ export class MantenimientosComponent implements OnInit {
           format: '{0:2}'
         },
         {
+          key: 'totalPagado',
+          title: 'Total Pagado',
+          type: 'numeric',
+          format: '{0:2}'
+        },
+        {
           key: 'fechaEntrada',
           title: 'Fecha de Entrada',
           type: 'date',
@@ -147,22 +155,22 @@ export class MantenimientosComponent implements OnInit {
           label: 'Informar un Salida',
           type: 'success',
           disabledOnEmptyRows: true,
-          onClick: (rows) => this.update(rows[0]),
+          onClick: (rows) => this.informarSalida(rows[0]),
         },
         {
           key: 'importe',
           label: 'Informar un Importe',
           type: 'success',
           disabledOnEmptyRows: true,
-          onClick: (rows) => this.update(rows[0]),
+          onClick: (rows) => this.informarImporte(rows[0]),
         },
-        {
-          key: 'observaciones',
-          label: 'Ver un Observaciones',
-          type: 'light',
-          disabledOnEmptyRows: true,
-          onClick: (rows) => this.update(rows[0]),
-        },
+        // {
+        //   key: 'observaciones',
+        //   label: 'Ver un Observaciones',
+        //   type: 'light',
+        //   disabledOnEmptyRows: true,
+        //   onClick: (rows) => this.update(rows[0]),
+        // },
       ],
     };
   }
@@ -177,6 +185,20 @@ export class MantenimientosComponent implements OnInit {
   add() {
     this.dialog
       .open(UpsertProveedorDialogComponent, {size: 'xxl'})
+      .afterClosed()
+      .subscribe(() => this.onBuscar());
+  }
+
+  informarSalida(row: MantenimientoGridModel) {
+    this.dialog
+      .open(InformarSalidaDialogComponent, { data: { idMantenimiento: row.idMantenimiento }, size: 'xxl' })
+      .afterClosed()
+      .subscribe(() => this.onBuscar());
+  }
+
+  informarImporte(row: MantenimientoGridModel) {
+    this.dialog
+      .open(InformarImporteDialogComponent, { data: { idMantenimiento: row.idMantenimiento }, size: 'xxl' })
       .afterClosed()
       .subscribe(() => this.onBuscar());
   }

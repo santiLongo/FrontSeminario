@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { GeneralesDashboardComponent } from '../dashboard/dashboard';
 
 export const GeneralesRoutes: Routes = [
   {
@@ -7,6 +8,10 @@ export const GeneralesRoutes: Routes = [
       import('../router/router').then((m) => m.RouterGeneralesComponent),
     data: { title: 'Generales' },
     children: [
+      {
+        path: '',
+        component: GeneralesDashboardComponent,
+      },
       {
         path: 'gestion-localidad',
         loadChildren: () =>

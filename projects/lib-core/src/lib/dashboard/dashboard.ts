@@ -1,12 +1,13 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { IconKey, ICONS } from "lib-core";
 import { MatIcon, MatIconModule } from "@angular/material/icon";
+import { ActivatedRoute, Router } from "@angular/router";
 
 export interface Cards {
   title: string;
   subtitle?: string;
   value?: string | number;
-  href?: string;
+  href: string;
   icon: IconKey;
   iconBg?: string;     
   iconColor?: string;
@@ -23,4 +24,12 @@ export interface Cards {
 export class DashboardComponent {
     @Input() cards: Cards[] = []
     ICONS = ICONS
+
+    constructor(private router: Router,
+        private route: ActivatedRoute
+    ){}
+
+    onClick(href: string){
+        this.router.navigate([href], {relativeTo: this.route})
+    }
 }

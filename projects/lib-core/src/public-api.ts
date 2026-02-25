@@ -22,4 +22,6 @@ export * from './lib/services/alert.service'
 export * from './lib/basic-dialog/basic-dialog'
 export * from './lib/services/dialog.service';
 export * from './lib/dashboard/dashboard';
+export * from './lib/dashboard-v2/dashboard-v2';
 export * from './lib/types/icons'
+export * from './lib/transition/fade-in'

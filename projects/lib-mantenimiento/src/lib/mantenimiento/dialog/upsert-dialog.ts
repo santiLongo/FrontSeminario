@@ -140,7 +140,7 @@ export class UpsertProveedorDialogComponent implements OnInit {
     }
 
     this.alertService
-      .info$('Seguro que desea actualizar el proveedor?')
+      .info$('Seguro que desea actualizar el mantenimiento?')
       .pipe(
         filter(Boolean),
         switchMap(() => {
@@ -149,7 +149,7 @@ export class UpsertProveedorDialogComponent implements OnInit {
         switchMap(() => {
           return this.alertService.success$(
             'Exito',
-            'Se guardo el proveedor con exito',
+            'Se guardo el mantenimiento con exito',
           );
         }),
       )

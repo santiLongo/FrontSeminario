@@ -1,0 +1,65 @@
+.eventos-columns-wrapper {
+  columns: 1;                  
+  column-gap: 12px;
+  height: 100%;
+  overflow: hidden;
+
+
+  column-width: 220px;         
+}
+
+.evento-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  break-inside: avoid;         
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+
+  &:hover {
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.13);
+    transform: translateY(-1px);
+  }
+
+  .evento-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #fff3e0;
+    flex-shrink: 0;
+
+    .material-icons {
+      color: #f57c00;
+      font-size: 20px;
+    }
+  }
+
+  .evento-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    overflow: hidden;
+
+    .evento-titulo {
+      font-size: 13px;
+      font-weight: 600;
+      color: #2c2c2c;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .evento-fecha {
+      font-size: 11px;
+      color: #888;
+    }
+  }
+}

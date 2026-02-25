@@ -115,6 +115,11 @@ export class ApiHttpService {
         return;
       }
 
+      if (value instanceof Date) {
+        httpParams = httpParams.set(key, value.toISOString());
+        return;
+      }
+
       if (typeof value !== 'object') {
         httpParams = httpParams.set(key, String(value));
       }

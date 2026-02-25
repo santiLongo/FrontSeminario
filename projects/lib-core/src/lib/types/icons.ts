@@ -57,7 +57,7 @@ export const ICONS = {
   billete: 'payments',
   billetera: 'wallet',
   bank: 'account_balance',
-  apps: 'apps'
+  apps: 'apps',
 
 } as const;
 

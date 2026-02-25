@@ -5,6 +5,8 @@ import { MantenimientoLibService } from '../../config/mantenimiento.service';
 import { MantenimientoFilterModel } from '../models/mantenimentos-filter-model';
 import { MantenimientoGridModel } from '../models/mantenimentos-grid-model';
 import { UpsertMantenimientoModel } from '../dialog/models/upsert-model';
+import { InfomarSalida } from '../informar-salida/informar-salida';
+import { InfomarImporte } from '../informar-importe/informar-importe';
 
 @Injectable({
   providedIn: 'root',
@@ -32,8 +34,18 @@ export class MantenimientoHttpService {
     return this.http.postWithBlock(fullUrl, command);
   }
 
-  get(idProveedor: number): Observable<UpsertMantenimientoModel> {
+  get(idMantenimiento: number): Observable<UpsertMantenimientoModel> {
     const fullUrl = this.url + 'get';
-    return this.http.getWithBlock(fullUrl, { idProveedor });
+    return this.http.getWithBlock(fullUrl, { idMantenimiento });
+  }
+
+  informarSalida(command: InfomarSalida): Observable<void> {
+    const fullUrl = this.url + 'informar-salida';
+    return this.http.postWithBlock(fullUrl, command);
+  }
+
+  informarImporte(command: InfomarImporte): Observable<void> {
+    const fullUrl = this.url + 'informar-importe';
+    return this.http.postWithBlock(fullUrl, command);
   }
 }

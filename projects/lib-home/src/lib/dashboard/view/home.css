@@ -6,5 +6,46 @@
   font-size: 11px;
   font-weight: 600;
   color: #333;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.eventos {
+  flex: 1;
+  padding: 5px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.map-eventos-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.map-card,
+.card-eventos {
+  flex: 0 0 calc(50% - 8px);
+  max-width: calc(50% - 8px);
+  background-color: var(--color-tres);
+  border-radius: 12px;
+  padding: 5px;
+}
+
+.card-eventos {
+  padding-top: 1px;
+  overflow: hidden;
+}
+
+@media (max-width: 999px) {
+  .map-eventos-container {
+    flex-direction: column;
+  }
+
+  .map-card,
+  .card-eventos {
+    flex: 0 0 100%;
+    max-width: 100%;
+    width: 100%;
+  }
 }

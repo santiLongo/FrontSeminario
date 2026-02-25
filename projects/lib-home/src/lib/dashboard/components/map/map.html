@@ -1,0 +1,20 @@
+<div style="display: flex; flex-direction: column; gap: 8px; height: 100%;">
+  
+  <div
+    id="mapa"
+    style="flex: 1; min-height: 500px; max-height: 700px; border-radius: 12px; width: 100%"
+  ></div>
+
+  <div style="display: flex; margin-left: 10px; gap: 10px; justify-content: flex-start; align-items: flex-end;">
+    <button
+      type="button"
+      class="btn btn-outline-secondary"
+      style="display: flex; align-items: center;"
+      (click)="search()"
+    >
+      <mat-icon>refresh</mat-icon>
+    </button>
+    <p> Ultima Busqueda:  {{ ultimaBusqueda | date:'HH:mm:ss' }}</p>
+  </div>
+
+</div>

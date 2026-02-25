@@ -56,12 +56,12 @@ export class TreeMenuV3Component implements OnInit {
             key: 'viajes-clientes',
             label: 'Clientes',
             icon: 'users',
-            onClick: () => this.router.navigate(['/gestion-clientes']),
+            onClick: () => this.router.navigate(['viajes/gestion-clientes']),
           },
           {
             key: 'viajes-choferes',
             label: 'Choferes',
-            icon: 'apps',
+            icon: 'worker',
             onClick: () => this.router.navigate(['viajes/gestion-choferes']),
           },
         ],
@@ -72,7 +72,8 @@ export class TreeMenuV3Component implements OnInit {
         children: [
           {
             key: 'mantenimiento-gestion',
-            label: 'Gestion de Mantenimiento',
+            label: 'Mantenimiento',
+            icon: 'caja_herr',
             onClick: () => this.router.navigate(['mantenimiento/gestion-mantenimiento']),
           },
           // {
@@ -83,11 +84,13 @@ export class TreeMenuV3Component implements OnInit {
           {
             key: 'mantenimiento-talleres',
             label: 'Talleres',
+            icon: 'engineering',
             onClick: () => this.router.navigate(['mantenimiento/talleres']),
           },
           {
             key: 'mantenimiento-proveedores',
             label: 'Proveedores',
+            icon: 'company',
             onClick: () => this.router.navigate(['mantenimiento/proveedores']),
           },
         ],
@@ -102,11 +105,13 @@ export class TreeMenuV3Component implements OnInit {
           //   onClick: () => this.router.navigate(['/gestion-pagos']),
           // },
           {
+            icon: 'dolar',
             key: 'finanzas-cobros',
             label: 'Gestion de Cobros',
             onClick: () => this.router.navigate(['finanzas/gestion-cobros']),
           },
           {
+            icon: 'bank',
             key: 'finanzas-cheques',
             label: 'Cheques Emitidos',
             onClick: () => this.router.navigate(['/cheques-emitidos']),
@@ -120,10 +125,12 @@ export class TreeMenuV3Component implements OnInit {
           {
             key: 'generales-localidades',
             label: 'Maestro de Localidades',
+            icon: 'location',
             onClick: () =>
               this.router.navigate(['generales/gestion-localidad']),
           },
           {
+            icon: 'truck',
             key: 'generales-camiones',
             label: 'Maestro de Camiones',
             onClick: () => this.router.navigate(['generales/gestion-camiones']),

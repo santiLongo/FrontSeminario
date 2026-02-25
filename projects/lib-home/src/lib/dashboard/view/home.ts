@@ -1,13 +1,39 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { Cards, DashboardComponent } from 'lib-core';
+import {
+  Cards,
+  DashboardComponent,
+  FadeInComponent,
+  ButtonComponent,
+  DialogService,
+} from 'lib-core';
 import { HomeHttpService } from '../service/http.service';
 import * as L from 'leaflet';
+import { NzCalendarModule } from 'ng-zorro-antd/calendar';
+import { CalendarioComponent } from '../components/calendario/calendario';
+import {
+  EventoItem,
+  EventosListComponent,
+} from '../components/eventos-list/eventos-list';
+import { MapComponent } from '../components/map/map';
+import { PosicionUnidad } from '../models/posicion-unidad';
+import { GetAllEventosCommand } from '../models/get-all-eventos';
+import { FormControl, FormGroup } from '@angular/forms';
+import { finalize, Subject, takeUntil } from 'rxjs';
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 @Component({
   selector: 'app-basic-home',
   templateUrl: './home.html',
   styleUrl: './home.css',
-  imports: [DashboardComponent],
+  imports: [
+    DashboardComponent,
+    FadeInComponent,
+    NzCalendarModule,
+    CalendarioComponent,
+    EventosListComponent,
+    MapComponent,
+    MatProgressSpinnerModule
+],
 })
 export class BasicHomeComponent implements OnInit, AfterViewInit {
   dashboardCards: Cards[] = [
@@ -34,84 +60,93 @@ export class BasicHomeComponent implements OnInit, AfterViewInit {
     {
       title: 'Generales',
       subtitle: 'Tablas generales',
-      href: '/config',
+      href: '/generales',
       icon: 'settings',
       value: '',
     },
   ];
-  private map!: L.Map;
-  private truckIcon = L.icon({
-        iconUrl: 'camion-ico.png',
-        iconSize: [36, 36],
-        iconAnchor: [18, 36],
-        popupAnchor: [0, -36],
-      });
+  data: PosicionUnidad[] = [];
+  eventos: EventoItem[] = [];
+  range: FormGroup;
+  loading = false;
 
-  constructor(private httpService: HomeHttpService) {}
+  private error = false;
+  private destroy$ = new Subject<void>();
+
+  constructor(
+    private httpService: HomeHttpService,
+    private dialogService: DialogService,
+  ) {}
 
   ngOnInit(): void {
-    this.initMap();
+    const hoy = new Date();
+    const proximaSemana = new Date();
+    proximaSemana.setDate(hoy.getDate() + 7);
+
+    this.range = new FormGroup({
+      start: new FormControl<Date | null>(hoy),
+      end: new FormControl<Date | null>(proximaSemana, { updateOn: 'blur' }),
+    });
   }
 
   ngAfterViewInit(): void {
     this.loadUnidades();
     //
-    setInterval(() => this.loadUnidades(), 30000); // 30s
-  }
-
-  // ================= MAPA =================
-
-  private initMap() {
-    this.map = L.map('mapa', {
-      center: [-34.6, -58.4], // Buenos Aires default
-      zoom: 6,
-      zoomControl: true,
+    this.loadEvent();
+    //
+    setInterval(() => this.loadUnidades(), 60000); // 30s
+    //
+    this.end?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
+      if (this.end?.value === undefined || this.start?.value === undefined)
+        return;
+      if (this.end?.value === null || this.start?.value === null) return;
+      //
+      this.loadEvent();
     });
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap',
-    }).addTo(this.map);
   }
 
-  // ================= DATA =================
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.subscribe();
+  }
 
   private loadUnidades() {
-    this.httpService.get().subscribe((data) => {
-      this.drawMarkers(data);
+    if (!this.error) {
+      this.httpService.get().subscribe({
+        next: (data) => {
+          this.data = data;
+        },
+        error: () => (this.error = true),
+      });
+    }
+  }
+
+  private loadEvent() {
+    this.loading = true;
+    const command: GetAllEventosCommand = {
+      fechaDesde: this.start?.value,
+      fechaHasta: this.end?.value,
+    };
+
+    this.httpService.getEvents(command).pipe(finalize(() => this.loading = false)).subscribe((res) => {
+      this.eventos = res;
     });
   }
 
-  private drawMarkers(unidades: any[]) {
-    const bounds: L.LatLngTuple[] = [];
+  onMapSearch() {
+    this.error = false;
+    this.loadUnidades();
+  }
 
-    unidades.forEach((u) => {
-      if (!u.latitud || !u.longitud) return;
+  openEventos(idEvento?: number) {
+    this.dialogService.openEventos$(idEvento).subscribe(() => this.loadEvent());
+  }
 
-      const latlng: L.LatLngExpression = [u.latitud, u.longitud];
-      bounds.push(latlng);
+  get start() {
+    return this.range.get('start');
+  }
 
-      const marker = L.marker(latlng, {
-        icon: this.truckIcon
-      }).addTo(this.map);
-
-      // Popup con patente
-      marker.bindPopup(`
-        <div style="font-weight:600">${u.nombre}</div>
-        <div style="font-size:12px;color:#666">${u.ubicacion ?? ''}</div>
-      `);
-
-      // Label permanente debajo (tipo patente)
-      marker.bindTooltip(u.nombre, {
-        permanent: true,
-        direction: 'bottom',
-        offset: [0, 10],
-        className: 'patente-label',
-      });
-    });
-
-    // Auto zoom a todos los puntos
-    if (bounds.length) {
-      this.map.fitBounds(bounds, { padding: [40, 40] });
-    }
+  get end() {
+    return this.range.get('end');
   }
 }

@@ -1,5 +1,7 @@
 import { Injectable, Type } from '@angular/core';
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
+import { UpsertEventoDialogComponent } from '../dialog-upsert-eventos/upsert-evento';
 
 export type DialogSize = 's' | 'm' | 'l' | 'xl' | 'xxl' | 'full';
 
@@ -54,5 +56,9 @@ export class DialogService {
     };
 
     return this.dialog.open(component, config);
+  }
+
+  openEventos$(idEvento?: number): Observable<void>{
+    return this.open(UpsertEventoDialogComponent, { data: {idEvento}, size: 'xxl'}).afterClosed();
   }
 }

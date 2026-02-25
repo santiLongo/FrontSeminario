@@ -23,7 +23,7 @@ import { ChoferesHttpService } from '../../services/http.service';
 import { UpsertChoferModel } from './models/upsert-model';
 
 @Component({
-  selector: 'app-upsert-localidad-dialog',
+  selector: 'app-upsert-chofer-dialog',
   templateUrl: './upsert-dialog.html',
   imports: [
     MatDialogModule,

@@ -2,7 +2,7 @@
   <div class="row g-4">
     @for (card of cards; track $index) {
       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-        <a [href]="card.href || '#'" class="text-decoration-none">
+        <a (click)="onClick(card.href)" class="text-decoration-none">
           <div class="card stats-card h-100">
             <!-- icon -->
             <div class="stats-top">

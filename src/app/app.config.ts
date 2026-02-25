@@ -22,6 +22,12 @@ import {
   WarningFill
 } from '@ant-design/icons-angular/icons';
 import { provideNzIcons } from 'ng-zorro-antd/icon';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+import localeEsAR from '@angular/common/locales/es-AR';
+
+registerLocaleData(localeEs)
+registerLocaleData(localeEsAR, 'es-AR');
 
 export const appConfig: ApplicationConfig = {
   providers: [

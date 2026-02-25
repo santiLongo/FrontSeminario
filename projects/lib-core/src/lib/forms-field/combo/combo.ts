@@ -68,7 +68,7 @@ export class ComboComponent implements ControlValueAccessor, OnInit, OnChanges {
   value: string | number | null = null;
   disabled = this.readonly;
 
-  private loaded = false;
+  loaded = false;
   private loading = false;
 
   private onChange = (_: any) => {};

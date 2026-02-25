@@ -6,5 +6,6 @@ export interface MantenimientoGridModel {
     fechaSalida: string;
     taller: string;
     importe: number;
+    totalPagado: number;
     estado: string;
 }

@@ -1,6 +1,38 @@
-<app-dashboard [cards]="dashboardCards"></app-dashboard>
-<div class="row mt-3">
-  <div class="col-6">
-    <div id="mapa" style="height: 500px; border-radius: 12px;"></div>
+<app-fade-in>
+  <app-dashboard [cards]="dashboardCards"></app-dashboard>
+  <div class="map-eventos-container gap-3 mt-3 p-2">
+    <!-- MAPA -->
+    <div class="map-card">
+      <app-map [data]="data" (onSearch)="onMapSearch()"></app-map>
+    </div>
+    <!-- EVENTOS -->
+    <div class="card-eventos">
+      <div class="d-columns gap-3 p-2">
+        <app-calendario
+          align="end"
+          style="height: 100%"
+          (onNewEventoClick)="openEventos()"
+          [range]="range"
+        ></app-calendario>
+        <div class="eventos">
+          <div class="d-columns gap-3 p-2">
+            <div class="flex-fill">
+              @if (!loading) {
+                <app-eventos-list
+                  [eventos]="eventos"
+                  (eventoClick)="openEventos($event)"
+                ></app-eventos-list>
+              } @else {
+                <div class="spinner-overlay">
+                  <mat-progress-spinner mode="indeterminate" diameter="50">
+                  </mat-progress-spinner>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+  <!--  -->
+</app-fade-in>

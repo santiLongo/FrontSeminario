@@ -1,0 +1,21 @@
+<div class="card">
+      <div class="card-header">
+        <mat-icon>calendar_month</mat-icon>
+        <span>Seleccionar período</span>
+        <div align="end" style="margin-left: auto">
+            <app-button (onClick)="onClick()" label="Nuevo Evento" type="light"></app-button>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <mat-form-field appearance="outline" class="range-field">
+          <mat-label>Rango de fechas</mat-label>
+          <mat-date-range-input [rangePicker]="picker" [formGroup]="range" >
+            <input matStartDate formControlName="start" placeholder="Desde" readonly />
+            <input matEndDate formControlName="end" placeholder="Hasta" readonly />
+          </mat-date-range-input>
+          <mat-datepicker-toggle matIconSuffix [for]="picker" />
+          <mat-date-range-picker #picker />
+        </mat-form-field>
+
+    </div>
