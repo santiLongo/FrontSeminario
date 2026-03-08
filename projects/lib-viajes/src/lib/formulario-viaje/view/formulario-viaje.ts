@@ -34,6 +34,7 @@ import { Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { MapToAltaModel, MapToUpdateModel } from '../helpers/mappers';
 import { Location } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ComboCamiones, ComboSemi } from '../types/types';
 
 @Component({
   standalone: true,
@@ -63,6 +64,8 @@ export class FormularioViajeComponent
   formulario: FormGroup;
   isLinear = true;
   loaded = false;
+  comboCamiones: ComboCamiones
+  comboSemi: ComboSemi
 
   private destroy$ = new Subject<void>();
 
@@ -74,6 +77,13 @@ export class FormularioViajeComponent
     private location: Location,
   ) {
     this.idViaje = +this.route.snapshot.params['idViaje'];
+    if(this.idViaje > 0){
+      this.comboCamiones = 'ComboCamiones'
+      this.comboSemi = 'ComboSemis'
+    } else {
+      this.comboCamiones = 'ComboCamionesDisponibles'
+      this.comboSemi = 'ComboSemisDisponibles'
+    }
   }
 
   ngOnInit(): void {
@@ -88,6 +98,7 @@ export class FormularioViajeComponent
           this.data = res;
           this.formulario.patchValue({
             ...this.data,
+            idCamion: this.data.datosCamion.idCamion,
             datosDestino: this.data.datosDestino?.map((x) => x.idDestino),
             datosProcedencias: this.data.datosProcedencias?.map(
               (x) => x.idProcedencia,

@@ -63,7 +63,7 @@ export class UpsertCamionDialogComponent implements OnInit {
       marca: [, Validators.compose([Validators.required, Validators.maxLength(20)])],
       modelo: [, Validators.compose([Validators.required, Validators.maxLength(20)])],
       nroChasis: [, Validators.compose([Validators.required, Validators.maxLength(50)])],
-      nroMotor: [, Validators.compose([Validators.required, Validators.maxLength(50)])],
+      nroMotor: [, Validators.compose([Validators.maxLength(50)])],
     });
   }
 
@@ -97,5 +97,9 @@ export class UpsertCamionDialogComponent implements OnInit {
         }),
       )
       .subscribe(() => this.salir());
+  }
+
+  get tipo() {
+    return this.formulario.get('idTipoCamion')
   }
 }

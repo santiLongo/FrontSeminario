@@ -22,7 +22,7 @@ import { MatError, MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { IMaskModule } from 'angular-imask';
+import { IMaskDirective, IMaskModule } from 'angular-imask';
 
 @Component({
   standalone: true,
@@ -49,6 +49,7 @@ import { IMaskModule } from 'angular-imask';
   ],
 })
 export class CuitMaskComponent implements ControlValueAccessor {
+  @ViewChild(IMaskDirective) imask!: IMaskDirective<any>;
   @Input({ required: true }) label!: string;
   @Input() readonly = false;
 
@@ -72,8 +73,20 @@ export class CuitMaskComponent implements ControlValueAccessor {
     }
   }
 
-  writeValue(value: string | null): void {
-    this.value = value;
+  writeValue(value: string | number | null): void {
+    if (value === null || value === undefined) {
+      this.value = null;
+      if (this.imask) this.imask.maskValue = '';
+      return;
+    }
+
+    const str = String(value);
+
+    this.value = str;
+
+    if (this.imask) {
+      this.imask.maskValue = str;
+    }
   }
 
   registerOnChange(fn: any): void {
@@ -100,8 +113,9 @@ export class CuitMaskComponent implements ControlValueAccessor {
 
     this.value = masked;
 
-    const numero = limpio ? Number(limpio) : null;
-    this.onChange(numero);
+    // const numero = limpio ? Number(limpio) : null;
+    // this.onChange(numero);
+    this.onChange(limpio || null);
 
     if (limpio.length === 11) {
       const valido = this.validarCUIT(limpio);

@@ -95,7 +95,7 @@ export class UpsertTallerDialogComponent implements OnInit {
         ,
         Validators.compose([Validators.required, Validators.maxLength(50)]),
       ],
-      telefono: [, Validators.compose([Validators.maxLength(11)])],
+      telefono: [, Validators.compose([Validators.max(1999999999)])],
       responsable: [, Validators.compose([Validators.maxLength(50)])],
       mail: [, Validators.compose([Validators.maxLength(50)])],
       idLocalidad: [, Validators.required],

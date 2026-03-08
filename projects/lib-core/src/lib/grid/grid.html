@@ -247,7 +247,7 @@
                 ></app-form-field>
               }
             } @else {
-              @if (column.template) {
+              @if (column.type === 'template') {
                 <ng-container
                   *ngTemplateOutlet="
                     column.template;

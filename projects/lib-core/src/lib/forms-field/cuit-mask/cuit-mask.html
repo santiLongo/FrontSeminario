@@ -3,12 +3,11 @@
 
   <input
     #input
+    #imask="imask"
     matInput
     type="text"
-    [value]="value"
     [readonly]="readonly"
     [disabled]="disabled"
-    [formControl]="control"
     [imask]="mask"
     (accept)="onAccept($event)"
     (blur)="onBlur()"

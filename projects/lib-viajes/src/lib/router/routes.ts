@@ -19,6 +19,10 @@ export const ViajesRoutes: Routes = [
                 path: 'gestion-choferes',
                 loadChildren: () => import('../choferes/router/routes').then(m => m.ChoferesRoutes),
             },
+            {
+                path: 'gestion-clientes',
+                loadChildren: () => import('../clientes/router/routes').then(m => m.ClientesRoutes),
+            },
         ]
     }
 

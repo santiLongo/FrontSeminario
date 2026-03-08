@@ -5,7 +5,7 @@ export interface GridConfig<T> {
   columns: GridColumn<T>[];
   menuActions?: GridMenuAction<T>[];
   toolBarActions?: GridToolBarAction<T>[];
-  selectableSettings: SelectebleSettings<T>;
+  selectableSettings?: SelectebleSettings<T>;
   isEditable?: boolean;
 }
 
@@ -56,7 +56,7 @@ export class GridToolBarAction<T> {
 
 export class SelectebleSettings<T>{
   type: 'multiple' | 'single' = 'single'
-  selectable: boolean
+  selectable: boolean = true;
   esSelectable?: (row: T) => boolean
 }
 

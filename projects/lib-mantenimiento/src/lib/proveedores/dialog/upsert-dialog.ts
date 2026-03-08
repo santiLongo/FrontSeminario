@@ -91,7 +91,7 @@ export class UpsertProveedorDialogComponent implements OnInit {
       cuit: [, Validators.compose([Validators.maxLength(11)])],
       direccion: [
         ,
-        Validators.compose([Validators.required, Validators.maxLength(50)]),
+        Validators.compose([Validators.required, Validators.maxLength(99)]),
       ],
       responsable: [, Validators.compose([Validators.maxLength(50)])],
       mail: [, Validators.compose([Validators.maxLength(50)])],

@@ -61,8 +61,8 @@ export class UpsertChoferDialogComponent implements OnInit {
     this.formulario = this.fb.group({
       nombre: [, Validators.compose([Validators.required, Validators.maxLength(20)])],
       apellido: [,Validators.compose([Validators.required, Validators.maxLength(20)])],
-      telefono: [,Validators.compose([Validators.max(11)])],
-      dni: [, Validators.compose([Validators.required, Validators.max(11)])],
+      telefono: [,Validators.compose([])],
+      dni: [, Validators.compose([])],
       direccion: [,Validators.compose([Validators.maxLength(50)])],
       nroRegistro: [, Validators.compose([Validators.required, Validators.maxLength(50)])],
     });
@@ -84,7 +84,7 @@ export class UpsertChoferDialogComponent implements OnInit {
     command.idChofer = this.id;
 
     this.alertService
-      .info$('Seguro que desea actualizar el camion?')
+      .info$('Seguro que desea actualizar el chofer?')
       .pipe(
         filter(Boolean),
         switchMap(() => {
@@ -93,7 +93,7 @@ export class UpsertChoferDialogComponent implements OnInit {
         switchMap(() => {
           return this.alertService.success$(
             'Exito',
-            'Se guardo el camion con exito',
+            'Se guardo el chofer con exito',
           );
         }),
       )

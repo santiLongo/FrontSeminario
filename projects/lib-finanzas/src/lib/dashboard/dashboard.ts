@@ -18,11 +18,11 @@ export class FiananzasDashboardComponent{
             subtitle: 'de Cobros',
             href: './gestion-cobros'
         },
-        {
-            icon: 'bank',
-            title: 'Cheques',
-            subtitle: 'Emitidos',
-            href: './cheques-emitidos'
-        },
+        // {
+        //     icon: 'bank',
+        //     title: 'Cheques',
+        //     subtitle: 'Emitidos',
+        //     href: './cheques-emitidos'
+        // },
     ]
 }

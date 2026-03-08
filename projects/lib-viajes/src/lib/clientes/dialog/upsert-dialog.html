@@ -1,48 +1,40 @@
-<h2 mat-dialog-title>{{id ? 'Editar Camion' : 'Nuevo Camion'}}</h2>
+<h2 mat-dialog-title>{{idCliente ? 'Editar Cliente' : 'Nuevo Cliente'}}</h2>
 <mat-dialog-content>
   <form [formGroup]="formulario">
     <div class="row">
       <div class="col-6">
-        <app-combo
-          [label]="'Tipo de Camion'"
-          formControlName="idTipoCamion"
-          [type]="'ComboTipoCamion'"
+        <app-form-field
+            label="Razon Social"
+            formControlName="razonSocial"
+        ></app-form-field>
+      </div>
+      <div class="col-6">
+        <app-cuit-mask
+            formControlName="cuit"
+            label="Cuit"
         >
-        </app-combo>
-      </div>
-      <div class="col-6">
-        <app-form-field
-            label="Patente"
-            formControlName="patente"
-        ></app-form-field>
+        </app-cuit-mask>
       </div>
     </div>
     <div class="row">
       <div class="col-6">
         <app-form-field
-            label="Marca"
-            formControlName="marca"
+            label="Direccion"
+            formControlName="direccion"
         ></app-form-field>
       </div>
       <div class="col-6">
-        <app-form-field
-            label="Modelo"
-            formControlName="modelo"
-        ></app-form-field>
+        <app-number-form-field
+            label="Telefono"
+            formControlName="telefono"
+        ></app-number-form-field>
       </div>
     </div>
     <div class="row">
-      <div class="col-6">
+      <div class="col-12">
         <app-form-field
-            label="Nro. Chasis"
-            formControlName="nroChasis"
-        ></app-form-field>
-      </div>
-      <div class="col-6">
-        <app-form-field
-            label="Nro. Motor"
-            formControlName="nroMotor"
-            [readonly]="tipo?.value > 2"
+            label="Mail"
+            formControlName="email"
         ></app-form-field>
       </div>
     </div>

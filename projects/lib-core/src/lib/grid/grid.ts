@@ -80,7 +80,7 @@ export class GridComponent<T extends Record<string, any>>
     this.columns = this.config.columns;
     this.menuActions = this.config.menuActions ?? [];
     this.toolbarButtons = this.config.toolBarActions ?? [];
-    this.selectableSettings = this.config.selectableSettings;
+    this.selectableSettings = this.config.selectableSettings ?? this.defaultSelectable();
 
     if (this.config.isEditable && this.isEditableService(this.dataService)) {
       this.editableService = this.dataService;
@@ -109,6 +109,15 @@ export class GridComponent<T extends Record<string, any>>
   onPageSizeChange(size: number) {
     this.dataService.state.pageSize = size;
     this.dataService.search();
+  }
+
+  //Defaluts
+
+  private defaultSelectable<T>(): SelectebleSettings<T> {
+      return {
+      type: "single",
+      selectable: true
+    }
   }
 
   //Metodos para seleccionar

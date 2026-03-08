@@ -110,12 +110,12 @@ export class TreeMenuV3Component implements OnInit {
             label: 'Gestion de Cobros',
             onClick: () => this.router.navigate(['finanzas/gestion-cobros']),
           },
-          {
-            icon: 'bank',
-            key: 'finanzas-cheques',
-            label: 'Cheques Emitidos',
-            onClick: () => this.router.navigate(['/cheques-emitidos']),
-          },
+          // {
+          //   icon: 'bank',
+          //   key: 'finanzas-cheques',
+          //   label: 'Cheques Emitidos',
+          //   onClick: () => this.router.navigate(['/cheques-emitidos']),
+          // },
         ],
       },
       {
