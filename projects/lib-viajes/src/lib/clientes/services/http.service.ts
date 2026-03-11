@@ -29,7 +29,7 @@ export class ClientesHttpService {
 
   bajaAlta(idCliente: number): Observable<void> {
     const fullUrl = this.url + 'baja-alta';
-    return this.http.postWithBlock(fullUrl, { idCliente });
+    return this.http.postWithBlock(fullUrl, idCliente );
   }
 
   get(idCliente: number): Observable<ClienteUpsertModel> {

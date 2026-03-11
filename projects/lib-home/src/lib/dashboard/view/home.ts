@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import {
   Cards,
   DashboardComponent,
@@ -35,7 +35,7 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
     MatProgressSpinnerModule
 ],
 })
-export class BasicHomeComponent implements OnInit, AfterViewInit {
+export class BasicHomeComponent implements OnInit, AfterViewInit, OnDestroy {
   dashboardCards: Cards[] = [
     {
       title: 'Viajes',

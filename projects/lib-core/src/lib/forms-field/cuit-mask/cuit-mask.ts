@@ -49,7 +49,7 @@ import { IMaskDirective, IMaskModule } from 'angular-imask';
   ],
 })
 export class CuitMaskComponent implements ControlValueAccessor {
-  @ViewChild(IMaskDirective) imask!: IMaskDirective<any>;
+  @ViewChild(IMaskDirective, { static: true }) imask!: IMaskDirective<any>;
   @Input({ required: true }) label!: string;
   @Input() readonly = false;
 

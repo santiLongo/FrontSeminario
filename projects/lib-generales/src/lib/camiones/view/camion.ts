@@ -103,15 +103,15 @@ export class CamionComponent implements OnInit, AfterViewInit {
             this.openUpsert(rows[0].id)
           }
         },
-        {
-          key: 'newTipoCamion',
-          icon: 'add',
-          label: 'Nuevo Tipo Camion',
-          type: 'secondary',
-          onClick: (rows) => {
-            this.openTipoCamion()
-          }
-        }
+        // {
+        //   key: 'newTipoCamion',
+        //   icon: 'add',
+        //   label: 'Nuevo Tipo Camion',
+        //   type: 'secondary',
+        //   onClick: (rows) => {
+        //     this.openTipoCamion()
+        //   }
+        // }
       ],
       menuActions: [
         {

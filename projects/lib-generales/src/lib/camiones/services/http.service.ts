@@ -34,11 +34,11 @@ export class CamionesHttpService {
 
     darBaja(id: number): Observable<void> {
         const fullUrl = this.url + `dar-baja`;
-        return this.http.postWithBlock(fullUrl, { id });
+        return this.http.postWithBlock(fullUrl,  {id} );
     }
 
     darAlta(id: number): Observable<void> {
         const fullUrl = this.url + `dar-alta`;
-        return this.http.postWithBlock(fullUrl, { id });
+        return this.http.postWithBlock(fullUrl,  {id} );
     }
 }
