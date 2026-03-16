@@ -100,7 +100,7 @@ export class EspecialidadDialogComponent implements OnInit {
   }
 
   salir() {
-    this.dialogRef.close;
+    this.dialogRef.close();
   }
   seleccionar(){
     this.dialogRef.close(this.dataService.selectedRows);

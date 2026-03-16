@@ -4,9 +4,10 @@ import { Observable } from 'rxjs';
 import { MantenimientoLibService } from '../../config/mantenimiento.service';
 import { MantenimientoFilterModel } from '../models/mantenimentos-filter-model';
 import { MantenimientoGridModel } from '../models/mantenimentos-grid-model';
-import { UpsertMantenimientoModel } from '../dialog/models/upsert-model';
-import { InfomarSalida } from '../informar-salida/informar-salida';
-import { InfomarImporte } from '../informar-importe/informar-importe';
+import { UpsertMantenimientoModel } from '../dialogs/dialog/models/upsert-model';
+import { InfomarSalida } from '../dialogs/informar-salida/informar-salida';
+import { InfomarImporte } from '../dialogs/informar-importe/informar-importe';
+import { ObservacionesModel } from '../dialogs/observaciones/model/model';
 
 @Injectable({
   providedIn: 'root',
@@ -47,5 +48,18 @@ export class MantenimientoHttpService {
   informarImporte(command: InfomarImporte): Observable<void> {
     const fullUrl = this.url + 'informar-importe';
     return this.http.postWithBlock(fullUrl, command);
+  }
+
+  getObs(
+    idMantenimiento: number,
+    state: GridState,
+  ): Observable<PagedResult<ObservacionesModel>> {
+    const fullUrl = this.url + 'get-obs';
+    return this.http.getState(fullUrl, { idMantenimiento }, state);
+  }
+
+  suspender(idMantenimiento: number): Observable<void> {
+    const fullUrl = this.url + 'suspender';
+    return this.http.postWithBlock(fullUrl, idMantenimiento );
   }
 }

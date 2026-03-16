@@ -34,26 +34,26 @@ import {
   TextareaFormFieldComponent,
 } from 'lib-core';
 import { filter, switchMap } from 'rxjs';
-import { MantenimientoHttpService } from '../services/http.service';
+import { MantenimientoHttpService } from '../../services/http.service';
 
 @Component({
-  selector: 'app-infomar-salida-dialog',
-  templateUrl: './informar-salida.html',
+  selector: 'app-infomar-importe-dialog',
+  templateUrl: './informar-importe.html',
   imports: [
     MatDialogModule,
     ButtonComponent,
     ReactiveFormsModule,
-    DateFormFieldComponent,
     FormsModule,
     TextareaFormFieldComponent,
-  ],
+    DecimalFormFieldComponent
+],
 })
-export class InformarSalidaDialogComponent implements OnInit {
+export class InformarImporteDialogComponent implements OnInit {
   public idMantenimiento: number;
   public formulario: FormGroup;
 
   constructor(
-    private dialogRef: MatDialogRef<InformarSalidaDialogComponent>,
+    private dialogRef: MatDialogRef<InformarImporteDialogComponent>,
     @Inject(MAT_DIALOG_DATA) data: { idMantenimiento: number },
     private fb: FormBuilder,
     private alertService: AlertService,
@@ -68,7 +68,7 @@ export class InformarSalidaDialogComponent implements OnInit {
 
   formSetup() {
     this.formulario = this.fb.group({
-      fechaSalida: [, Validators.compose([Validators.required])],
+      importe: [, Validators.compose([Validators.required])],
       observacion: [],
     });
   }
@@ -85,16 +85,16 @@ export class InformarSalidaDialogComponent implements OnInit {
       return;
     }
 
-    const command = this.formulario.getRawValue() as InfomarSalida;
+    const command = this.formulario.getRawValue() as InfomarImporte;
     command.idMantenimiento = this.idMantenimiento;
 
     this.httpService
-      .informarSalida(command)
+      .informarImporte(command)
       .pipe(
         switchMap(() => {
           return this.alertService.success$(
             'Exito',
-            'Se informo la salida correctamente',
+            'Se informo el importe correctamente',
           );
         }),
       )
@@ -102,8 +102,8 @@ export class InformarSalidaDialogComponent implements OnInit {
   }
 }
 
-export interface InfomarSalida {
+export interface InfomarImporte {
   idMantenimiento: number;
-  fechaSalida: Date;
+  importe: number;
   observacion: string;
 }

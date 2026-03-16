@@ -51,11 +51,12 @@
   [nzLoading]="loading"
   [nzFrontPagination]="false"
   [nzTotal]="total"
-  [nzPageSize]="dataService.state.pageSize"
-  [nzPageIndex]="dataService.state.page"
+  [(nzPageSize)]="dataService.state.pageSize"
+  [(nzPageIndex)]="dataService.state.page"
   [nzShowSizeChanger]="true"
   [nzPageSizeOptions]="[10, 20, 50]"
-  (nzPageSizeChange)="onPageSizeChange($event)"
+  (nzPageSizeChange)="onPageSizeChange()"
+  (nzPageIndexChange)="onPageSizeChange()"
   style="width: 100%; overflow-y: auto; margin-bottom: 20px"
 >
   <thead>
@@ -136,7 +137,7 @@
   </thead>
 
   <tbody>
-    @for (row of data; track editableService?.getRowKey(row) ?? row) {
+    @for (row of data; track trackRow($index, row)) {
       <tr>
         <!-- CheckBox para seleccionar rows -->
         @if (selectableSettings?.selectable) {

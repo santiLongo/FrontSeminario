@@ -6,6 +6,7 @@
         <app-form-field
           label="Titulo"
           formControlName="titulo"
+          [readonly]="readonly"
         ></app-form-field>
       </div>
       <div class="col-6">
@@ -21,6 +22,7 @@
           [label]="'Vehiculos'"
           type="ComboVehiculos"
           formControlName="idCamion"
+          [readonly]="readonly"
         ></app-combo>
       </div>
       <div class="col-6">
@@ -28,6 +30,7 @@
           [label]="'Taller'"
           type="ComboTalleres"
           formControlName="idTaller"
+          [readonly]="readonly"
         ></app-combo>
       </div>
     </div>

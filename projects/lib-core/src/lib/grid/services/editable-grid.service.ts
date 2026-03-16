@@ -25,7 +25,7 @@ export class EditableGridService<T extends Record<string, any>>
     const found = this.items.find((i) => i.data === row);
 
     if (!found) {
-      this.alertService.error$('Row no encontrada').subscribe();
+      console.log('Row no encontrada')
       throw new Error('Row no encontrada en EditableGridService');
     }
 

@@ -106,8 +106,7 @@ export class GridComponent<T extends Record<string, any>>
     this.destroy$.complete();
   }
 
-  onPageSizeChange(size: number) {
-    this.dataService.state.pageSize = size;
+  onPageSizeChange() {
     this.dataService.search();
   }
 
@@ -238,6 +237,16 @@ export class GridComponent<T extends Record<string, any>>
   }
 
   // Para editable
+  trackRow = (index: number, row: T): string => {
+    if (!this.editableService) return String(index);
+    try {
+      return this.editableService.getRowKey(row);
+    } catch {
+      return String(index);
+    }
+  };
+
+
   private isEditableService(svc: any): svc is EditableGridService<T> {
     return svc && typeof svc.getRowKey === 'function' && typeof svc.update === 'function';
   }
@@ -298,12 +307,11 @@ export class GridComponent<T extends Record<string, any>>
     const key = this.editableService.getRowKey(row);
     const edited = this.editCache[key].data;
 
-    Object.assign(row, edited);
-
-    this.editableService.update(row);
-
     this.editCache[key].edit = false;
     this.editingId = undefined;
+
+    Object.assign(row, edited);
+    this.editableService.update(row);
   }
 
   removeEdit(row: T) {
@@ -313,10 +321,6 @@ export class GridComponent<T extends Record<string, any>>
     const edited = this.editCache[key].data;
 
     Object.assign(row, edited);
-
     this.editableService.remove(row);
-
-    this.editCache[key].edit = false;
-    this.editingId = undefined;
   }
 }

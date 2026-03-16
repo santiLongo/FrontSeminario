@@ -19,14 +19,15 @@ import {
 } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
-import { UpsertProveedorDialogComponent } from '../dialog/upsert-dialog';
+import { UpsertProveedorDialogComponent } from '../dialogs/dialog/upsert-dialog';
 import { filter, Subject, switchMap } from 'rxjs';
 import { MantenimientoGridModel } from '../models/mantenimentos-grid-model';
 import { MantenimientoDataService } from '../services/data.service';
 import { MantenimientoFilterModel } from '../models/mantenimentos-filter-model';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { InformarSalidaDialogComponent } from '../informar-salida/informar-salida';
-import { InformarImporteDialogComponent } from '../informar-importe/informar-importe';
+import { InformarSalidaDialogComponent } from '../dialogs/informar-salida/informar-salida';
+import { InformarImporteDialogComponent } from '../dialogs/informar-importe/informar-importe';
+import { Observaciones } from '../dialogs/observaciones/observaciones';
 
 @Component({
   selector: 'app-mantenimiento',
@@ -130,6 +131,16 @@ export class MantenimientosComponent implements OnInit {
           format: 'ddMMyyyy'
         },
       ],
+      menuActions: [
+        {
+          key: 'suspender',
+          label: 'Suspender',
+          icon: 'remove',
+          onClick: (row) => {
+            this.suspender(row)
+          }
+        }
+      ],
       selectableSettings: {
         selectable: true,
         type: 'single',
@@ -164,13 +175,13 @@ export class MantenimientosComponent implements OnInit {
           disabledOnEmptyRows: true,
           onClick: (rows) => this.informarImporte(rows[0]),
         },
-        // {
-        //   key: 'observaciones',
-        //   label: 'Ver un Observaciones',
-        //   type: 'light',
-        //   disabledOnEmptyRows: true,
-        //   onClick: (rows) => this.update(rows[0]),
-        // },
+        {
+          key: 'observaciones',
+          label: 'Ver un Observaciones',
+          type: 'light',
+          disabledOnEmptyRows: true,
+          onClick: (rows) => this.verObs(rows[0]),
+        },
       ],
     };
   }
@@ -201,6 +212,16 @@ export class MantenimientosComponent implements OnInit {
       .open(InformarImporteDialogComponent, { data: { idMantenimiento: row.idMantenimiento }, size: 'xxl' })
       .afterClosed()
       .subscribe(() => this.onBuscar());
+  }
+
+  verObs(row: MantenimientoGridModel): void {
+    this.dialog
+      .open(Observaciones, { data: { idMantenimiento: row.idMantenimiento }, size: 'xl' })
+  }
+
+  suspender(row: MantenimientoGridModel) {
+    this.dataService.suspender(row.idMantenimiento)
+    .subscribe(() => this.onBuscar())
   }
 
   onBuscar() {

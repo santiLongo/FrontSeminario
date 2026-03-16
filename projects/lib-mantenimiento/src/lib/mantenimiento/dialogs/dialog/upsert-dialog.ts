@@ -15,7 +15,7 @@ import {
 } from '@angular/material/dialog';
 import { ComboComponent, ButtonComponent, FormFieldComponent, AlertService, CuitMaskComponent, NumberFormFieldComponent, GridComponent, GridConfig, DialogService, DateFormFieldComponent, DecimalFormFieldComponent } from 'lib-core';
 import { filter, switchMap } from 'rxjs';
-import { MantenimientoHttpService } from '../services/http.service';
+import { MantenimientoHttpService } from '../../services/http.service';
 import { UpsertDataService } from './data.service';
 import { UpsertMantenimientoModel, UpsertTareas } from './models/upsert-model';
 
@@ -41,6 +41,7 @@ export class UpsertProveedorDialogComponent implements OnInit {
   public formulario: FormGroup;
   public config: GridConfig<UpsertTareas>;
   public costo: FormControl;
+  public readonly = false
 
   constructor(
     private dialogRef: MatDialogRef<UpsertProveedorDialogComponent>,
@@ -61,6 +62,7 @@ export class UpsertProveedorDialogComponent implements OnInit {
     this.gridSetup();
     //
     if (this.idMantenimiento) {
+      this.readonly = true;
       this.httpService
         .get(this.idMantenimiento)
         .subscribe((res: UpsertMantenimientoModel) => {

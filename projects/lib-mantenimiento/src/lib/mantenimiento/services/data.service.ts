@@ -15,8 +15,12 @@ export class MantenimientoDataService extends BaseGridService<MantenimientoGridM
         this.filterSub$ = new BehaviorSubject<MantenimientoFilterModel>({});
     }
     
-    override getData(state: GridState): Observable<PagedResult<MantenimientoGridModel>> {
+    getData(state: GridState): Observable<PagedResult<MantenimientoGridModel>> {
         const command = this.filterSub$.value;
         return this.httpService.getAll(command, state);
+    }
+
+    suspender(idMantenimiento: number): Observable<void> {
+      return this.httpService.suspender(idMantenimiento);
     }
 }

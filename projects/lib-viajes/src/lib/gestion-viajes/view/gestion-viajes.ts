@@ -20,6 +20,7 @@ import { ForzarEstadoDialog } from '../dialogs/forzar-estado/forzar-estado-dialo
 import { InformarDescargaDialog } from '../dialogs/informar-descarga/informar-descarga-dialog';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { InformarCobroDialog } from '../dialogs/informar-cobro/informar-cobro';
+import { Observaciones } from '../dialogs/observaciones/observaciones';
 
 @Component({
   standalone: true,
@@ -178,6 +179,14 @@ export class GestionViajesComponent implements OnInit, AfterViewInit {
           disabledOnEmptyRows: true,
           onClick: (rows) => this.informarCobro(rows[0]),
         },
+        {
+          key: 'obs',
+          label: 'Ver Observciones',
+          type: 'info',
+          icon: 'view',
+          disabledOnEmptyRows: true,
+          onClick: (rows) => this.verObs(rows[0]),
+        },
       ],
       selectableSettings: {
         type: 'single',
@@ -229,6 +238,13 @@ export class GestionViajesComponent implements OnInit, AfterViewInit {
     .subscribe(() => {
       this.onBuscar()
     });
+  }
+
+  verObs(row: GestionViajesGridModel): void {
+    this.dialogService.open(Observaciones, {
+      data: { idViaje: row.idViaje },
+      size: 'xl'
+    })
   }
 
   get estado() {
