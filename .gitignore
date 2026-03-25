@@ -41,7 +41,9 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
-env/.env.development
-env/.env.production
 package-lock.json
 package-lock.json
+
+#environments
+src/environments/environments.development.ts
+src/environments/environments.production.ts
