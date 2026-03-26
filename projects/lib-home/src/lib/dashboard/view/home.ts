@@ -70,6 +70,7 @@ export class BasicHomeComponent implements OnInit, AfterViewInit, OnDestroy {
   range: FormGroup;
   loading = false;
 
+  private intervalId: any;
   private error = false;
   private destroy$ = new Subject<void>();
 
@@ -94,7 +95,7 @@ export class BasicHomeComponent implements OnInit, AfterViewInit, OnDestroy {
     //
     this.loadEvent();
     //
-    setInterval(() => this.loadUnidades(), 60000); // 30s
+    this.intervalId = setInterval(() => this.loadUnidades(), 60000); // 30s
     //
     this.end?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       if (this.end?.value === undefined || this.start?.value === undefined)
@@ -108,6 +109,10 @@ export class BasicHomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.subscribe();
+
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 
   private loadUnidades() {

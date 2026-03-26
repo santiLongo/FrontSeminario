@@ -22,6 +22,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() data: PosicionUnidad[];
   @Output() onSearch = new EventEmitter<void>();
   ultimaBusqueda: Date = new Date();
+  private markers: L.Marker[] = [];
   private map!: L.Map;
   private truckIcon = L.icon({
     iconUrl: 'camion-ico.png',
@@ -64,38 +65,44 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   // ================= DATA =================
 
   private drawMarkers(unidades: any[]) {
-    const bounds: L.LatLngTuple[] = [];
+  // 🧹 eliminar markers anteriores
+  this.markers.forEach(m => m.remove());
+  this.markers = [];
 
-    unidades.forEach((u) => {
-      if (!u.latitud || !u.longitud) return;
+  const bounds: L.LatLngTuple[] = [];
 
-      const latlng: L.LatLngExpression = [u.latitud, u.longitud];
-      bounds.push(latlng);
+  unidades.forEach((u) => {
+    if (!u.latitud || !u.longitud) return;
 
-      const marker = L.marker(latlng, {
-        icon: this.truckIcon,
-      }).addTo(this.map);
+    const latlng: L.LatLngExpression = [u.latitud, u.longitud];
+    bounds.push(latlng);
 
-      // Popup con patente
-      marker.bindPopup(`
-            <div style="font-weight:600">${u.nombre}</div>
-            <div style="font-size:12px;color:#666">${u.ubicacion ?? ''}</div>
-          `);
+    const marker = L.marker(latlng, {
+      icon: this.truckIcon,
+    }).addTo(this.map);
 
-      // Label permanente debajo (tipo patente)
-      marker.bindTooltip(u.nombre, {
-        permanent: true,
-        direction: 'bottom',
-        offset: [0, 10],
-        className: 'patente-label',
-      });
+    // Popup
+    marker.bindPopup(`
+      <div style="font-weight:600">${u.nombre} | ${u.velocidad}km/h</div>
+      <div style="font-size:12px;color:#666">${u.ubicacion ?? ''}</div>
+    `);
+
+    // Tooltip
+    marker.bindTooltip(`${u.nombre} | ${u.velocidad}km/h`, {
+      permanent: true,
+      direction: 'bottom',
+      offset: [0, 10],
+      className: 'patente-label',
     });
 
-    // Auto zoom a todos los puntos
-    if (bounds.length) {
-      this.map.fitBounds(bounds, { padding: [40, 40] });
-    }
+    // 👉 guardarlo para poder borrarlo después
+    this.markers.push(marker);
+  });
+
+  if (bounds.length) {
+    this.map.fitBounds(bounds, { padding: [40, 40] });
   }
+}
 
   search() {
     this.onSearch.emit();
