@@ -7,14 +7,6 @@ RUN npm run build:dev
 
 FROM nginx:alpine
 COPY --from=build /app/dist/front-seminario/browser /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/templates/default.conf.template
 
-RUN echo 'server { \
-    listen ${PORT}; \
-    location / { \
-        root /usr/share/nginx/html; \
-        index index.html; \
-        try_files $uri $uri/ /index.html; \
-    } \
-}' > /etc/nginx/conf.d/default.conf
-
-EXPOSE 80
+EXPOSE 8080
