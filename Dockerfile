@@ -9,7 +9,7 @@ FROM nginx:alpine
 COPY --from=build /app/dist/front-seminario/browser /usr/share/nginx/html
 
 RUN echo 'server { \
-    listen 80; \
+    listen ${PORT}; \
     location / { \
         root /usr/share/nginx/html; \
         index index.html; \
