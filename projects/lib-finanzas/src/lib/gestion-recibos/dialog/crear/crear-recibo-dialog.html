@@ -1,0 +1,74 @@
+<h2 mat-dialog-title>Nuevo Recibo</h2>
+<mat-dialog-content>
+  <form [formGroup]="formulario">
+    <div class="row mb-3">
+      <div class="col-12">
+        <mat-button-toggle-group [hideSingleSelectionIndicator]="true" formControlName="tipoRecibo">
+          <mat-button-toggle [value]="1">Cobro</mat-button-toggle>
+          <mat-button-toggle [value]="2">Pago</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4">
+        <app-date-form-field [label]="'Fecha Recibo'" formControlName="fechaRecibo"></app-date-form-field>
+      </div>
+      <div class="col-4">
+        <app-combo label="Moneda" [type]="'ComboMoneda'" formControlName="idMoneda"></app-combo>
+      </div>
+      <div class="col-4">
+        <app-decimal-form-field
+          label="Tipo de Cambio"
+          formControlName="tipoCambio"
+          [readonly]="moneda.value <= 1"
+          [decimals]="4"
+        ></app-decimal-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4">
+        <app-combo label="Cliente" [type]="'ComboClientes'" formControlName="idCliente"></app-combo>
+      </div>
+      <div class="col-4">
+        <app-combo label="Proveedor" [type]="'ComboProveedor'" formControlName="idProveedor"></app-combo>
+      </div>
+      <div class="col-4">
+        <app-combo label="Taller" [type]="'ComboTaller'" formControlName="idTaller"></app-combo>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <app-form-field label="Observaciones" formControlName="observaciones"></app-form-field>
+      </div>
+    </div>
+    <hr>
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h6>Formas de Pago</h6>
+      <app-button label="Agregar Pago" [type]="'primary'" (onClick)="agregarPago()"></app-button>
+    </div>
+    @for (grupo of formasDePago.controls; track $index; let i = $index) {
+      <app-recibo-pago-row [grupo]="$any(grupo)">
+        <app-button label="Quitar" [type]="'danger'" (onClick)="eliminarPago(i)"></app-button>
+      </app-recibo-pago-row>
+    }
+    <hr>
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h6>Imputaciones <small class="text-muted">(opcional)</small></h6>
+      <app-button label="Agregar Imputación" [type]="'primary'" (onClick)="agregarImputacion()"></app-button>
+    </div>
+    @for (grupo of imputaciones.controls; track $index; let i = $index) {
+      <app-recibo-imputacion-row [grupo]="$any(grupo)">
+        <app-button label="Quitar" [type]="'danger'" (onClick)="eliminarImputacion(i)"></app-button>
+      </app-recibo-imputacion-row>
+    }
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <div style="display: flex; width: 100%">
+    <div style="margin-right: auto"></div>
+    <div style="margin-left: auto; display: flex; gap: 10px">
+      <app-button [label]="'Cancelar'" [type]="'danger'" (onClick)="salir()"></app-button>
+      <app-button [label]="'Guardar'" [type]="'success'" (onClick)="guardar()"></app-button>
+    </div>
+  </div>
+</mat-dialog-actions>

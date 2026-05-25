@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  urlLogin: 'https://glorious-mercy-testing.up.railway.app/api/',
-  urlViajes: 'https://glorious-mercy-testing.up.railway.app/api/'
+  urlLogin: 'http://localhost:5281/api/',
+  urlViajes: 'http://localhost:5281/api/'
 };

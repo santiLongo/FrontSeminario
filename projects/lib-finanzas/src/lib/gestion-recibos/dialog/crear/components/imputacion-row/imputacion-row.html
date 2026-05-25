@@ -1,0 +1,11 @@
+<div [formGroup]="grupo" class="row align-items-end mb-2">
+  <div class="col-5">
+    <app-number-form-field label="ID Factura" formControlName="idFactura"></app-number-form-field>
+  </div>
+  <div class="col-5">
+    <app-decimal-form-field label="Importe Aplicado" formControlName="importeAplicado" [decimals]="2"></app-decimal-form-field>
+  </div>
+  <div class="col-2 d-flex align-items-center pb-1">
+    <ng-content></ng-content>
+  </div>
+</div>

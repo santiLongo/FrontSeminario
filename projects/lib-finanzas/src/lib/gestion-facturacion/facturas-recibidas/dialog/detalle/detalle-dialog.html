@@ -1,0 +1,110 @@
+<h2 mat-dialog-title>Detalle de Factura Recibida</h2>
+<mat-dialog-content>
+  @if (factura) {
+    <div class="row mb-3">
+      <div class="col-3">
+        <small class="text-muted">Número</small>
+        <p>{{ factura.puntoVenta }}-{{ factura.numero }}</p>
+      </div>
+      <div class="col-3">
+        <small class="text-muted">Fecha Emisión</small>
+        <p>{{ factura.fechaEmision | date:'dd/MM/yyyy' }}</p>
+      </div>
+      <div class="col-3">
+        <small class="text-muted">Vencimiento</small>
+        <p>{{ factura.fechaVencimiento ? (factura.fechaVencimiento | date:'dd/MM/yyyy') : '-' }}</p>
+      </div>
+      <div class="col-3">
+        <small class="text-muted">Estado</small>
+        <p>{{ estadoLabel }}</p>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-4">
+        <small class="text-muted">Proveedor / Taller</small>
+        <p>{{ factura.nombreContraparte }}</p>
+      </div>
+      <div class="col-2">
+        <small class="text-muted">Subtotal</small>
+        <p>{{ factura.subtotal | number:'1.2-2' }}</p>
+      </div>
+      <div class="col-2">
+        <small class="text-muted">% IVA</small>
+        <p>{{ factura.porcentajeIva }}%</p>
+      </div>
+      <div class="col-2">
+        <small class="text-muted">Total</small>
+        <p><strong>{{ factura.total | number:'1.2-2' }}</strong></p>
+      </div>
+      <div class="col-2">
+        <small class="text-muted">Saldo</small>
+        <p>{{ factura.saldoPendiente | number:'1.2-2' }}</p>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-12">
+        <small class="text-muted">Observaciones</small>
+        <p>{{ factura.observaciones || '-' }}</p>
+      </div>
+    </div>
+
+    @if (factura.detalles?.length) {
+      <hr>
+      <h6>Ítems</h6>
+      <table class="table table-sm">
+        <thead><tr><th>#</th><th>Descripción</th><th>Cant.</th><th>P. Unit.</th><th>% IVA</th><th>Subtotal</th><th>Total</th></tr></thead>
+        <tbody>
+          @for (d of factura.detalles; track d.idFacturaDetalle) {
+            <tr>
+              <td>{{ d.orden }}</td><td>{{ d.descripcion }}</td><td>{{ d.cantidad }}</td>
+              <td>{{ d.precioUnitario | number:'1.2-2' }}</td><td>{{ d.porcentajeIva ?? 0 }}%</td>
+              <td>{{ d.subtotal | number:'1.2-2' }}</td><td>{{ d.total | number:'1.2-2' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+    @if (factura.mantenimientos?.length) {
+      <hr>
+      <h6>Mantenimientos Asociados</h6>
+      <table class="table table-sm">
+        <thead><tr><th>Id</th><th>Título</th><th>Importe</th></tr></thead>
+        <tbody>
+          @for (m of factura.mantenimientos; track m.idMantenimiento) {
+            <tr><td>{{ m.idMantenimiento }}</td><td>{{ m.titulo }}</td><td>{{ m.importe | number:'1.2-2' }}</td></tr>
+          }
+        </tbody>
+      </table>
+    }
+    @if (factura.recibosImputados?.length) {
+      <hr>
+      <h6>Recibos Imputados</h6>
+      <table class="table table-sm">
+        <thead><tr><th>Recibo</th><th>Fecha</th><th>Importe</th><th>Anulado</th></tr></thead>
+        <tbody>
+          @for (r of factura.recibosImputados; track r.idReciboFactura) {
+            <tr>
+              <td>{{ r.idRecibo }}</td><td>{{ r.fechaRecibo | date:'dd/MM/yyyy' }}</td>
+              <td>{{ r.importeAplicado | number:'1.2-2' }}</td>
+              <td><span class="badge" [class.bg-danger]="r.reciboAnulado" [class.bg-success]="!r.reciboAnulado">{{ r.reciboAnulado ? 'Sí' : 'No' }}</span></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  } @else {
+    <p class="text-muted">Cargando...</p>
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <div style="display:flex;width:100%">
+    <div style="margin-right:auto">
+      @if (factura && !factura.anulada) {
+        <app-button label="Anular" type="danger" (onClick)="anular()"></app-button>
+      }
+    </div>
+    <div style="margin-left:auto">
+      <app-button label="Cerrar" type="primary" (onClick)="salir()"></app-button>
+    </div>
+  </div>
+</mat-dialog-actions>

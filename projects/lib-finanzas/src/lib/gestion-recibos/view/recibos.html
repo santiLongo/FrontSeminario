@@ -1,0 +1,31 @@
+<app-core-view title="Recibos">
+  <div body>
+    <mat-button-toggle-group
+      [hideSingleSelectionIndicator]="true"
+      (change)="dataService.search()"
+      [formControl]="dataService.tipoRecibo"
+      style="margin-bottom: 20px"
+    >
+      <mat-button-toggle [value]="null">Todos</mat-button-toggle>
+      <mat-button-toggle [value]="1">Cobros</mat-button-toggle>
+      <mat-button-toggle [value]="2">Pagos</mat-button-toggle>
+    </mat-button-toggle-group>
+    <app-grid [dataService]="dataService" [config]="gridConfig"></app-grid>
+  </div>
+</app-core-view>
+
+<ng-template #tipo let-row>
+  @if (row?.tipo === 1) {
+    <span class="badge bg-success">Cobro</span>
+  } @else {
+    <span class="badge bg-warning text-dark">Pago</span>
+  }
+</ng-template>
+
+<ng-template #estado let-row>
+  @if (row?.anulado) {
+    <span class="badge bg-danger">Anulado</span>
+  } @else {
+    <span class="badge bg-success">Activo</span>
+  }
+</ng-template>

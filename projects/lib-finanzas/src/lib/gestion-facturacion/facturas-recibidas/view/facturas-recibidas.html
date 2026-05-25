@@ -1,0 +1,24 @@
+<app-core-view title="Facturas Recibidas">
+  <div body>
+    <app-grid [dataService]="dataService" [config]="gridConfig"> </app-grid>
+  </div>
+</app-core-view>
+<ng-template #estadoTpl let-row>
+  @switch (row.estado) {
+    @case (1) {
+      <span class="badge bg-warning text-dark">Pendiente</span>
+    }
+    @case (2) {
+      <span class="badge bg-info">Pago Parcial</span>
+    }
+    @case (3) {
+      <span class="badge bg-success">Cancelada</span>
+    }
+    @case (4) {
+      <span class="badge bg-danger">Anulada</span>
+    }
+    @default {
+      <span class="badge bg-secondary">-</span>
+    }
+  }
+</ng-template>

@@ -1,0 +1,59 @@
+<h2 mat-dialog-title>Nueva Factura Emitida (Sin Viaje)</h2>
+<mat-dialog-content>
+  <form [formGroup]="formulario">
+    <div class="row mb-3">
+      <div class="col-12">
+        <app-combo label="Cliente" [type]="'ComboClientes'" formControlName="idCliente"></app-combo>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4">
+        <app-date-form-field label="Fecha Emisión" formControlName="fechaEmision"></app-date-form-field>
+      </div>
+      <div class="col-4">
+        <app-date-form-field label="Fecha Vencimiento" formControlName="fechaVencimiento"></app-date-form-field>
+      </div>
+      <div class="col-4">
+        <app-combo
+          label="% IVA"
+          [isLocal]="true"
+          [data]="[{numero: 0, descripcion: '0%'}, {numero: 10.5, descripcion: '10.5%'}, {numero: 21, descripcion: '21%'}]"
+          formControlName="porcentajeIva"
+        ></app-combo>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-6">
+        <app-combo label="Moneda" [type]="'ComboMoneda'" formControlName="idMoneda"></app-combo>
+      </div>
+      <div class="col-6">
+        <app-decimal-form-field label="Tipo de Cambio" formControlName="tipoCambio" [readonly]="moneda.value <= 1" [decimals]="4"></app-decimal-form-field>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-12">
+        <app-form-field label="Observaciones" formControlName="observaciones"></app-form-field>
+      </div>
+    </div>
+  </form>
+  <h6 class="text-body-secondary mb-2">Ítems</h6>
+  <app-grid [dataService]="detallesService" [config]="detallesConfig" [hiddenRefresh]="true"></app-grid>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <div style="display:flex;width:100%">
+    <div style="margin-right:auto"></div>
+    <div style="margin-left:auto;display:flex;gap:10px">
+      <app-button label="Cancelar" type="danger" (onClick)="salir()"></app-button>
+      <app-button label="Guardar" type="success" (onClick)="guardar()"></app-button>
+    </div>
+  </div>
+</mat-dialog-actions>
+<ng-template #cantidadTpl let-row>
+  <app-decimal-form-field label="Cantidad" [(ngModel)]="row.cantidad" [decimals]="2"></app-decimal-form-field>
+</ng-template>
+<ng-template #precioTpl let-row>
+  <app-decimal-form-field label="Precio Unit." [(ngModel)]="row.precioUnitario" [decimals]="2"></app-decimal-form-field>
+</ng-template>
+<ng-template #ivaTpl let-row>
+  <app-decimal-form-field label="% IVA" [(ngModel)]="row.porcentajeIva" [decimals]="2"></app-decimal-form-field>
+</ng-template>

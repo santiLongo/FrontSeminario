@@ -16,6 +16,14 @@ export const FinanzasRoutes : Routes = [
             {
                 path: 'gestion-cobros',
                 loadChildren: () => import('../gestion-cobros/router/routes').then(m => m.GestionCobrosRoutes)
+            },
+            {
+                path: 'gestion-recibos',
+                loadChildren: () => import('../gestion-recibos/router/routes').then(m => m.RecibosRoutes)
+            },
+            {
+                path: 'gestion-facturacion',
+                loadChildren: () => import('../gestion-facturacion/router/routes').then(m => m.FacturacionRoutes)
             }
         ]
     }

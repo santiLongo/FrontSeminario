@@ -1,0 +1,36 @@
+<div [formGroup]="grupo" class="border rounded p-2 mb-2">
+  <div class="row align-items-end">
+    <div class="col-6">
+      <app-combo label="Forma de Pago" [type]="'ComboFormaPago'" formControlName="idFormaPago"></app-combo>
+    </div>
+    <div class="col-4">
+      <app-decimal-form-field label="Monto" formControlName="monto" [decimals]="2"></app-decimal-form-field>
+    </div>
+    <div class="col-2 d-flex align-items-center pb-1">
+      <ng-content></ng-content>
+    </div>
+  </div>
+  @if (esCheque) {
+    <div formGroupName="datosCheque">
+      <div class="row">
+        <div class="col-3">
+          <app-decimal-form-field label="Nro. Cheque" formControlName="nroCheque" [decimals]="0"></app-decimal-form-field>
+        </div>
+        <div class="col-3">
+          <app-cuit-mask label="CUIT Emisor" formControlName="cuitEmisor"></app-cuit-mask>
+        </div>
+        <div class="col-3">
+          <app-date-form-field [label]="'Fecha Cobro'" formControlName="fechaCobro"></app-date-form-field>
+        </div>
+        <div class="col-3">
+          <app-combo label="Banco" [type]="'ComboBanco'" formControlName="idBanco"></app-combo>
+        </div>
+      </div>
+      <div class="row mt-1">
+        <div class="col-12">
+          <mat-checkbox formControlName="esPropio">Es cheque propio</mat-checkbox>
+        </div>
+      </div>
+    </div>
+  }
+</div>

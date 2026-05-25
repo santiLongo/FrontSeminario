@@ -1,0 +1,96 @@
+<h2 mat-dialog-title>Detalle de Recibo</h2>
+<mat-dialog-content>
+  @if (recibo) {
+    <div class="row mb-3">
+      <div class="col-3">
+        <small class="text-muted">Tipo</small>
+        <p>
+          <span
+            class="badge"
+            [class.bg-success]="recibo.tipo === 1"
+            [class.bg-warning]="recibo.tipo === 2"
+            [class.text-dark]="recibo.tipo === 2"
+          >{{tipoLabel}}</span>
+        </p>
+      </div>
+      <div class="col-3">
+        <small class="text-muted">Fecha</small>
+        <p>{{recibo.fechaRecibo | date:'dd/MM/yyyy'}}</p>
+      </div>
+      <div class="col-3">
+        <small class="text-muted">Contraparte</small>
+        <p>{{recibo.nombreContraparte}}</p>
+      </div>
+      <div class="col-3">
+        <small class="text-muted">Monto Total</small>
+        <p><strong>{{recibo.montoTotal | number:'1.2-2'}}</strong></p>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-12">
+        <small class="text-muted">Observaciones</small>
+        <p>{{recibo.observaciones || '-'}}</p>
+      </div>
+    </div>
+    @if (recibo.formasDePago?.length) {
+      <hr>
+      <h6>Formas de Pago</h6>
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th>Forma de Pago</th>
+            <th>Monto</th>
+            <th>Nro. Cheque</th>
+            <th>Fecha Cobro</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (p of recibo.formasDePago; track p.idReciboFormaPago) {
+            <tr>
+              <td>{{p.descripcionFormaPago}}</td>
+              <td>{{p.monto | number:'1.2-2'}}</td>
+              <td>{{p.nroCheque || '-'}}</td>
+              <td>{{p.fechaCobro ? (p.fechaCobro | date:'dd/MM/yyyy') : '-'}}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+    @if (recibo.facturasImputadas?.length) {
+      <hr>
+      <h6>Facturas Imputadas</h6>
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th>Número</th>
+            <th>Fecha Emisión</th>
+            <th>Importe Aplicado</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (f of recibo.facturasImputadas; track f.idReciboFactura) {
+            <tr>
+              <td>{{f.puntoVenta}}-{{f.numero}}</td>
+              <td>{{f.fechaEmision | date:'dd/MM/yyyy'}}</td>
+              <td>{{f.importeAplicado | number:'1.2-2'}}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  } @else {
+    <p class="text-muted">Cargando...</p>
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <div style="display: flex; width: 100%">
+    <div style="margin-right: auto">
+      @if (recibo && !recibo.anulado) {
+        <app-button [label]="'Anular'" [type]="'danger'" (onClick)="anular()"></app-button>
+      }
+    </div>
+    <div style="margin-left: auto">
+      <app-button [label]="'Cerrar'" [type]="'primary'" (onClick)="salir()"></app-button>
+    </div>
+  </div>
+</mat-dialog-actions>

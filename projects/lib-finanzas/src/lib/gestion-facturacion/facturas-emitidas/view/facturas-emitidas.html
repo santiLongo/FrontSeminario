@@ -1,0 +1,25 @@
+<app-core-view title="Facturas Emitidas">
+  <div body>
+    <app-grid [dataService]="dataService" [config]="gridConfig"></app-grid>
+  </div>
+</app-core-view>
+
+<ng-template #estadoTpl let-row>
+  @if (row?.estado === 1) {
+    <span class="badge bg-warning text-dark">Pendiente</span>
+  } @else if (row?.estado === 2) {
+    <span class="badge bg-info">Pago Parcial</span>
+  } @else if (row?.estado === 3) {
+    <span class="badge bg-success">Cancelada</span>
+  } @else {
+    <span class="badge bg-danger">Anulada</span>
+  }
+</ng-template>
+
+<ng-template #confirmadaTpl let-row>
+  @if (row?.confirmada) {
+    <span class="badge bg-success">Sí</span>
+  } @else {
+    <span class="badge bg-secondary">No</span>
+  }
+</ng-template>
