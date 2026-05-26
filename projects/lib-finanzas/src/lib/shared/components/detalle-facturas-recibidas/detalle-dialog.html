@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Detalle de Factura Emitida</h2>
+<h2 mat-dialog-title>Detalle de Factura Recibida</h2>
 <mat-dialog-content>
   @if (factura) {
     <div class="row mb-3">
@@ -21,7 +21,7 @@
     </div>
     <div class="row mb-3">
       <div class="col-4">
-        <small class="text-muted">Cliente</small>
+        <small class="text-muted">Proveedor / Taller</small>
         <p>{{ factura.nombreContraparte }}</p>
       </div>
       <div class="col-2">
@@ -42,27 +42,7 @@
       </div>
     </div>
     <div class="row mb-2">
-      <div class="col-3">
-        <small class="text-muted">Confirmada</small>
-        <p>
-          @if (factura.confirmada) {
-            <span class="badge bg-success">Sí</span>
-          } @else {
-            <span class="badge bg-secondary">No</span>
-          }
-        </p>
-      </div>
-      @if (factura.cae) {
-        <div class="col-4">
-          <small class="text-muted">CAE</small>
-          <p>{{ factura.cae }}</p>
-        </div>
-        <div class="col-3">
-          <small class="text-muted">Vto. CAE</small>
-          <p>{{ factura.caeFchVto }}</p>
-        </div>
-      }
-      <div class="col-2">
+      <div class="col-12">
         <small class="text-muted">Observaciones</small>
         <p>{{ factura.observaciones || '-' }}</p>
       </div>
@@ -84,14 +64,14 @@
         </tbody>
       </table>
     }
-    @if (factura.viajes?.length) {
+    @if (factura.mantenimientos?.length) {
       <hr>
-      <h6>Viajes Asociados</h6>
+      <h6>Mantenimientos Asociados</h6>
       <table class="table table-sm">
-        <thead><tr><th>Nro. Viaje</th><th>Cliente</th><th>Monto</th></tr></thead>
+        <thead><tr><th>Id</th><th>Título</th><th>Importe</th></tr></thead>
         <tbody>
-          @for (v of factura.viajes; track v.idFacturaViaje) {
-            <tr><td>{{ v.nroViaje }}</td><td>{{ v.cliente }}</td><td>{{ v.montoViaje | number:'1.2-2' }}</td></tr>
+          @for (m of factura.mantenimientos; track m.idMantenimiento) {
+            <tr><td>{{ m.idMantenimiento }}</td><td>{{ m.titulo }}</td><td>{{ m.importeMantenimiento | number:'1.2-2' }}</td></tr>
           }
         </tbody>
       </table>
@@ -119,7 +99,7 @@
 <mat-dialog-actions align="center">
   <div style="display:flex;width:100%">
     <div style="margin-right:auto">
-      @if (factura && !factura.anulada) {
+      @if (factura && !factura.anulada && showAnular) {
         <app-button label="Anular" type="danger" (onClick)="anular()"></app-button>
       }
     </div>

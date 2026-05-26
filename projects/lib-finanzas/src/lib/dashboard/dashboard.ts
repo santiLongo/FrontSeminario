@@ -26,7 +26,7 @@ export class FiananzasDashboardComponent{
         },
         {
             icon: 'bank',
-            title: 'Gestión de',
+            title: '',
             subtitle: 'Facturación',
             href: './gestion-facturacion'
         },

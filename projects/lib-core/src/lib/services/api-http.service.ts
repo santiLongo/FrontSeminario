@@ -94,6 +94,16 @@ export class ApiHttpService {
       .pipe(finalize(() => this.loadingService.hide()));
   }
 
+  putWithBlock<T>(url: string, body: any, message?: string): Observable<T> {
+    this.loadingService.show(message);
+
+    return this.http
+      .put<T>(url, body, {
+        headers: this.getHeaders(),
+      })
+      .pipe(finalize(() => this.loadingService.hide()));
+  }
+
   private buildParams(params?: any): HttpParams {
     let httpParams = new HttpParams();
 

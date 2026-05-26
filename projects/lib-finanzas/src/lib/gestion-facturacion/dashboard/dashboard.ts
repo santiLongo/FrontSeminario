@@ -13,18 +13,6 @@ import { Cards, DashboardV2Component, FadeInComponent } from 'lib-core';
 export class FacturacionDashboardComponent {
     cards: Cards[] = [
         {
-            icon: 'company',
-            title: 'Facturas',
-            subtitle: 'Emitidas',
-            href: './facturas-emitidas',
-        },
-        {
-            icon: 'inventory',
-            title: 'Facturas',
-            subtitle: 'Recibidas',
-            href: './facturas-recibidas',
-        },
-        {
             icon: 'truck',
             title: 'Viajes',
             subtitle: 'Pendientes de Facturar',
@@ -36,5 +24,24 @@ export class FacturacionDashboardComponent {
             subtitle: 'Pendientes de Facturar',
             href: './pendientes-mantenimientos',
         },
+        {
+            icon: 'next',
+            title: 'Pendientes',
+            subtitle: 'de Confirmar',
+            href: './pendientes-confirmar'
+        },
+        {
+            icon: 'company',
+            title: 'Facturas',
+            subtitle: 'Emitidas',
+            href: './facturas-emitidas',
+        },
+        {
+            icon: 'inventory',
+            title: 'Facturas',
+            subtitle: 'Recibidas',
+            href: './facturas-recibidas',
+        },
+        
     ];
 }

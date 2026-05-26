@@ -5,13 +5,16 @@
   </p>
   <form [formGroup]="formulario">
     <div class="row mb-3">
-      <div class="col-4">
-        <app-number-form-field label="Punto de Venta" formControlName="puntoVenta"></app-number-form-field>
+      <div class="col-6">
+        <app-number-form-field label="Punto de Venta" formControlName="ptoVenta"></app-number-form-field>
       </div>
-      <div class="col-4">
-        <app-number-form-field label="Número" formControlName="numero"></app-number-form-field>
+
+      <div class="col-6">
+        <app-number-form-field label="Numero de Factura" formControlName="numeroFactura"></app-number-form-field>
       </div>
-      <div class="col-4">
+    </div>
+    <div class="row mb-3">
+      <div class="col-12">
         <app-date-form-field label="Fecha Vencimiento (opcional)" formControlName="fechaVencimiento"></app-date-form-field>
       </div>
     </div>

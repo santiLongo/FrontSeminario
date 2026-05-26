@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>Editar Factura Emitida #{{ data.numero }}</h2>
+<mat-dialog-content>
+  @if (cargando) {
+    <p class="text-muted text-center py-3">Cargando...</p>
+  } @else {
+    <form [formGroup]="formulario">
+      <div class="row mb-3">
+        <div class="col-6">
+          <app-date-form-field label="Fecha Vencimiento" formControlName="fechaVencimiento"></app-date-form-field>
+        </div>
+        <div class="col-6">
+          <app-combo label="Moneda" [type]="'ComboMoneda'" formControlName="idMoneda"></app-combo>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-6">
+          <app-decimal-form-field
+            label="Tipo de Cambio"
+            formControlName="tipoCambio"
+            [readonly]="moneda.value <= 1"
+            [decimals]="4"
+          ></app-decimal-form-field>
+        </div>
+        <div class="col-6">
+          <app-form-field label="Observaciones" formControlName="observaciones"></app-form-field>
+        </div>
+      </div>
+    </form>
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <div style="display:flex;width:100%;gap:10px;justify-content:flex-end">
+    <app-button label="Cancelar" type="danger" (onClick)="salir()"></app-button>
+    <app-button label="Guardar" type="success" (onClick)="guardar()" [disabled]="cargando"></app-button>
+  </div>
+</mat-dialog-actions>

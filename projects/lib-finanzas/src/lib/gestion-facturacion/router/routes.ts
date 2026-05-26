@@ -33,6 +33,13 @@ export const FacturacionRoutes: Routes = [
                         (m) => m.PendientesMantenimientosRoutes,
                     ),
             },
+            {
+                path: 'pendientes-confirmar',
+                loadChildren: () =>
+                    import('../pendientes-confirmar/router/routes').then(
+                        (m) => m.PendientesConfirmarRoutes,
+                    ),
+            },
         ],
     },
 ];

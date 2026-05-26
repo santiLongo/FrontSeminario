@@ -1,26 +1,34 @@
-import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import {
     AlertService,
     ButtonComponent,
     ComboComponent,
     DateFormFieldComponent,
     DecimalFormFieldComponent,
+    EditableGridService,
     FormFieldComponent,
     GridComponent,
     GridConfig,
 } from 'lib-core';
 import { CommonModule } from '@angular/common';
 import { filter, Subject, switchMap, takeUntil } from 'rxjs';
-import { FacturasRecibidasHttpService } from '../../services/http.service';
-import { CrearRecibidaModel, DetalleItemModel } from './models/model';
-import { CrearRecibidaDetalleDataService } from './detalle-data.service';
+import { Injectable } from '@angular/core';
+import { PendientesConfirmarHttpService } from '../../services/http.service';
+import { DetalleUpdateModel, UpdateRecibidaModel } from './models/model';
+
+@Injectable()
+class EditarRecibidaDetalleDataService extends EditableGridService<DetalleUpdateModel> {
+    constructor(alertService: AlertService) {
+        super(alertService);
+    }
+    get data() { return this.unwrap(this.items); }
+}
 
 @Component({
-    standalone: true,
-    selector: 'app-crear-recibida-dialog',
-    templateUrl: './crear-dialog.html',
+    selector: 'app-editar-recibida-dialog',
+    templateUrl: './editar-recibida-dialog.html',
     imports: [
         MatDialogModule,
         ReactiveFormsModule,
@@ -31,54 +39,41 @@ import { CrearRecibidaDetalleDataService } from './detalle-data.service';
         FormFieldComponent,
         CommonModule,
         GridComponent,
-        FormsModule
+        FormsModule,
     ],
-    providers: [CrearRecibidaDetalleDataService],
+    providers: [EditarRecibidaDetalleDataService],
 })
-export class CrearRecibidaDialogComponent implements OnInit, OnDestroy {
+export class EditarRecibidaDialogComponent implements OnInit, OnDestroy {
     @ViewChild('cantidadTpl', { static: true }) cantidadTpl: TemplateRef<any>;
     @ViewChild('precioTpl', { static: true }) precioTpl: TemplateRef<any>;
     @ViewChild('ivaTpl', { static: true }) ivaTpl: TemplateRef<any>;
 
     formulario: FormGroup;
-    detallesConfig: GridConfig<DetalleItemModel>;
+    detallesConfig: GridConfig<DetalleUpdateModel>;
+    cargando = true;
     private destroy$ = new Subject<void>();
 
     constructor(
-        private dialogRef: MatDialogRef<CrearRecibidaDialogComponent>,
+        private dialogRef: MatDialogRef<EditarRecibidaDialogComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: { idFactura: number; numero: number },
         private fb: FormBuilder,
+        private httpService: PendientesConfirmarHttpService,
         private alertService: AlertService,
-        private httpService: FacturasRecibidasHttpService,
-        public detallesService: CrearRecibidaDetalleDataService,
+        public detallesService: EditarRecibidaDetalleDataService,
     ) {}
 
     ngOnInit(): void {
-        this.formSetup();
-        this.gridSetup();
-        this.moneda.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((v) => {
-            if (v <= 1) this.tipoCambio.reset();
-        });
-    }
-
-    ngOnDestroy(): void {
-        this.destroy$.next();
-        this.destroy$.complete();
-    }
-
-    formSetup() {
         this.formulario = this.fb.group({
             idProveedor: [null],
             idTaller: [null],
-            fechaEmision: [new Date(), Validators.required],
+            fechaEmision: [null, Validators.required],
             fechaVencimiento: [null],
             porcentajeIva: [21, Validators.required],
             idMoneda: [null, Validators.required],
             tipoCambio: [null],
             observaciones: [null],
         });
-    }
 
-    gridSetup() {
         this.detallesConfig = {
             columns: [
                 { key: 'descripcion', title: 'Descripción', type: 'text', editable: true },
@@ -88,9 +83,41 @@ export class CrearRecibidaDialogComponent implements OnInit, OnDestroy {
             ],
             isEditable: true,
         };
+
+        this.moneda.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((v) => {
+            if (v <= 1) this.tipoCambio.reset();
+        });
+
+        this.httpService.getFactura(this.data.idFactura, 2).subscribe((factura) => {
+            this.formulario.patchValue({
+                idProveedor: factura.idProveedor,
+                idTaller: factura.idTaller,
+                fechaEmision: factura.fechaEmision ? new Date(factura.fechaEmision) : null,
+                fechaVencimiento: factura.fechaVencimiento ? new Date(factura.fechaVencimiento) : null,
+                porcentajeIva: factura.porcentajeIva,
+                idMoneda: factura.idMoneda,
+                tipoCambio: factura.tipoCambio,
+                observaciones: factura.observaciones,
+            });
+
+            if (factura.detalles?.length) {
+                const items = factura.detalles.map((d: any) => ({
+                    descripcion: d.descripcion,
+                    cantidad: d.cantidad,
+                    precioUnitario: d.precioUnitario,
+                    porcentajeIva: d.porcentajeIva ?? 0,
+                }));
+                this.detallesService.setAll(items);
+            }
+
+            this.cargando = false;
+        });
     }
 
-    salir() { this.dialogRef.close(); }
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
 
     guardar() {
         this.formulario.markAllAsTouched();
@@ -109,7 +136,7 @@ export class CrearRecibidaDialogComponent implements OnInit, OnDestroy {
             return;
         }
 
-        const command: CrearRecibidaModel = {
+        const command: UpdateRecibidaModel = {
             idProveedor: raw.idProveedor,
             idTaller: raw.idTaller,
             fechaEmision: raw.fechaEmision,
@@ -122,14 +149,16 @@ export class CrearRecibidaDialogComponent implements OnInit, OnDestroy {
         };
 
         this.alertService
-            .info$('¿Confirmar la carga de la factura?')
+            .info$(`¿Guardar los cambios de la factura #${this.data.numero}?`)
             .pipe(
                 filter(Boolean),
-                switchMap(() => this.httpService.add(command)),
-                switchMap(() => this.alertService.success$('Éxito', 'Factura registrada correctamente')),
+                switchMap(() => this.httpService.updateRecibida(this.data.idFactura, command)),
+                switchMap(() => this.alertService.success$('Éxito', 'Factura actualizada correctamente')),
             )
-            .subscribe(() => this.salir());
+            .subscribe(() => this.dialogRef.close(true));
     }
+
+    salir() { this.dialogRef.close(); }
 
     get moneda() { return this.formulario.get('idMoneda')!; }
     get tipoCambio() { return this.formulario.get('tipoCambio')!; }

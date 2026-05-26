@@ -6,7 +6,6 @@ import { GestionViajesGridModel } from '../models/grid-model';
 import { ForzarEstadoModel } from '../dialogs/forzar-estado/models/forzar-estado-model';
 import { InformarDescargaModel } from '../dialogs/informar-descarga/models/informar-descarga-model';
 import { ViajesLibService } from '../../config/viajes.service';
-import { InformarCobroModel } from '../dialogs/informar-cobro/models/informar-cobro-model';
 import { ObservacionesModel } from '../dialogs/observaciones/model/model';
 
 @Injectable({
@@ -39,11 +38,6 @@ export class GestionViajesHttpService {
 
   informarDescarga(command: InformarDescargaModel): Observable<void> {
     const fullUrl = this.url + 'cargar-descarga';
-    return this.http.postWithBlock(fullUrl, command);
-  }
-
-  altaCobro(command: InformarCobroModel): Observable<void> {
-    const fullUrl = this.urlCobro + 'add';
     return this.http.postWithBlock(fullUrl, command);
   }
 

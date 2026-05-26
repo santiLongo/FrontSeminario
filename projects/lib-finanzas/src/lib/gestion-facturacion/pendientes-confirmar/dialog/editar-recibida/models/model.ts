@@ -1,11 +1,11 @@
-export interface DetalleItemModel {
+export interface DetalleUpdateModel {
     descripcion: string;
     cantidad: number;
     precioUnitario: number;
     porcentajeIva: number;
 }
 
-export interface CrearRecibidaModel {
+export interface UpdateRecibidaModel {
     idProveedor?: number;
     idTaller?: number;
     fechaEmision: Date;
@@ -13,7 +13,6 @@ export interface CrearRecibidaModel {
     porcentajeIva: number;
     idMoneda: number;
     tipoCambio?: number;
-    idsMantenimiento?: number[];
     observaciones?: string;
-    detalles: DetalleItemModel[];
+    detalles: DetalleUpdateModel[];
 }

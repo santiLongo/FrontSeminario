@@ -12,7 +12,7 @@ export interface DetalleFacturaItem {
 export interface MantenimientoFacturaItem {
     idMantenimiento: number;
     titulo: string;
-    importe: number;
+    importeMantenimiento: number;
 }
 
 export interface ReciboFacturaItem {

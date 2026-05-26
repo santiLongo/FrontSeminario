@@ -6,8 +6,7 @@ import { FacturasEmitidasDataService } from '../services/data.service';
 import { FacturaEmitidaGridModel } from '../models/grid-model';
 import { CrearEmitidaConViajeDialogComponent } from '../dialog/crear-con-viaje/crear-con-viaje-dialog';
 import { CrearEmitidaSinViajeDialogComponent } from '../dialog/crear-sin-viaje/crear-sin-viaje-dialog';
-import { ConfirmarEmitidaDialogComponent } from '../dialog/confirmar/confirmar-dialog';
-import { DetalleEmitidaDialogComponent } from '../dialog/detalle/detalle-dialog';
+import { FinanzasDialogService } from '../../../shared/services/dialog.service';
 
 @Component({
     selector: 'app-facturas-emitidas',
@@ -25,6 +24,7 @@ export class FacturasEmitidasComponent implements OnInit {
         public dataService: FacturasEmitidasDataService,
         private dialog: DialogService,
         private alertService: AlertService,
+        private finanzasDialogService: FinanzasDialogService
     ) {}
 
     ngOnInit(): void {
@@ -53,13 +53,6 @@ export class FacturasEmitidasComponent implements OnInit {
                     label: 'Ver Detalle',
                     icon: 'view',
                     onClick: (row) => this.openDetalle(row.idFactura),
-                },
-                {
-                    key: 'confirmar',
-                    label: 'Confirmar',
-                    icon: 'next',
-                    hidden: (row) => row.confirmada || row.anulada,
-                    onClick: (row) => this.openConfirmar(row),
                 },
                 {
                     key: 'anular',
@@ -111,16 +104,7 @@ export class FacturasEmitidasComponent implements OnInit {
     }
 
     openDetalle(idFactura: number) {
-        this.dialog
-            .open(DetalleEmitidaDialogComponent, { data: { idFactura }, size: 'xxl' })
-            .afterClosed()
-            .subscribe(() => this.dataService.search());
-    }
-
-    openConfirmar(row: FacturaEmitidaGridModel) {
-        this.dialog
-            .open(ConfirmarEmitidaDialogComponent, { data: { idFactura: row.idFactura, numero: row.numero }, size: 'xxl' })
-            .afterClosed()
+        this.finanzasDialogService.openDetalleEmitida(idFactura)
             .subscribe(() => this.dataService.search());
     }
 

@@ -5,7 +5,7 @@ import { filter, switchMap } from 'rxjs';
 import { FacturasRecibidasDataService } from '../services/data.service';
 import { FacturaRecibidaGridModel } from '../models/grid-model';
 import { CrearRecibidaDialogComponent } from '../dialog/crear/crear-dialog';
-import { DetalleRecibidaDialogComponent } from '../dialog/detalle/detalle-dialog';
+import { FinanzasDialogService } from '../../../shared/services/dialog.service';
 
 @Component({
     selector: 'app-facturas-recibidas',
@@ -22,6 +22,7 @@ export class FacturasRecibidasComponent implements OnInit {
         public dataService: FacturasRecibidasDataService,
         private dialog: DialogService,
         private alertService: AlertService,
+        private finanzasDialogService: FinanzasDialogService
     ) {}
 
     ngOnInit(): void {
@@ -85,9 +86,7 @@ export class FacturasRecibidasComponent implements OnInit {
     }
 
     openDetalle(idFactura: number) {
-        this.dialog
-            .open(DetalleRecibidaDialogComponent, { data: { idFactura }, size: 'xxl' })
-            .afterClosed()
+        this.finanzasDialogService.openDetalleRecibida(idFactura)
             .subscribe(() => this.dataService.search());
     }
 

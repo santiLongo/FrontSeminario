@@ -3,28 +3,31 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { AlertService, ButtonComponent } from 'lib-core';
 import { CommonModule, DatePipe, DecimalPipe } from '@angular/common';
 import { filter, switchMap } from 'rxjs';
-import { FacturasRecibidasHttpService } from '../../services/http.service';
-import { GetFacturaRecibidaResponse } from './models/model';
+import { GetFacturaEmitidaResponse } from './models/model';
+import { FinanzasHttpService } from '../../services/http.service';
 
 const ESTADO_LABELS: Record<number, string> = { 1: 'Pendiente', 2: 'Pago Parcial', 3: 'Cancelada', 4: 'Anulada' };
 
 @Component({
-    selector: 'app-detalle-recibida-dialog',
+    selector: 'app-detalle-emitida-dialog',
     templateUrl: './detalle-dialog.html',
     imports: [MatDialogModule, ButtonComponent, CommonModule, DatePipe, DecimalPipe],
 })
-export class DetalleRecibidaDialogComponent implements OnInit {
-    factura?: GetFacturaRecibidaResponse;
+export class DetalleEmitidaDialogComponent implements OnInit {
+    factura?: GetFacturaEmitidaResponse;
+    showAnular = true
 
     constructor(
-        private dialogRef: MatDialogRef<DetalleRecibidaDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: { idFactura: number },
-        private httpService: FacturasRecibidasHttpService,
+        private dialogRef: MatDialogRef<DetalleEmitidaDialogComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: { idFactura: number, showAnular: boolean },
+        private httpService: FinanzasHttpService,
         private alertService: AlertService,
-    ) {}
+    ) {
+        this.showAnular = data.showAnular;
+    }
 
     ngOnInit(): void {
-        this.httpService.get(this.data.idFactura).subscribe((res) => (this.factura = res));
+        this.httpService.getEmitidas(this.data.idFactura).subscribe((res) => (this.factura = res));
     }
 
     anular() {
@@ -32,7 +35,7 @@ export class DetalleRecibidaDialogComponent implements OnInit {
             .info$('¿Seguro que desea anular esta factura?')
             .pipe(
                 filter(Boolean),
-                switchMap(() => this.httpService.anular(this.data.idFactura)),
+                switchMap(() => this.httpService.anularEmitida(this.data.idFactura)),
                 switchMap(() => this.alertService.success$('Éxito', 'Factura anulada correctamente')),
             )
             .subscribe(() => this.dialogRef.close(true));

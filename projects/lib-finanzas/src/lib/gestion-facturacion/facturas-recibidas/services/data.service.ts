@@ -12,7 +12,7 @@ export class FacturasRecibidasDataService extends BaseGridService<FacturaRecibid
     }
 
     override getData(state: GridState): Observable<PagedResult<FacturaRecibidaGridModel>> {
-        const command: FacturaRecibidaFilterModel = {};
+        const command: FacturaRecibidaFilterModel = { confirmada: true };
         return this.httpService.getAll(command, state);
     }
 

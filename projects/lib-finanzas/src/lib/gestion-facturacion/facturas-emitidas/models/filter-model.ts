@@ -3,4 +3,5 @@ export interface FacturaEmitidaFilterModel {
     estado?: number;
     fechaDesde?: Date;
     fechaHasta?: Date;
+    confirmada?: boolean;
 }

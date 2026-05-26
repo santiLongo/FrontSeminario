@@ -1,6 +1,6 @@
 export interface GenerarFacturaMantenimientoModel {
-    puntoVenta: number;
-    numero: number;
+    ptoVenta: number;
+    numeroFactura: number;
     idMoneda: number;
     porcentajeIva: number;
     fechaVencimiento?: Date;

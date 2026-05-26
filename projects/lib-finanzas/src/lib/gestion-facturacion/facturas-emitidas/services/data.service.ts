@@ -12,7 +12,7 @@ export class FacturasEmitidasDataService extends BaseGridService<FacturaEmitidaG
     }
 
     override getData(state: GridState): Observable<PagedResult<FacturaEmitidaGridModel>> {
-        const command: FacturaEmitidaFilterModel = {};
+        const command: FacturaEmitidaFilterModel = { confirmada: true };
         return this.httpService.getAll(command, state);
     }
 

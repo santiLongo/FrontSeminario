@@ -23,7 +23,7 @@ import { GenerarFacturaMantenimientoModel } from './models/model';
         ComboComponent,
         DateFormFieldComponent,
         FormFieldComponent,
-        NumberFormFieldComponent,
+        NumberFormFieldComponent
     ],
 })
 export class GenerarFacturaMantenimientoDialogComponent implements OnInit {
@@ -39,8 +39,8 @@ export class GenerarFacturaMantenimientoDialogComponent implements OnInit {
 
     ngOnInit(): void {
         this.formulario = this.fb.group({
-            puntoVenta: [null, Validators.required],
-            numero: [null, Validators.required],
+            ptoVenta: [0, Validators.compose([Validators.required, Validators.min(1)])],
+            numeroFactura: [0, Validators.compose([Validators.required, Validators.min(1)])],
             idMoneda: [1, Validators.required],
             porcentajeIva: [21, Validators.required],
             fechaVencimiento: [null],
@@ -57,8 +57,8 @@ export class GenerarFacturaMantenimientoDialogComponent implements OnInit {
 
         const raw = this.formulario.getRawValue();
         const command: GenerarFacturaMantenimientoModel = {
-            puntoVenta: raw.puntoVenta,
-            numero: raw.numero,
+            numeroFactura: raw.numeroFactura,
+            ptoVenta: raw.ptoVenta,
             idMoneda: raw.idMoneda,
             porcentajeIva: raw.porcentajeIva,
             fechaVencimiento: raw.fechaVencimiento,

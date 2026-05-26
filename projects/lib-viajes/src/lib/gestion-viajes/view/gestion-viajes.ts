@@ -19,7 +19,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ForzarEstadoDialog } from '../dialogs/forzar-estado/forzar-estado-dialog';
 import { InformarDescargaDialog } from '../dialogs/informar-descarga/informar-descarga-dialog';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { InformarCobroDialog } from '../dialogs/informar-cobro/informar-cobro';
 import { Observaciones } from '../dialogs/observaciones/observaciones';
 
 @Component({
@@ -171,15 +170,6 @@ export class GestionViajesComponent implements OnInit, AfterViewInit {
           onClick: (rows) => this.forzarEstado(rows[0]),
         },
         {
-          key: 'cobrar',
-          label: 'Informar Cobro',
-          type: 'success',
-          icon: 'info',
-          disabled: (rows) => rows[0].estado === 'Cobrado',
-          disabledOnEmptyRows: true,
-          onClick: (rows) => this.informarCobro(rows[0]),
-        },
-        {
           key: 'obs',
           label: 'Ver Observciones',
           type: 'info',
@@ -226,14 +216,6 @@ export class GestionViajesComponent implements OnInit, AfterViewInit {
 
   informarDescarga(row: GestionViajesGridModel) {
     this.dialog.open(InformarDescargaDialog, { data: { idViaje: row.idViaje }, width: '800px' })
-    .afterClosed()
-    .subscribe(() => {
-      this.onBuscar()
-    });
-  }
-
-  informarCobro(row: GestionViajesGridModel) {
-    this.dialogService.open(InformarCobroDialog, { data: { idViaje: row.idViaje }, size: 'xl' })
     .afterClosed()
     .subscribe(() => {
       this.onBuscar()
