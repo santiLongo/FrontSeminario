@@ -7,6 +7,7 @@ import { LIB_VIAJES_CONFIG } from 'lib-viajes';
 import { LIB_GENERALES_CONFIG } from 'lib-generales';
 import { LIB_FINANZAS_CONFIG } from 'lib-finanzas';
 import { LIB_MANTENIMIENTO_CONFIG } from 'lib-mantenimiento';
+import { APP_CONFIG } from './app.config';
 
 export const LIB_CONFIG_PROVIDERS: Provider[] = [
   {
@@ -48,5 +49,11 @@ export const LIB_CONFIG_PROVIDERS: Provider[] = [
       urlLogin: ENV_CONFIG.urlLogin,
       urlViajes: ENV_CONFIG.urlViajes,
     },
+  },
+  {
+    provide: APP_CONFIG,
+    useValue: {
+      urlLogin: ENV_CONFIG.urlLogin
+    }
   },
 ];

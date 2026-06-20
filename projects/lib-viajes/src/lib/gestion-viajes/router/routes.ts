@@ -8,7 +8,8 @@ export const GestionViajesRoutes : Routes = [
         children: [
             {
                 path: '',
-                loadComponent: () => import('../view/gestion-viajes').then(m => m.GestionViajesComponent)
+                loadComponent: () => import('../view/gestion-viajes').then(m => m.GestionViajesComponent),
+                data: { title: '' },
             },
             {
                 path: 'formulario',

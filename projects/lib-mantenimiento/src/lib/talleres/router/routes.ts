@@ -9,6 +9,7 @@ export const TalleresRoutes : Routes = [
             {
                 path: '',
                 loadComponent: () => import('../view/talleres').then(m => m.TalleresComponent),
+                data: { title: '' },
             }
         ]
     }

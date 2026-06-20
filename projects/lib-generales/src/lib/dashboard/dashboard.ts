@@ -1,28 +1,24 @@
-import { Component } from "@angular/core";
-import { Cards, DashboardV2Component, FadeInComponent } from "lib-core";
+import { Component, Inject } from '@angular/core';
+import { Cards, DashboardV2Component, FadeInComponent } from 'lib-core';
+import { DASHBOARD, IDashboardService } from 'lib-shared'
 
 @Component({
-    selector: 'app-generales-dashboard',
-    template: `
+  selector: 'app-generales-dashboard',
+  template: `
     <app-fade-in>
       <app-dashboard-v2 [cards]="cards" />
     </app-fade-in>
   `,
-    imports: [DashboardV2Component, FadeInComponent]
+  imports: [DashboardV2Component, FadeInComponent],
 })
-export class GeneralesDashboardComponent{
-    cards: Cards[] = [
-        {
-            icon: 'location',
-            title: 'Maestro de',
-            subtitle: 'Localidades',
-            href: './gestion-localidad'
-        },
-        {
-            icon: 'truck',
-            title: 'Maestro de',
-            subtitle: 'Camiones',
-            href: './gestion-camiones'
-        },
-    ]
+export class GeneralesDashboardComponent {
+  cards: Cards[] = [];
+
+  constructor(@Inject(DASHBOARD) private dashboard: IDashboardService) {}
+
+  ngAfterViewInit(): void {
+    this.dashboard.getDashboard('generales').subscribe((res) => {
+      this.cards = res;
+    });
+  }
 }

@@ -13,6 +13,7 @@ export const MantenimientoRoutes: Routes = [
       {
         path: '',
         component: MantenimientoDashboardComponent,
+        data: { title: '' },
       },
       {
         path: 'talleres',

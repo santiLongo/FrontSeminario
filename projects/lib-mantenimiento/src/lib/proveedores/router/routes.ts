@@ -9,6 +9,7 @@ export const ProveedoresRoutes : Routes = [
             {
                 path: '',
                 loadComponent: () => import('../view/proveedores').then(m => m.ProveedoresComponent),
+                data: { title: '' },
             }
         ]
     }

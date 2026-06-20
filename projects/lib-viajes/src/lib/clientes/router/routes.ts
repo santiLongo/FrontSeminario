@@ -13,6 +13,7 @@ export const ClientesRoutes: Routes = [
         path: '',
         loadComponent: () =>
           import('../view/clientes').then((m) => m.ClientesComponent),
+        data: { title: '' },
       },
     ],
   },

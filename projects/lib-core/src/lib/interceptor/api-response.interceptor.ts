@@ -59,8 +59,14 @@ export const apiResponseInterceptor: HttpInterceptorFn = (
         error.message ||
         'Error inesperado del servidor';
 
-      if(error.error.message == undefined)
+      if(error.error?.message == undefined)
         message = 'Error al comunicarse con el servidor'
+
+      if(error.status === 401){
+        message = "Sesion expirada";
+        localStorage.clear();
+      }
+        
 
       dialogService.showError(message, error.status);
       return throwError(() => error);

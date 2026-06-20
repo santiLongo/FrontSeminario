@@ -36,6 +36,9 @@
       "lib-mantenimiento": [
         "projects/lib-mantenimiento/src/public-api.ts"
       ],
+      "lib-shared": [
+        "projects/lib-shared/src/public-api.ts"
+      ],
       "lib-viajes": [
         "projects/lib-viajes/src/public-api.ts"
       ]
@@ -91,6 +94,12 @@
     },
     {
       "path": "./projects/lib-mantenimiento/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/lib-shared/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/lib-shared/tsconfig.spec.json"
     }
   ]
 }

@@ -25,6 +25,8 @@ import { provideNzIcons } from 'ng-zorro-antd/icon';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 import localeEsAR from '@angular/common/locales/es-AR';
+import { DASHBOARD } from 'lib-shared';
+import { DashboardService } from 'src/service/dashboard.service';
 
 registerLocaleData(localeEs)
 registerLocaleData(localeEsAR, 'es-AR');
@@ -56,5 +58,9 @@ export const appConfig: ApplicationConfig = {
       WarningFill
     ]),
     ...LIB_CONFIG_PROVIDERS,
+    {
+      provide: DASHBOARD,
+      useClass: DashboardService
+    }
   ],
 };

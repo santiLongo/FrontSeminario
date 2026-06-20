@@ -1,13 +1,11 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import {
   Cards,
   DashboardComponent,
   FadeInComponent,
-  ButtonComponent,
   DialogService,
 } from 'lib-core';
 import { HomeHttpService } from '../service/http.service';
-import * as L from 'leaflet';
 import { NzCalendarModule } from 'ng-zorro-antd/calendar';
 import { CalendarioComponent } from '../components/calendario/calendario';
 import {
@@ -20,6 +18,7 @@ import { GetAllEventosCommand } from '../models/get-all-eventos';
 import { FormControl, FormGroup } from '@angular/forms';
 import { finalize, Subject, takeUntil } from 'rxjs';
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { DASHBOARD, IDashboardService } from 'lib-shared'
 
 @Component({
   selector: 'app-basic-home',
@@ -36,35 +35,7 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 ],
 })
 export class BasicHomeComponent implements OnInit, AfterViewInit, OnDestroy {
-  dashboardCards: Cards[] = [
-    {
-      title: 'Viajes',
-      subtitle: 'Gestión de viajes',
-      href: '/viajes',
-      icon: 'truck',
-    },
-    {
-      title: 'Mantenimiento',
-      subtitle: 'Control de unidades',
-      href: '/mantenimiento',
-      icon: 'caja_herr',
-      value: '',
-    },
-    {
-      title: 'Finanzas',
-      subtitle: 'Ingresos y gastos',
-      href: '/finanzas',
-      icon: 'dolar',
-      value: '',
-    },
-    {
-      title: 'Generales',
-      subtitle: 'Tablas generales',
-      href: '/generales',
-      icon: 'settings',
-      value: '',
-    },
-  ];
+  dashboardCards: Cards[] = [];
   data: PosicionUnidad[] = [];
   eventos: EventoItem[] = [];
   range: FormGroup;
@@ -77,6 +48,7 @@ export class BasicHomeComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private httpService: HomeHttpService,
     private dialogService: DialogService,
+    @Inject(DASHBOARD) private dashboard: IDashboardService
   ) {}
 
   ngOnInit(): void {
@@ -103,6 +75,10 @@ export class BasicHomeComponent implements OnInit, AfterViewInit, OnDestroy {
       if (this.end?.value === null || this.start?.value === null) return;
       //
       this.loadEvent();
+    });
+    //
+    this.dashboard.getDashboard('home').subscribe((res) => {
+      this.dashboardCards = res;
     });
   }
 

@@ -9,6 +9,7 @@ export const MantenimientoRoutes : Routes = [
             {
                 path: '',
                 loadComponent: () => import('../view/mantenimiento').then(m => m.MantenimientosComponent),
+                data: { title: '' },
             }
         ]
     }

@@ -18,7 +18,7 @@
 <!--  -->
 <mat-sidenav-container>
   <mat-sidenav mode="side" [opened]="opened">
-    <app-tree-menu-v3></app-tree-menu-v3>
+    <app-tree-menu-v3 (onSalir)="logout()" [items]="menuItems"></app-tree-menu-v3>
   </mat-sidenav>
   <mat-sidenav-content>
     <app-breadcrumb></app-breadcrumb>

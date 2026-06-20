@@ -11,6 +11,7 @@ export const GeneralesRoutes: Routes = [
       {
         path: '',
         component: GeneralesDashboardComponent,
+        data: { title: '' },
       },
       {
         path: 'gestion-localidad',
