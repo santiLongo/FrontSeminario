@@ -3,7 +3,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 COPY . .
-RUN npm run build:prod -- --base-href=/seminario-app/
+RUN npm run build:prod -- --base-href=/lognet-app/
 
 FROM nginx:alpine
 COPY --from=build /app/dist/front-seminario/browser /usr/share/nginx/html
