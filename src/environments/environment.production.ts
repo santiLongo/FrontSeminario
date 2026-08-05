@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  urlLogin: '',
-  urlViajes: ''
+  urlLogin: 'https://santilongo.duckdns.org/lognet/api/',
+  urlViajes: 'https://santilongo.duckdns.org/lognet/api/'
 };

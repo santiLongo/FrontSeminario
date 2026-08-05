@@ -18,7 +18,7 @@ import {
   AlertService,
 } from 'lib-core';
 import { filter, switchMap } from 'rxjs';
-import { CamionesHttpService } from '../services/http.service';
+import { CamionesHttpService } from '../../services/http.service';
 import { UpsertCamionModel } from './models/upsert-model';
 
 @Component({

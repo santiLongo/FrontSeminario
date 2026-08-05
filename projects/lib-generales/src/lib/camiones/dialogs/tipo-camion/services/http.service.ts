@@ -3,7 +3,7 @@ import { ApiHttpService, GridState, PagedResult } from "lib-core";
 import { Observable } from "rxjs";
 import { TipoCamionGridModel } from "../model/grid-model";
 import { UpsertTipoCamionModel } from "../upsert/model/upsert-model";
-import { GeneralesLibService } from "../../../config/generales.service";
+import { GeneralesLibService } from "../../../../config/generales.service";
 
 @Injectable({
     providedIn: 'root'

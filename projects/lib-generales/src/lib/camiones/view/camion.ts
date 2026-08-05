@@ -16,9 +16,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { CamionesGridModel } from '../models/camiones-grid-model';
 import { CamionesDataService } from '../services/data.service';
 import { CamionesFilterModel } from '../models/camiones-filter-model';
-import { UpsertCamionDialogComponent } from '../dialog/upsert-dialog';
+import { UpsertCamionDialogComponent } from '../dialogs/upsert-dialog/upsert-dialog';
 import { switchMap } from 'rxjs';
-import { TipoCamionDialogComponent } from '../tipo-camion/tipo-camion';
+import { TipoCamionDialogComponent } from '../dialogs/tipo-camion/tipo-camion';
+import { ArchivosDialogComponent } from '../dialogs/archivos-dialog/archivos-dialog';
 
 @Component({
   selector: 'app-camion',
@@ -103,6 +104,17 @@ export class CamionComponent implements OnInit, AfterViewInit {
             this.openUpsert(rows[0].id)
           }
         },
+        {
+          key: 'file',
+          icon: 'folder',
+          label: 'Archivos',
+          type: 'primary',
+          position: 'right',
+          disabledOnEmptyRows: true,
+          onClick: (rows) => {
+            this.openArchivos(rows[0])
+          }
+        },
         // {
         //   key: 'newTipoCamion',
         //   icon: 'add',
@@ -144,6 +156,13 @@ export class CamionComponent implements OnInit, AfterViewInit {
 
   openUpsert(id?: number) {
     this.dialog.open(UpsertCamionDialogComponent, {data: { id }, size: 'l'}).afterClosed().subscribe(() => {
+      this.onBuscar();
+    });
+  }
+
+  openArchivos(item: CamionesGridModel) {
+    const idCamion = item.id;
+    this.dialog.open(ArchivosDialogComponent, {data: { idCamion }, size: 'xxl'}).afterClosed().subscribe(() => {
       this.onBuscar();
     });
   }

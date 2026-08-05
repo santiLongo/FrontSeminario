@@ -3,7 +3,7 @@ import { ApiHttpService, GridState, PagedResult } from "lib-core";
 import { CamionesFilterModel } from "../models/camiones-filter-model";
 import { Observable } from "rxjs";
 import { CamionesGridModel } from "../models/camiones-grid-model";
-import { UpsertCamionModel } from "../dialog/models/upsert-model";
+import { UpsertCamionModel } from "../dialogs/upsert-dialog/models/upsert-model";
 import { GeneralesLibService } from "../../config/generales.service";
 
 @Injectable({

@@ -63,6 +63,11 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "local": {   
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
             }
           },
           "defaultConfiguration": "production"
@@ -75,9 +80,12 @@
             },
             "development": {
               "buildTarget": "front-seminario:build:development"
+            },
+            "local": {
+              "buildTarget": "front-seminario:build:local"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "local"
         },
         "extract-i18n": {
           "builder": "@angular/build:extract-i18n"
@@ -117,9 +125,12 @@
             },
             "development": {
               "tsConfig": "projects/lib-home/tsconfig.lib.json"
+            },
+            "local": {
+              "tsConfig": "projects/lib-home/tsconfig.lib.json"
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "local"
         },
         "test": {
           "builder": "@angular/build:karma",

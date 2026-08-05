@@ -28,35 +28,25 @@ pipeline {
             env.CONTAINER  = 'seminario-front'
             env.HOST_PORT  = '5006'
             env.BASE_HREF  = '/lognet-app/'
-            env.URL_LOGIN  = 'https://santilongo.duckdns.org/lognet/'    // <-- AJUSTAR si el path del endpoint difiere
-            env.URL_VIAJES = 'https://santilongo.duckdns.org/lognet/'    // <-- AJUSTAR si el path del endpoint difiere
+            env.BUILD_CONFIGURATION = 'production'
           } else {
             env.CONTAINER  = 'seminario-front-test'
             env.HOST_PORT  = '5008'
             env.BASE_HREF  = '/lognet-test/'
-            env.URL_LOGIN  = 'https://santilongo.duckdns.org/lognet-test-api/' // <-- AJUSTAR
-            env.URL_VIAJES = 'https://santilongo.duckdns.org/lognet-test-api/' // <-- AJUSTAR
+            env.BUILD_CONFIGURATION = 'development'
           }
         }
       }
     }
 
-    stage('Inyectar environment') {
-      steps {
-        writeFile file: 'src/environments/environment.production.ts',
-                  text: """export const environment = {
-  production: true,
-  urlLogin: '${env.URL_LOGIN}',
-  urlViajes: '${env.URL_VIAJES}'
-};
-"""
-        sh 'cat src/environments/environment.production.ts'
-      }
-    }
-
     stage('Build imagen') {
       steps {
-        sh 'docker build --build-arg BASE_HREF=${BASE_HREF} -t ${IMAGE}:${DEPLOY_ENV} .'
+        sh '''
+            docker build \
+              --build-arg BUILD_CONFIGURATION=${BUILD_CONFIGURATION} \
+              --build-arg BASE_HREF=${BASE_HREF} \
+              -t ${IMAGE}:${DEPLOY_ENV} .
+          '''
       }
     }
 

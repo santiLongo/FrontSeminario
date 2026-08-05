@@ -58,7 +58,8 @@ export const ICONS = {
   billetera: 'wallet',
   bank: 'account_balance',
   apps: 'apps',
-
+  folder: 'folder_copy',
+  download: 'download'
 } as const;
 
 export type IconKey = keyof typeof ICONS;
