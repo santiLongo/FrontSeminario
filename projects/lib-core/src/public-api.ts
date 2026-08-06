@@ -17,6 +17,8 @@ export * from './lib/grid/services/local-grid.service';
 export * from './lib/grid/services/editable-grid.service';
 export * from './lib/grid/types/type';
 export * from './lib/button/button';
+export * from './lib/upload-files/upload-files';
+export * from './lib/upload-files/services/base-upload.service';
 export * from './lib/forms-field/index';
 export * from './lib/services/alert.service'
 export * from './lib/basic-dialog/basic-dialog'

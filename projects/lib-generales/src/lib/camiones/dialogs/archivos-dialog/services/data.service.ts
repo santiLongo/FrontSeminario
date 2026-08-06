@@ -9,12 +9,20 @@ export class ArchivosCamionesDataService extends BaseGridService<ArchivoGridMode
   private camion$: BehaviorSubject<number> = new BehaviorSubject(0);
 
   constructor(private httpService: ArchivosCamionesHttpService) {
-    super()
+    super();
   }
 
   getData(state: GridState): Observable<PagedResult<ArchivoGridModel>> {
     const idCamion = this.camion;
     return this.httpService.getAll(idCamion, state);
+  }
+
+  download(id: number): Observable<Blob> {
+    return this.httpService.download(id);
+  }
+
+  delete(id: number): Observable<void> {
+    return this.httpService.delete(id);
   }
 
   get camion(): number {

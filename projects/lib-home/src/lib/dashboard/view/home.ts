@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import {
   Cards,
   DashboardComponent,
@@ -17,8 +23,9 @@ import { PosicionUnidad } from '../models/posicion-unidad';
 import { GetAllEventosCommand } from '../models/get-all-eventos';
 import { FormControl, FormGroup } from '@angular/forms';
 import { finalize, Subject, takeUntil } from 'rxjs';
-import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
-import { DASHBOARD, IDashboardService } from 'lib-shared'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { DASHBOARD, IDashboardService } from 'lib-shared';
+import { UpsertEventoDialogComponent } from '../../dialog-upsert-eventos/upsert-evento';
 
 @Component({
   selector: 'app-basic-home',
@@ -31,8 +38,8 @@ import { DASHBOARD, IDashboardService } from 'lib-shared'
     CalendarioComponent,
     EventosListComponent,
     MapComponent,
-    MatProgressSpinnerModule
-],
+    MatProgressSpinnerModule,
+  ],
 })
 export class BasicHomeComponent implements OnInit, AfterViewInit, OnDestroy {
   dashboardCards: Cards[] = [];
@@ -48,7 +55,7 @@ export class BasicHomeComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private httpService: HomeHttpService,
     private dialogService: DialogService,
-    @Inject(DASHBOARD) private dashboard: IDashboardService
+    @Inject(DASHBOARD) private dashboard: IDashboardService,
   ) {}
 
   ngOnInit(): void {
@@ -109,9 +116,12 @@ export class BasicHomeComponent implements OnInit, AfterViewInit, OnDestroy {
       fechaHasta: this.end?.value,
     };
 
-    this.httpService.getEvents(command).pipe(finalize(() => this.loading = false)).subscribe((res) => {
-      this.eventos = res;
-    });
+    this.httpService
+      .getEvents(command)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe((res) => {
+        this.eventos = res;
+      });
   }
 
   onMapSearch() {
@@ -120,7 +130,10 @@ export class BasicHomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   openEventos(idEvento?: number) {
-    this.dialogService.openEventos$(idEvento).subscribe(() => this.loadEvent());
+    this.dialogService
+      .open(UpsertEventoDialogComponent, { data: { idEvento } })
+      .afterClosed()
+      .subscribe(() => this.loadEvent());
   }
 
   get start() {

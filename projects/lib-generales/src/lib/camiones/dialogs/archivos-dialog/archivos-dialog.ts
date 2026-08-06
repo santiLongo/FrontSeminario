@@ -1,12 +1,15 @@
 import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import {
-  MAT_DIALOG_DATA,
-  MatDialogModule,
-  MatDialogRef,
-} from '@angular/material/dialog';
-import { GridComponent, GridConfig } from 'lib-core';
+  AlertService,
+  DialogService,
+  GridComponent,
+  GridConfig,
+} from 'lib-core';
+import { filter, switchMap } from 'rxjs';
 import { ArchivoGridModel } from './models/models';
 import { ArchivosCamionesDataService } from './services/data.service';
+import { SubirArchivosDialogComponent } from './subir-dialog/subir-dialog';
 
 @Component({
   selector: 'app-archivos-dialog',
@@ -16,12 +19,15 @@ import { ArchivosCamionesDataService } from './services/data.service';
 })
 export class ArchivosDialogComponent implements OnInit, AfterViewInit {
   gridConfig: GridConfig<ArchivoGridModel>;
+  private idCamion: number;
 
   constructor(
-    private dialogRef: MatDialogRef<ArchivosDialogComponent>,
     public dataService: ArchivosCamionesDataService,
+    private dialog: DialogService,
+    private alertService: AlertService,
     @Inject(MAT_DIALOG_DATA) data: { idCamion: number },
   ) {
+    this.idCamion = data.idCamion;
     this.dataService.camion = data.idCamion;
   }
 
@@ -85,16 +91,44 @@ export class ArchivosDialogComponent implements OnInit, AfterViewInit {
           icon: 'save',
           position: 'right',
           onClick: () => {
-            this.save();
+            this.subir();
           },
         },
       ],
     };
   }
 
-  private download(item: ArchivoGridModel) {}
+  private subir() {
+    this.dialog
+      .open(SubirArchivosDialogComponent, {
+        data: { idCamion: this.idCamion },
+        size: 'l',
+      })
+      .afterClosed()
+      .subscribe(() => this.dataService.search());
+  }
 
-  private remove(item: ArchivoGridModel) {}
+  private download(item: ArchivoGridModel) {
+    this.dataService.download(item.id).subscribe((blob) => {
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = item.nombre;
+      link.click();
+      window.URL.revokeObjectURL(url);
+    });
+  }
 
-  private save() {}
+  private remove(item: ArchivoGridModel) {
+    this.alertService
+      .info$('Seguro que desea borrar el archivo?', item.nombre)
+      .pipe(
+        filter(Boolean),
+        switchMap(() => this.dataService.delete(item.id)),
+        switchMap(() =>
+          this.alertService.success$('Se borro el archivo con exito'),
+        ),
+      )
+      .subscribe(() => this.dataService.search());
+  }
 }

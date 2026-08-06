@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>Subir archivos</h2>
+<mat-dialog-content>
+  <app-upload-files
+    [service]="uploadService"
+    [loadExisting]="false"
+  ></app-upload-files>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <app-button
+    key="cerrar"
+    label="Cerrar"
+    type="secondary"
+    (onClick)="salir()"
+  ></app-button>
+</mat-dialog-actions>

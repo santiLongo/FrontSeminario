@@ -60,6 +60,18 @@ export class ApiHttpService {
     });
   }
 
+  getBlob(url: string, params?: any, message?: string): Observable<Blob> {
+    this.loadingService.show(message);
+
+    return this.http
+      .get(url, {
+        headers: this.getHeaders(),
+        params: this.buildParams(params),
+        responseType: 'blob',
+      })
+      .pipe(finalize(() => this.loadingService.hide()));
+  }
+
   getWithBlock<T>(url: string, params?: any, message?: string): Observable<T> {
     this.loadingService.show(message);
 
