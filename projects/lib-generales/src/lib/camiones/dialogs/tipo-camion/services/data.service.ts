@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
-import { BaseGridService, GridState, PagedResult } from "lib-core";
+import { BaseGridService } from "lib-components";
 import { TipoCamionGridModel } from "../model/grid-model";
 import { Observable } from "rxjs";
 import { TipoCamionHttpService } from "./http.service";
+import { GridState, PagedResult } from "lib-servicios";
 
 @Injectable()
 export class TipoCamionDataService extends BaseGridService<TipoCamionGridModel> {

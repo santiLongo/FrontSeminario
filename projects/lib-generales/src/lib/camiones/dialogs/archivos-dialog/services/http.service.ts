@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiHttpService, GridState, PagedResult } from 'lib-core';
+import { ApiHttpService, GridState, PagedResult } from 'lib-servicios';
 import { ArchivoGridModel } from '../models/models';
 import { Observable } from 'rxjs';
 import { GeneralesLibService } from 'projects/lib-generales/src/lib/config/generales.service';

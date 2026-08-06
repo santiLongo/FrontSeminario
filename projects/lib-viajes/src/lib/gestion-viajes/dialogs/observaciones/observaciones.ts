@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { GestionViajesHttpService } from '../../service/http.service';
-import { ButtonComponent, GridComponent, GridConfig } from "lib-core";
+import { ButtonComponent, GridComponent, GridConfig } from "lib-components";
 import { ObservacionesModel } from './model/model';
 import { ObservacionesDataService } from './data.service';
 import { config } from 'rxjs';

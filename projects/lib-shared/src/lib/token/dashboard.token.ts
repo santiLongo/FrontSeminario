@@ -1,5 +1,5 @@
 import { InjectionToken } from "@angular/core";
-import { Cards } from "lib-core";
+import { Cards } from "lib-components";
 import { Observable } from "rxjs";
 
 export interface IDashboardService {

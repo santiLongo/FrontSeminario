@@ -10,7 +10,7 @@ import {
   ButtonComponent,
   DateFormFieldComponent,
   FormFieldComponent,
-} from 'lib-core';
+} from 'lib-components';
 import { filter, switchMap } from 'rxjs';
 import { PendientesConfirmarHttpService } from '../../services/http.service';
 import { ConfirmarFacturaModel } from './models/model';

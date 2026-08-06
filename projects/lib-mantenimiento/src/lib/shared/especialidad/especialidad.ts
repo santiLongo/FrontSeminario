@@ -1,12 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import {
-  GridColumn,
   GridConfig,
   ButtonComponent,
   GridComponent,
   AlertService,
-  DialogService,
-} from 'lib-core';
+} from 'lib-components';
 import {
   MatDialogRef,
   MatDialogModule,
@@ -16,6 +14,7 @@ import {
 import { EspecialidadDataService } from './services/data.service';
 import { EspecialidadGridModel } from './models/especialidad-grid';
 import { UpsertEspecialidadDialogComponent } from './upsert/upsert';
+import { DialogService } from 'lib-servicios';
 
 @Component({
   selector: 'app-tipo-camion',

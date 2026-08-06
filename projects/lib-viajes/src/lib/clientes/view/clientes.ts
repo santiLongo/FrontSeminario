@@ -3,9 +3,8 @@ import {
   GridComponent,
   CoreViewComponent,
   AlertService,
-  DialogService,
   GridConfig,
-} from 'lib-core';
+} from 'lib-components';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { ClientesDataService } from '../services/data.service';
 import { ClienteGridModel } from '../models/grid-model';
@@ -14,6 +13,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { CommonModule } from '@angular/common';
 import { switchMap } from 'rxjs';
 import { UpsertClienteDialogComponent } from '../dialog/upsert-dialog';
+import { DialogService } from 'lib-servicios';
 
 @Component({
   selector: 'app-clientes',

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiHttpService, GridState, PagedResult } from 'lib-core';
+import { ApiHttpService, GridState, PagedResult } from 'lib-servicios';
 import { MantenimientoLibService } from '../../../config/mantenimiento.service';
 import { Observable } from 'rxjs';
 import { EspecialidadGridModel } from '../models/especialidad-grid';

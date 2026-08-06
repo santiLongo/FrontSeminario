@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DialogService } from 'lib-core';
+import { DialogService } from 'lib-servicios';
 import { Observable } from 'rxjs';
 import { DetalleEmitidaDialogComponent } from '../components/detalle-facturas-emitidas/detalle-dialog';
 import { DetalleRecibidaDialogComponent } from '../components/detalle-facturas-recibidas/detalle-dialog';

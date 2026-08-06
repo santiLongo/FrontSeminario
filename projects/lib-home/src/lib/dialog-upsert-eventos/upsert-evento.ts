@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
@@ -16,14 +15,13 @@ import {
   ButtonComponent,
   FormFieldComponent,
   AlertService,
-  NumberFormFieldComponent,
   DateFormFieldComponent,
   TextareaFormFieldComponent,
-  DialogService,
-} from 'lib-core';
+} from 'lib-components';
 import { filter, switchMap } from 'rxjs';
 import { EventosHttpService } from './services/http.service';
 import { EventoUpsertModel } from './models/upsert-model';
+import { DialogService } from 'lib-servicios';
 @Component({
   selector: 'app-upsert-evento-dialog',
   templateUrl: './upsert-evento.html',

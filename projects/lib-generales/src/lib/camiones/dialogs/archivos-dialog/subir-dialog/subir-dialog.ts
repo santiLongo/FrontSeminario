@@ -4,7 +4,7 @@ import {
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
-import { ButtonComponent, UploadFilesComponent } from 'lib-core';
+import { ButtonComponent, UploadFilesComponent } from 'lib-components';
 import { ArchivosUploadService } from '../services/upload.service';
 
 @Component({

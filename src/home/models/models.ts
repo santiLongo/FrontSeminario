@@ -1,4 +1,4 @@
-import { IconKey } from "lib-core";
+import { IconKey } from "lib-components";
 
 export interface MenuModel {
     key: string;

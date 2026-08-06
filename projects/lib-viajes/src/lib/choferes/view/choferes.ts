@@ -2,17 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import {
   GridComponent,
   CoreViewComponent,
-  FilterComponent,
   GridConfig,
-  DialogService,
   AlertService,
-} from 'lib-core';
+} from 'lib-components';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { ChoferesDataService } from '../services/data.service';
 import { ChoferesGridModel } from '../models/choferes-grid-model';
 import { UpsertChoferDialogComponent } from '../dialogs/upsert/upsert-dialog';
 import { switchMap } from 'rxjs';
+import { DialogService } from 'lib-servicios';
 
 @Component({
   selector: 'app-choferes',

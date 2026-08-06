@@ -4,7 +4,7 @@ import {
   MatDialogModule,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
-import { AlertService, ButtonComponent, ComboComponent, TextareaFormFieldComponent, DateFormFieldComponent } from 'lib-core';
+import { AlertService, ButtonComponent, ComboComponent, TextareaFormFieldComponent, DateFormFieldComponent } from 'lib-components';
 import {
   FormBuilder,
   FormControl,

@@ -17,7 +17,7 @@ import {
   FormFieldComponent,
   AlertService,
   NumberFormFieldComponent,
-} from 'lib-core';
+} from 'lib-components';
 import { filter, switchMap } from 'rxjs';
 import { ChoferesHttpService } from '../../services/http.service';
 import { UpsertChoferModel } from './models/upsert-model';

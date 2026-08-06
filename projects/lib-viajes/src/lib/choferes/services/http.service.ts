@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiHttpService, GridState, PagedResult } from 'lib-core';
+import { ApiHttpService, GridState, PagedResult } from 'lib-servicios';
 import { Observable } from 'rxjs';
 import { ViajesLibService } from '../../config/viajes.service';
 import { ChoferesFilterModel } from '../models/choferes-filter-model';

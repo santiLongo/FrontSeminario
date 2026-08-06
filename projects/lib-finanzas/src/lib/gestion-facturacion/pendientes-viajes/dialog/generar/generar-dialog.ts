@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { AlertService, ButtonComponent, ComboComponent, DateFormFieldComponent, FormFieldComponent } from 'lib-core';
+import { AlertService, ButtonComponent, ComboComponent, DateFormFieldComponent, FormFieldComponent } from 'lib-components';
 import { filter, switchMap } from 'rxjs';
 import { PendientesViajesHttpService } from '../../services/http.service';
 import { GenerarFacturaViajeModel } from './models/model';

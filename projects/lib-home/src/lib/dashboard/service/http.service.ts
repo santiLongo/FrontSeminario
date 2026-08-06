@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HomeLibService } from "../../config/home.service";
-import { ApiHttpService } from "lib-core";
+import { ApiHttpService } from "lib-servicios";
 import { Observable } from "rxjs";
 import { GetAllEventosCommand, GetAllEventosResponse } from "../models/get-all-eventos";
 

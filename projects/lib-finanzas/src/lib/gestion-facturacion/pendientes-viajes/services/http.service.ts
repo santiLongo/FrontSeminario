@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiHttpService } from 'lib-core';
+import { ApiHttpService } from 'lib-servicios';
 import { Observable } from 'rxjs';
 import { FinanzasLibService } from '../../../config/finanzas.service';
 import { ViajesPendienteGridModel } from '../models/grid-model';

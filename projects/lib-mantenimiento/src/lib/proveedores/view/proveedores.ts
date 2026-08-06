@@ -4,13 +4,10 @@ import {
   FilterComponent,
   GridComponent,
   ButtonComponent,
-  DateFormFieldComponent,
   ComboComponent,
-  ViajeMaskComponent,
   GridConfig,
   AlertService,
-  DialogService,
-} from 'lib-core';
+} from 'lib-components';
 import {
   FormBuilder,
   FormControl,
@@ -18,12 +15,11 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDialog } from '@angular/material/dialog';
 import { UpsertProveedorDialogComponent } from '../dialog/upsert-dialog';
-import { filter, switchMap } from 'rxjs';
 import { ProveedoresGridModel } from '../models/proveedores-grid-model';
 import { ProveedoresDataService } from '../services/data.service';
 import { ProveedoresFilterModel } from '../models/proveedores-filter-model';
+import { DialogService } from 'lib-servicios';
 
 @Component({
   selector: 'app-proveedores',

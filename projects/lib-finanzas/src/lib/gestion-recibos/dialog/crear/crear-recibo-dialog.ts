@@ -15,7 +15,7 @@ import {
     DateFormFieldComponent,
     DecimalFormFieldComponent,
     FormFieldComponent,
-} from 'lib-core';
+} from 'lib-components';
 import { filter, Subject, switchMap, takeUntil } from 'rxjs';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { CommonModule } from '@angular/common';

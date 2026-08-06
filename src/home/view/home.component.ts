@@ -1,13 +1,13 @@
-import { AfterViewInit, Component, ViewEncapsulation } from "@angular/core";
+import { AfterViewInit, Component } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIcon } from "@angular/material/icon";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { Router, RouterOutlet } from "@angular/router";
-import { BreadcrumbComponent, TreeMenuItem, TreeMenuV3Component } from "lib-home";
+import { TreeMenuItem, TreeMenuV3Component } from "lib-home";
 import { HomeHttpService } from "../service/http.service";
 import { MenuModel } from "../models/models";
-import { map } from "leaflet";
-import { AuthService } from "lib-core";
+import { BreadcrumbComponent } from "lib-components";
+import { AuthService } from "lib-servicios";
 
 @Component({
     standalone: true,

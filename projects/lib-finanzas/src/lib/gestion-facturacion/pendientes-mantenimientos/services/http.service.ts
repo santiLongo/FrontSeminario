@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiHttpService } from 'lib-core';
+import { ApiHttpService } from 'lib-servicios';
 import { Observable } from 'rxjs';
 import { FinanzasLibService } from '../../../config/finanzas.service';
 import { MantenimientoPendienteGridModel } from '../models/grid-model';

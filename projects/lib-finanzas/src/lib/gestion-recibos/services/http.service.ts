@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiHttpService, GridState, PagedResult } from 'lib-core';
+import { ApiHttpService, GridState, PagedResult } from 'lib-servicios';
 import { Observable } from 'rxjs';
 import { FinanzasLibService } from '../../config/finanzas.service';
 import { ReciboGridModel } from '../models/grid-model';

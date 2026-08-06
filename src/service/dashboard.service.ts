@@ -1,8 +1,9 @@
-import { ApiHttpService, Cards } from "lib-core";
+import { ApiHttpService } from "lib-servicios";
 import { Observable } from "rxjs";
 import { AppConfigService } from "./config.service";
 import { IDashboardService } from 'lib-shared'
 import { Injectable } from "@angular/core";
+import { Cards } from "lib-components";
 
 @Injectable() 
 export class DashboardService implements IDashboardService {

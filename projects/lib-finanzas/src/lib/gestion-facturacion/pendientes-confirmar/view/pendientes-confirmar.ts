@@ -2,10 +2,9 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import {
   AlertService,
   CoreViewComponent,
-  DialogService,
   GridComponent,
   GridConfig,
-} from 'lib-core';
+} from 'lib-components';
 import { CommonModule } from '@angular/common';
 import { filter, switchMap } from 'rxjs';
 import { PendientesConfirmarDataService } from '../services/data.service';
@@ -14,6 +13,7 @@ import { ConfirmarPendienteDialogComponent } from '../dialog/confirmar/confirmar
 import { EditarEmitidaDialogComponent } from '../dialog/editar-emitida/editar-emitida-dialog';
 import { EditarRecibidaDialogComponent } from '../dialog/editar-recibida/editar-recibida-dialog';
 import { FinanzasDialogService } from '../../../shared/services/dialog.service';
+import { DialogService } from 'lib-servicios';
 
 @Component({
   selector: 'app-pendientes-confirmar',

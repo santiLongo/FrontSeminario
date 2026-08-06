@@ -1,16 +1,13 @@
-import { AfterViewInit, Component, model, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import {
   CoreViewComponent,
   FilterComponent,
   GridComponent,
   ButtonComponent,
-  DateFormFieldComponent,
   ComboComponent,
-  ViajeMaskComponent,
   GridConfig,
   AlertService,
-  DialogService,
-} from 'lib-core';
+} from 'lib-components';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { CamionesGridModel } from '../models/camiones-grid-model';
@@ -20,6 +17,7 @@ import { UpsertCamionDialogComponent } from '../dialogs/upsert-dialog/upsert-dia
 import { switchMap } from 'rxjs';
 import { TipoCamionDialogComponent } from '../dialogs/tipo-camion/tipo-camion';
 import { ArchivosDialogComponent } from '../dialogs/archivos-dialog/archivos-dialog';
+import { DialogService } from 'lib-servicios';
 
 @Component({
   selector: 'app-camion',

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BaseGridService, GridState, PagedResult } from 'lib-core';
+import { BaseGridService } from 'lib-components';
 import { ArchivoGridModel } from '../models/models';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ArchivosCamionesHttpService } from './http.service';
+import { GridState, PagedResult } from 'lib-servicios';
 
 @Injectable()
 export class ArchivosCamionesDataService extends BaseGridService<ArchivoGridModel> {

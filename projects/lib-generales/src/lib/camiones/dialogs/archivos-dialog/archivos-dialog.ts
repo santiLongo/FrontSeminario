@@ -2,14 +2,14 @@ import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import {
   AlertService,
-  DialogService,
   GridComponent,
   GridConfig,
-} from 'lib-core';
+} from 'lib-components';
 import { filter, switchMap } from 'rxjs';
 import { ArchivoGridModel } from './models/models';
 import { ArchivosCamionesDataService } from './services/data.service';
 import { SubirArchivosDialogComponent } from './subir-dialog/subir-dialog';
+import { DialogService } from 'lib-servicios';
 
 @Component({
   selector: 'app-archivos-dialog',

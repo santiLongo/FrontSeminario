@@ -2,7 +2,6 @@ import { Provider } from '@angular/core';
 import { ENV_CONFIG } from './env.config';
 
 import { LIB_HOME_CONFIG } from 'lib-home';
-import { LIB_CORE_CONFIG } from 'lib-core';
 import { LIB_VIAJES_CONFIG } from 'lib-viajes';
 import { LIB_GENERALES_CONFIG } from 'lib-generales';
 import { LIB_FINANZAS_CONFIG } from 'lib-finanzas';
@@ -12,12 +11,6 @@ import { APP_CONFIG } from './app.config';
 export const LIB_CONFIG_PROVIDERS: Provider[] = [
   {
     provide: LIB_HOME_CONFIG,
-    useValue: {
-      urlLogin: ENV_CONFIG.urlLogin,
-    },
-  },
-  {
-    provide: LIB_CORE_CONFIG,
     useValue: {
       urlLogin: ENV_CONFIG.urlLogin,
     },

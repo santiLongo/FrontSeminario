@@ -11,7 +11,7 @@ import {
   MatDialogRef,
   MatDialogModule,
 } from '@angular/material/dialog';
-import { ComboComponent, ButtonComponent, FormFieldComponent, AlertService, TextareaFormFieldComponent } from 'lib-core';
+import { ComboComponent, ButtonComponent, FormFieldComponent, AlertService, TextareaFormFieldComponent } from 'lib-components';
 import { filter, switchMap } from 'rxjs';
 import { TipoEventoHttpService } from '../services/http.service';
 import { UpsertTipoEventoModel } from './model/upsert-model';

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ApiHttpService, GridState, PagedResult } from 'lib-core';
 import { GestionViajesFilterModel } from '../models/filter-model';
 import { Observable } from 'rxjs';
 import { GestionViajesGridModel } from '../models/grid-model';
@@ -7,6 +6,7 @@ import { ForzarEstadoModel } from '../dialogs/forzar-estado/models/forzar-estado
 import { InformarDescargaModel } from '../dialogs/informar-descarga/models/informar-descarga-model';
 import { ViajesLibService } from '../../config/viajes.service';
 import { ObservacionesModel } from '../dialogs/observaciones/model/model';
+import { ApiHttpService, GridState, PagedResult } from 'lib-servicios';
 
 @Injectable({
   providedIn: 'root',

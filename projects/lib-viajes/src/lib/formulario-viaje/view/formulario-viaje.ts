@@ -29,7 +29,7 @@ import {
   ButtonComponent,
   MultipleComboComponent,
   AlertService,
-} from 'lib-core';
+} from 'lib-components';
 import { Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { MapToAltaModel, MapToUpdateModel } from '../helpers/mappers';
 import { Location } from '@angular/common';

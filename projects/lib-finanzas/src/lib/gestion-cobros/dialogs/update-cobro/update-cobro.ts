@@ -20,7 +20,7 @@ import {
   NumberFormFieldComponent,
   CuitMaskComponent,
   AlertService,
-} from 'lib-core';
+} from 'lib-components';
 import { Subject, takeUntil, switchMap } from 'rxjs';
 import { CobrosHttpService } from '../../services/http.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';

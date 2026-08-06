@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
@@ -17,11 +16,9 @@ import {
   FormFieldComponent,
   AlertService,
   CuitMaskComponent,
-  NumberFormFieldComponent,
   GridComponent,
   GridConfig,
-  DialogService,
-} from 'lib-core';
+} from 'lib-components';
 import { filter, switchMap } from 'rxjs';
 import { ProveedoresHttpService } from '../services/http.service';
 import {
@@ -30,6 +27,7 @@ import {
 } from './models/upsert-model';
 import { UpsertDataService } from './data.service';
 import { EspecialidadDialogComponent } from '../../shared/especialidad/especialidad';
+import { DialogService } from 'lib-servicios';
 
 @Component({
   selector: 'app-upsert-localidad-dialog',

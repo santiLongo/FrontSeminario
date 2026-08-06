@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { LocalGridService } from "lib-core";
+import { LocalGridService } from "lib-components";
 import { UpsertEspecialidadProveedor } from "./models/upsert-model";
 
 @Injectable()

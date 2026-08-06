@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
-import { BaseGridService, GridState, PagedResult } from "lib-core";
+import { BaseGridService } from "lib-components";
 import { ObservacionesModel } from "./model/model";
 import { BehaviorSubject, Observable } from "rxjs";
 import { GestionViajesHttpService } from "../../service/http.service";
+import { GridState, PagedResult } from "lib-servicios";
 
 @Injectable()
 export class ObservacionesDataService extends BaseGridService<ObservacionesModel> {

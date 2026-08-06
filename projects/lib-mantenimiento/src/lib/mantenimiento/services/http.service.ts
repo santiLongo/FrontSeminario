@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiHttpService, GridState, PagedResult } from 'lib-core';
+import { ApiHttpService, GridState, PagedResult } from 'lib-servicios';
 import { Observable } from 'rxjs';
 import { MantenimientoLibService } from '../../config/mantenimiento.service';
 import { MantenimientoFilterModel } from '../models/mantenimentos-filter-model';

@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { Cards, DashboardV2Component, FadeInComponent } from "lib-core";
+import { Cards, DashboardV2Component, FadeInComponent } from "lib-components";
 
 @Component({
     selector: 'app-finanzas-dashboard',

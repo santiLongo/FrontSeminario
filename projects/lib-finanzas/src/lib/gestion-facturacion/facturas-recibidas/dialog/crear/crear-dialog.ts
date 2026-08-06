@@ -10,7 +10,7 @@ import {
     FormFieldComponent,
     GridComponent,
     GridConfig,
-} from 'lib-core';
+} from 'lib-components';
 import { CommonModule } from '@angular/common';
 import { filter, Subject, switchMap, takeUntil } from 'rxjs';
 import { FacturasRecibidasHttpService } from '../../services/http.service';

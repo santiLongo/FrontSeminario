@@ -5,6 +5,5 @@
 export * from './lib/login/view/login.component'
 export * from './lib/dashboard/view/home'
 export * from './lib/not-found/view/not-found.component'
-export * from './lib/breadcrumb/breadcrumb'
 export * from './lib/tree-menu-v3/index'
 export * from './lib/config/home-config';

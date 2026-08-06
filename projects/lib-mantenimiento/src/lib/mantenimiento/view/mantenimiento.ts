@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   CoreViewComponent,
   FilterComponent,
@@ -6,11 +6,9 @@ import {
   ButtonComponent,
   DateFormFieldComponent,
   ComboComponent,
-  ViajeMaskComponent,
   GridConfig,
   AlertService,
-  DialogService,
-} from 'lib-core';
+} from 'lib-components';
 import {
   FormBuilder,
   FormControl,
@@ -18,9 +16,8 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDialog } from '@angular/material/dialog';
 import { UpsertProveedorDialogComponent } from '../dialogs/dialog/upsert-dialog';
-import { filter, Subject, switchMap } from 'rxjs';
+import { Subject } from 'rxjs';
 import { MantenimientoGridModel } from '../models/mantenimentos-grid-model';
 import { MantenimientoDataService } from '../services/data.service';
 import { MantenimientoFilterModel } from '../models/mantenimentos-filter-model';
@@ -28,6 +25,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { InformarSalidaDialogComponent } from '../dialogs/informar-salida/informar-salida';
 import { InformarImporteDialogComponent } from '../dialogs/informar-importe/informar-importe';
 import { Observaciones } from '../dialogs/observaciones/observaciones';
+import { DialogService } from 'lib-servicios';
 
 @Component({
   selector: 'app-mantenimiento',

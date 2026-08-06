@@ -5,7 +5,7 @@ import {
   ButtonComponent,
   GridComponent,
   AlertService,
-} from 'lib-core';
+} from 'lib-components';
 import { TipoCamionGridModel } from './model/grid-model';
 import {
   MatDialogRef,

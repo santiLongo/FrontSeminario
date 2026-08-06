@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { LoginCommand } from "../models/login-command";
 import { Observable } from "rxjs";
 import { LoginResponse } from "../models/login-response";
-import { ApiHttpService } from 'lib-core';
+import { ApiHttpService } from 'lib-servicios';
 import { HomeLibService } from "../../config/home.service";
 
 @Injectable({
