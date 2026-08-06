@@ -3,11 +3,9 @@ import { CobrosDataService } from '../services/data.service';
 import {
   FormGroup,
   FormBuilder,
-  ɵInternalFormsSharedModule,
   ReactiveFormsModule,
   FormControl,
 } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import {
   GridConfig,
   AlertService,
@@ -18,13 +16,13 @@ import {
   ViajeMaskComponent,
   ComboComponent,
   DateFormFieldComponent,
-  DialogService,
-} from 'lib-core';
+} from 'lib-components';
 import { CobrosGridModel } from '../models/cobros-grid-model';
 import { CobrosFilterModel } from '../models/cobros-filter-model';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { UpdateCobroDialogComponent } from '../dialogs/update-cobro/update-cobro';
 import { switchMap } from 'rxjs';
+import { DialogService } from 'lib-servicios';
 
 @Component({
   selector: 'app-gestion-cobros',

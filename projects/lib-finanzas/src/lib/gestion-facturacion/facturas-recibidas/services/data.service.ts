@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BaseGridService, GridState, PagedResult } from 'lib-core';
+import { BaseGridService } from 'lib-components';
 import { Observable } from 'rxjs';
 import { FacturaRecibidaGridModel } from '../models/grid-model';
 import { FacturasRecibidasHttpService } from './http.service';
 import { FacturaRecibidaFilterModel } from '../models/filter-model';
+import { GridState, PagedResult } from 'lib-servicios';
 
 @Injectable()
 export class FacturasRecibidasDataService extends BaseGridService<FacturaRecibidaGridModel> {

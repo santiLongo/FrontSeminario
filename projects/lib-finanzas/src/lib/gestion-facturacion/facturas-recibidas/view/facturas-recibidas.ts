@@ -1,11 +1,12 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { AlertService, CoreViewComponent, DialogService, GridComponent, GridConfig } from 'lib-core';
+import { AlertService, CoreViewComponent, GridComponent, GridConfig } from 'lib-components';
 import { CommonModule } from '@angular/common';
 import { filter, switchMap } from 'rxjs';
 import { FacturasRecibidasDataService } from '../services/data.service';
 import { FacturaRecibidaGridModel } from '../models/grid-model';
 import { CrearRecibidaDialogComponent } from '../dialog/crear/crear-dialog';
 import { FinanzasDialogService } from '../../../shared/services/dialog.service';
+import { DialogService } from 'lib-servicios';
 
 @Component({
     selector: 'app-facturas-recibidas',

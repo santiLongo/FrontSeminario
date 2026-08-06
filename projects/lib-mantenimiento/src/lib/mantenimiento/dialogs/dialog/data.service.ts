@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { AlertService, EditableGridService, LocalGridService } from "lib-core";
+import { AlertService, EditableGridService, LocalGridService } from "lib-components";
 import { UpsertTareas } from "./models/upsert-model";
 
 @Injectable()

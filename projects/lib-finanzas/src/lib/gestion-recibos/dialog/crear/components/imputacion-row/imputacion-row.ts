@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { DecimalFormFieldComponent, NumberFormFieldComponent } from 'lib-core';
+import { DecimalFormFieldComponent, NumberFormFieldComponent } from 'lib-components';
 
 @Component({
     selector: 'app-recibo-imputacion-row',

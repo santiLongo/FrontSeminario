@@ -1,10 +1,11 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { CoreViewComponent, DialogService, GridComponent, GridConfig } from 'lib-core';
+import { CoreViewComponent, GridComponent, GridConfig } from 'lib-components';
 import { CommonModule } from '@angular/common';
 import { PendientesViajesHttpService } from '../services/http.service';
 import { PendientesViajesDataService } from '../services/data.service';
 import { ViajesPendienteGridModel } from '../models/grid-model';
 import { GenerarFacturaViajeDialogComponent } from '../dialog/generar/generar-dialog';
+import { DialogService } from 'lib-servicios';
 
 @Component({
     selector: 'app-pendientes-viajes',

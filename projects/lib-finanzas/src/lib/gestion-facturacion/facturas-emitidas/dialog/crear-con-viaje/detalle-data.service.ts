@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AlertService, EditableGridService } from 'lib-core';
+import { AlertService, EditableGridService } from 'lib-components';
 import { DetalleItemModel } from './models/model';
 
 @Injectable()

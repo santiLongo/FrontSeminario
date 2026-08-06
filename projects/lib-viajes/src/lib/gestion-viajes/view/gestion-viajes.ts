@@ -3,13 +3,12 @@ import {
   CoreViewComponent,
   FilterComponent,
   GridComponent,
-  GridConfig,
   ButtonComponent,
   DateFormFieldComponent,
   ComboComponent,
   ViajeMaskComponent,
-  DialogService,
-} from 'lib-core';
+  GridConfig
+} from 'lib-components';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { GestionViajesDataService } from '../service/data.service';
@@ -20,6 +19,7 @@ import { ForzarEstadoDialog } from '../dialogs/forzar-estado/forzar-estado-dialo
 import { InformarDescargaDialog } from '../dialogs/informar-descarga/informar-descarga-dialog';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { Observaciones } from '../dialogs/observaciones/observaciones';
+import { DialogService } from 'lib-servicios';
 
 @Component({
   standalone: true,

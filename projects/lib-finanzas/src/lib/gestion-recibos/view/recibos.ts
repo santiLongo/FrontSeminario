@@ -3,9 +3,8 @@ import {
     GridComponent,
     CoreViewComponent,
     AlertService,
-    DialogService,
     GridConfig,
-} from 'lib-core';
+} from 'lib-components';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { RecibosDataService } from '../services/data.service';
 import { ReciboGridModel } from '../models/grid-model';
@@ -14,6 +13,7 @@ import { CommonModule } from '@angular/common';
 import { filter, switchMap } from 'rxjs';
 import { CrearReciboDialogComponent } from '../dialog/crear/crear-recibo-dialog';
 import { DetalleReciboDialogComponent } from '../dialog/detalle/detalle-recibo-dialog';
+import { DialogService } from 'lib-servicios';
 
 @Component({
     selector: 'app-recibos',

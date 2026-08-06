@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ApiHttpService, GridState, PagedResult } from "lib-core";
+import { ApiHttpService, GridState, PagedResult } from "lib-servicios";
 import { CamionesFilterModel } from "../models/camiones-filter-model";
 import { Observable } from "rxjs";
 import { CamionesGridModel } from "../models/camiones-grid-model";

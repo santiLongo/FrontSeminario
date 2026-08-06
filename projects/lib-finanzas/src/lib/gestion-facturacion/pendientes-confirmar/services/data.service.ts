@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BaseGridService, GridState, PagedResult } from 'lib-core';
+import { BaseGridService } from 'lib-components';
 import { Observable } from 'rxjs';
 import { PendienteConfirmarGridModel } from '../models/grid-model';
 import { PendientesConfirmarHttpService } from './http.service';
+import { GridState, PagedResult } from 'lib-servicios';
 
 @Injectable()
 export class PendientesConfirmarDataService extends BaseGridService<PendienteConfirmarGridModel> {

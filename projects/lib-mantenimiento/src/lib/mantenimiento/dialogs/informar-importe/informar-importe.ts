@@ -2,15 +2,11 @@ import {
   Component,
   Inject,
   OnInit,
-  TemplateRef,
-  ViewChild,
 } from '@angular/core';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
   FormsModule,
-  NgModel,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -20,20 +16,12 @@ import {
   MatDialogModule,
 } from '@angular/material/dialog';
 import {
-  ComboComponent,
   ButtonComponent,
-  FormFieldComponent,
   AlertService,
-  CuitMaskComponent,
-  NumberFormFieldComponent,
-  GridComponent,
-  GridConfig,
-  DialogService,
-  DateFormFieldComponent,
   DecimalFormFieldComponent,
   TextareaFormFieldComponent,
-} from 'lib-core';
-import { filter, switchMap } from 'rxjs';
+} from 'lib-components';
+import { switchMap } from 'rxjs';
 import { MantenimientoHttpService } from '../../services/http.service';
 
 @Component({

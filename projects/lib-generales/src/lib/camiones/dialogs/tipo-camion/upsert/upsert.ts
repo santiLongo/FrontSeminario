@@ -16,7 +16,7 @@ import {
   ButtonComponent,
   FormFieldComponent,
   AlertService,
-} from 'lib-core';
+} from 'lib-components';
 import { filter, switchMap } from 'rxjs';
 import { TipoCamionHttpService } from '../services/http.service';
 import { UpsertTipoCamionModel } from './model/upsert-model';

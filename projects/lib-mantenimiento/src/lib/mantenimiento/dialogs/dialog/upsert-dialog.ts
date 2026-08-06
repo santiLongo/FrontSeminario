@@ -4,7 +4,6 @@ import {
   FormControl,
   FormGroup,
   FormsModule,
-  NgModel,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -13,7 +12,7 @@ import {
   MatDialogRef,
   MatDialogModule,
 } from '@angular/material/dialog';
-import { ComboComponent, ButtonComponent, FormFieldComponent, AlertService, CuitMaskComponent, NumberFormFieldComponent, GridComponent, GridConfig, DialogService, DateFormFieldComponent, DecimalFormFieldComponent } from 'lib-core';
+import { ComboComponent, ButtonComponent, FormFieldComponent, AlertService, GridComponent, GridConfig, DateFormFieldComponent, DecimalFormFieldComponent } from 'lib-components';
 import { filter, switchMap } from 'rxjs';
 import { MantenimientoHttpService } from '../../services/http.service';
 import { UpsertDataService } from './data.service';

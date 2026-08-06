@@ -11,7 +11,7 @@ import {
   MatDialogRef,
   MatDialogModule,
 } from '@angular/material/dialog';
-import { ComboComponent, ButtonComponent, FormFieldComponent, AlertService, NumberFormFieldComponent, CuitMaskComponent } from 'lib-core';
+import { ComboComponent, ButtonComponent, FormFieldComponent, AlertService, NumberFormFieldComponent, CuitMaskComponent } from 'lib-components';
 import { filter, switchMap } from 'rxjs';
 import { ClientesHttpService } from '../services/http.service';
 import { ClienteUpsertModel } from './model/upsert-model';

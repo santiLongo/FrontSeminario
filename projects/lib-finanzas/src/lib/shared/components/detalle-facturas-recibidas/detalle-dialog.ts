@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { AlertService, ButtonComponent } from 'lib-core';
+import { AlertService, ButtonComponent } from 'lib-components';
 import { CommonModule, DatePipe, DecimalPipe } from '@angular/common';
 import { filter, switchMap } from 'rxjs';
 import { GetFacturaRecibidaResponse } from './models/model';

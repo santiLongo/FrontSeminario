@@ -9,8 +9,7 @@ import {
   Cards,
   DashboardComponent,
   FadeInComponent,
-  DialogService,
-} from 'lib-core';
+} from 'lib-components';
 import { HomeHttpService } from '../service/http.service';
 import { NzCalendarModule } from 'ng-zorro-antd/calendar';
 import { CalendarioComponent } from '../components/calendario/calendario';
@@ -26,6 +25,7 @@ import { finalize, Subject, takeUntil } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DASHBOARD, IDashboardService } from 'lib-shared';
 import { UpsertEventoDialogComponent } from '../../dialog-upsert-eventos/upsert-evento';
+import { DialogService } from 'lib-servicios';
 
 @Component({
   selector: 'app-basic-home',

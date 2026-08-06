@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { BaseGridService, GridState, PagedResult } from 'lib-core';
+import { BaseGridService } from 'lib-components';
 import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { ReciboGridModel } from '../models/grid-model';
 import { RecibosHttpService } from './http.service';
 import { ReciboFilterModel } from '../models/filter-model';
+import { GridState, PagedResult } from 'lib-servicios';
 
 @Injectable()
 export class RecibosDataService extends BaseGridService<ReciboGridModel> {

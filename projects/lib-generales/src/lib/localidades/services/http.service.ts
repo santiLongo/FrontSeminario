@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiHttpService, GridState, PagedResult } from 'lib-core';
+import { ApiHttpService, GridState, PagedResult } from 'lib-servicios';
 import { Observable } from 'rxjs';
 import { LocalidadGridModel } from '../models/localidad-grid-model';
 import { LocalidadFilterModel } from '../models/localidad-filter-model';

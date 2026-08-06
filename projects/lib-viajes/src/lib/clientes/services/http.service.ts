@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ApiHttpService, GridState, PagedResult } from 'lib-core';
 import { Observable } from 'rxjs';
 import { ViajesLibService } from '../../config/viajes.service';
 import { ClienteGridModel } from '../models/grid-model';
 import { ClienteFilterModel } from '../models/filter-model';
 import { ClienteUpsertModel } from '../dialog/model/upsert-model';
+import { ApiHttpService, GridState, PagedResult } from 'lib-servicios';
 
 @Injectable({
   providedIn: 'root',

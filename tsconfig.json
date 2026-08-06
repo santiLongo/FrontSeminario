@@ -15,7 +15,6 @@
 
   "experimentalDecorators": true,
   "importHelpers": true,
-  "allowSyntheticDefaultImports": true,
   "esModuleInterop": true,
   "strictNullChecks": false,
   "skipLibCheck": true,

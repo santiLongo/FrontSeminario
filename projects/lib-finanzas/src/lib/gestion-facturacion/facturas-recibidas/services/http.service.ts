@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ApiHttpService, GridState, PagedResult } from 'lib-core';
+import { ApiHttpService, GridState, PagedResult } from 'lib-servicios';
 import { Observable } from 'rxjs';
 import { FinanzasLibService } from '../../../config/finanzas.service';
 import { FacturaRecibidaGridModel } from '../models/grid-model';
 import { FacturaRecibidaFilterModel } from '../models/filter-model';
-import { GetFacturaRecibidaResponse } from '../../../shared/components/detalle-facturas-recibidas/models/model';
 import { CrearRecibidaModel } from '../dialog/crear/models/model';
 import { ConfirmarRecibidaModel } from '../../pendientes-confirmar/dialog/confirmar/models/model';
 import { UpdateRecibidaModel } from '../../pendientes-confirmar/dialog/editar-recibida/models/model';

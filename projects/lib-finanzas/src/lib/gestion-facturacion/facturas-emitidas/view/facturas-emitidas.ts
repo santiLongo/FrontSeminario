@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { AlertService, CoreViewComponent, DialogService, GridComponent, GridConfig } from 'lib-core';
+import { AlertService, CoreViewComponent, GridComponent, GridConfig } from 'lib-components';
 import { CommonModule } from '@angular/common';
 import { filter, switchMap } from 'rxjs';
 import { FacturasEmitidasDataService } from '../services/data.service';
@@ -7,6 +7,7 @@ import { FacturaEmitidaGridModel } from '../models/grid-model';
 import { CrearEmitidaConViajeDialogComponent } from '../dialog/crear-con-viaje/crear-con-viaje-dialog';
 import { CrearEmitidaSinViajeDialogComponent } from '../dialog/crear-sin-viaje/crear-sin-viaje-dialog';
 import { FinanzasDialogService } from '../../../shared/services/dialog.service';
+import { DialogService } from 'lib-servicios';
 
 @Component({
     selector: 'app-facturas-emitidas',

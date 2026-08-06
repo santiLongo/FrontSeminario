@@ -12,7 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
-import { APP_DATE_FORMATS, ButtonComponent } from 'lib-core';
+import { APP_DATE_FORMATS, ButtonComponent } from 'lib-components';
 
 @Component({
   selector: 'app-calendario',

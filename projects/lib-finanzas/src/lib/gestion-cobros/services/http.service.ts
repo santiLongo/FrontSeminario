@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { FinanzasLibService } from "../../config/finanzas.service";
-import { ApiHttpService, GridState, PagedResult } from "lib-core";
+import { ApiHttpService, GridState, PagedResult } from "lib-servicios";
 import { CobrosFilterModel } from "../models/cobros-filter-model";
 import { Observable } from "rxjs";
 import { CobrosGridModel } from "../models/cobros-grid-model";

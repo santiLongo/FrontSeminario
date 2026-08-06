@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TreeMenuItem } from '../models/tree-menu-item';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { MatIconModule } from "@angular/material/icon";
-import { ICONS } from 'lib-core';
+import { ICONS } from 'lib-components';
 
 @Component({
   standalone: true,

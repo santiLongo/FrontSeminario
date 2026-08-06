@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { CoreViewComponent, DialogService, GridComponent, GridConfig } from 'lib-core';
+import { CoreViewComponent, GridComponent, GridConfig } from 'lib-components';
 import { CommonModule } from '@angular/common';
 import { PendientesMantenimientosHttpService } from '../services/http.service';
 import { PendientesMantenimientosDataService } from '../services/data.service';
 import { MantenimientoPendienteGridModel } from '../models/grid-model';
 import { GenerarFacturaMantenimientoDialogComponent } from '../dialog/generar/generar-dialog';
+import { DialogService } from 'lib-servicios';
 
 @Component({
     selector: 'app-pendientes-mantenimientos',

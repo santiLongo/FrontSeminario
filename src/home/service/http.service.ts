@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ApiHttpService } from "lib-core";
+import { ApiHttpService } from "lib-servicios";
 import { Observable } from "rxjs";
 import { AppConfigService } from "src/service/config.service";
 import { MenuModel } from "../models/models";

@@ -9,7 +9,7 @@ import {
   ViajeMaskComponent,
   GridConfig,
   AlertService,
-} from 'lib-core';
+} from 'lib-components';
 import {
   FormBuilder,
   FormControl,

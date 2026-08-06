@@ -16,7 +16,7 @@ import {
   ButtonComponent,
   FormFieldComponent,
   AlertService,
-} from 'lib-core';
+} from 'lib-components';
 import { UpsertLocalidadModel } from './models/upsert-model';
 import { LocalidadHttpService } from '../services/http.service';
 import { filter, switchMap } from 'rxjs';

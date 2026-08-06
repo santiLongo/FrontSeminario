@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
-import { ApiHttpService, GridState, PagedResult } from "lib-core";
+import { ApiHttpService, GridState, PagedResult } from "lib-servicios";
 import { Observable } from "rxjs";
-import { CoreLibService } from "../../../config/core.service";
 import { TipoEventoGridModel } from "../model/grid-model";
 import { UpsertTipoEventoModel } from "../upsert/model/upsert-model";
+import { HomeLibService } from "../../../config/home.service";
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +11,7 @@ import { UpsertTipoEventoModel } from "../upsert/model/upsert-model";
 export class TipoEventoHttpService {
     private url = '';
         
-        constructor(private config: CoreLibService, private http: ApiHttpService) 
+        constructor(private config: HomeLibService, private http: ApiHttpService) 
         {
             this.url = config.loginUrl + 'v1/eventos/';
         }

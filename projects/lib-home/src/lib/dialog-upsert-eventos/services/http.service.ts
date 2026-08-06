@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
-import { ApiHttpService, LibCoreConfig } from "lib-core";
+import { ApiHttpService } from "lib-servicios";
 import { Observable } from "rxjs";
 import { EventoUpsertModel } from "../models/upsert-model";
-import { CoreLibService } from "../../config/core.service";
+import { HomeLibService } from "../../config/home.service";
 
 @Injectable({
     providedIn: 'root'
@@ -10,7 +10,7 @@ import { CoreLibService } from "../../config/core.service";
 export class EventosHttpService {
     private url = ''
 
-    constructor(private config: CoreLibService, private http: ApiHttpService){
+    constructor(private config: HomeLibService, private http: ApiHttpService){
         this.url = config.loginUrl + 'v1/eventos/'
     }
 

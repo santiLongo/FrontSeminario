@@ -5,7 +5,7 @@ import {
     CuitMaskComponent,
     DateFormFieldComponent,
     DecimalFormFieldComponent,
-} from 'lib-core';
+} from 'lib-components';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
 

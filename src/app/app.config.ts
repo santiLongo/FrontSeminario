@@ -7,10 +7,9 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { authInterceptor } from '../../projects/lib-core/src/lib/interceptor/auth-interceptor.service';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { LIB_CONFIG_PROVIDERS } from 'src/config/lib-config.providers';
-import { apiResponseInterceptor, APP_DATE_FORMATS } from 'lib-core';
+import { apiResponseInterceptor, authInterceptor } from 'lib-servicios';
 import { provideNativeDateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { LOCALE_ID } from '@angular/core';
 import { es_ES, provideNzI18n } from 'ng-zorro-antd/i18n';
@@ -27,6 +26,8 @@ import localeEs from '@angular/common/locales/es';
 import localeEsAR from '@angular/common/locales/es-AR';
 import { DASHBOARD } from 'lib-shared';
 import { DashboardService } from 'src/service/dashboard.service';
+import { APP_DATE_FORMATS, COMBO_DATA_PROVIDER } from 'lib-components';
+import { ComboHttpService } from 'src/service/combo-http.service';
 
 registerLocaleData(localeEs)
 registerLocaleData(localeEsAR, 'es-AR');
@@ -61,6 +62,7 @@ export const appConfig: ApplicationConfig = {
     {
       provide: DASHBOARD,
       useClass: DashboardService
-    }
+    },
+    { provide: COMBO_DATA_PROVIDER, useExisting: ComboHttpService },
   ],
 };

@@ -4,8 +4,7 @@ import {
   ButtonComponent,
   GridComponent,
   AlertService,
-  DialogService,
-} from 'lib-core';
+} from 'lib-components';
 import { TipoEventoGridModel } from './model/grid-model';
 import {
   MatDialogRef,
@@ -13,6 +12,7 @@ import {
 } from '@angular/material/dialog';
 import { TipoEventoDataService } from './services/data.service';
 import { UpsertTipoEventoDialogComponent } from './upsert/upsert';
+import { DialogService } from 'lib-servicios';
 
 @Component({
   selector: 'app-tipo-evento',

@@ -4,13 +4,10 @@ import {
   FilterComponent,
   GridComponent,
   ButtonComponent,
-  DateFormFieldComponent,
   ComboComponent,
-  ViajeMaskComponent,
   GridConfig,
   AlertService,
-  DialogService,
-} from 'lib-core';
+} from 'lib-components';
 import {
   FormBuilder,
   FormControl,
@@ -18,12 +15,11 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDialog } from '@angular/material/dialog';
 import { UpsertTallerDialogComponent } from '../dialog/upsert-dialog';
-import { filter, switchMap } from 'rxjs';
 import { TalleresGridModel } from '../models/talleres-grid-model';
 import { TalleresDataService } from '../services/data.service';
 import { TalleresFilterModel } from '../models/talleres-filter-model';
+import { DialogService } from 'lib-servicios';
 
 @Component({
   selector: 'app-localidad',

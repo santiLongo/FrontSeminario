@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { Cards, DashboardV2Component, FadeInComponent } from 'lib-core';
+import { Cards, DashboardV2Component, FadeInComponent } from 'lib-components';
 import { DASHBOARD, IDashboardService } from 'lib-shared'
 
 @Component({

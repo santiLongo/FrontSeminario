@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core";
-import { BaseGridService, GridState, PagedResult } from 'lib-core'
+import { BaseGridService } from 'lib-components'
 import { CobrosGridModel } from "../models/cobros-grid-model";
 import { BehaviorSubject, Observable } from "rxjs";
 import { CobrosFilterModel } from "../models/cobros-filter-model";
 import { CobrosHttpService } from "./http.service";
+import { GridState, PagedResult } from "lib-servicios";
 
 @Injectable()
 export class CobrosDataService extends BaseGridService<CobrosGridModel> {

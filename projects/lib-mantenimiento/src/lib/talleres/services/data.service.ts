@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core";
-import { BaseGridService, GridState, PagedResult } from "lib-core";
+import { BaseGridService } from "lib-components";
 import {  TalleresGridModel } from "../models/talleres-grid-model";
 import { BehaviorSubject, Observable } from "rxjs";
 import { TalleresHttpService } from "./http.service";
 import { TalleresFilterModel } from "../models/talleres-filter-model";
+import { GridState, PagedResult } from "lib-servicios";
 
 @Injectable()
 export class TalleresDataService extends BaseGridService<TalleresGridModel> {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BaseUploadService } from 'lib-core';
+import { BaseUploadService } from 'lib-components';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { map, Observable } from 'rxjs';
 import { ArchivosCamionesHttpService } from './http.service';

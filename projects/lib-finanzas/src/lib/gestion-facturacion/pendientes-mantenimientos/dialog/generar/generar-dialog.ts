@@ -8,7 +8,7 @@ import {
     DateFormFieldComponent,
     FormFieldComponent,
     NumberFormFieldComponent,
-} from 'lib-core';
+} from 'lib-components';
 import { filter, switchMap } from 'rxjs';
 import { PendientesMantenimientosHttpService } from '../../services/http.service';
 import { GenerarFacturaMantenimientoModel } from './models/model';
