@@ -9,7 +9,6 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
-  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -18,41 +17,18 @@ import {
   FormularioGetDataViaje,
 } from '../models/formulario-data';
 import { FormularioViajeHttpService } from '../services/http.service';
-import { MatStepper, MatStepperModule } from '@angular/material/stepper';
-import {
-  CoreViewComponent,
-  DateFormFieldComponent,
-  ComboComponent,
-  FormFieldComponent,
-  DecimalFormFieldComponent,
-  NumberFormFieldComponent,
-  ButtonComponent,
-  MultipleComboComponent,
-  AlertService,
-} from 'lib-components';
+import { MatStepper } from '@angular/material/stepper';
+import { AlertService } from 'lib-components';
 import { Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { MapToAltaModel, MapToUpdateModel } from '../helpers/mappers';
 import { Location } from '@angular/common';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ComboCamiones, ComboSemi } from '../types/types';
 
 @Component({
-  standalone: true,
+  standalone: false,
   selector: 'app-formulario-viaje',
   templateUrl: './formulario-viaje.html',
   styleUrl: './formulario-viaje.css',
-  imports: [
-    ReactiveFormsModule,
-    CoreViewComponent,
-    DateFormFieldComponent,
-    ComboComponent,
-    FormFieldComponent,
-    DecimalFormFieldComponent,
-    MatStepperModule,
-    ButtonComponent,
-    MultipleComboComponent,
-    MatProgressSpinnerModule,
-  ],
 })
 export class FormularioViajeComponent
   implements OnInit, OnDestroy, AfterContentInit
@@ -64,8 +40,6 @@ export class FormularioViajeComponent
   formulario: FormGroup;
   isLinear = true;
   loaded = false;
-  comboCamiones: ComboCamiones
-  comboSemi: ComboSemi
 
   private destroy$ = new Subject<void>();
 
@@ -77,13 +51,6 @@ export class FormularioViajeComponent
     private location: Location,
   ) {
     this.idViaje = +this.route.snapshot.params['idViaje'];
-    if(this.idViaje > 0){
-      this.comboCamiones = 'ComboCamiones'
-      this.comboSemi = 'ComboSemis'
-    } else {
-      this.comboCamiones = 'ComboCamionesDisponibles'
-      this.comboSemi = 'ComboSemisDisponibles'
-    }
   }
 
   ngOnInit(): void {
@@ -106,8 +73,10 @@ export class FormularioViajeComponent
           });
         },
         error: (error) => {
-          this.alertService.error$("Error",error.message).subscribe(() => this.salir())
-          }
+          this.alertService
+            .error$('Error', error.message)
+            .subscribe(() => this.salir());
+        },
       });
     } else {
       this.loaded = true;

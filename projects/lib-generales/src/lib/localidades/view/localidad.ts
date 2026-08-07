@@ -23,6 +23,7 @@ import { LocalidadFilterModel } from '../models/localidad-filter-model';
 import { MatDialog } from '@angular/material/dialog';
 import { UpsertLocalidadDialogComponent } from '../dialog/upsert-dialog';
 import { filter, switchMap } from 'rxjs';
+import { LocalidadesDialogService } from '../services/dialog.service';
 
 @Component({
   selector: 'app-localidad',
@@ -45,7 +46,7 @@ export class LocalidadComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public dataService: LocalidadDataService,
-    private dialog: MatDialog,
+    private dialog: LocalidadesDialogService,
     private alertService: AlertService
   ) {}
 
@@ -133,15 +134,13 @@ export class LocalidadComponent implements OnInit {
 
   update(row: LocalidadGridModel) {
     this.dialog
-      .open(UpsertLocalidadDialogComponent, { data: { id: row.idLocalidad }, width: '600px' })
-      .afterClosed()
+      .openLocalidadesUpsert$(row.idLocalidad)
       .subscribe(() => this.onBuscar());
   }
 
   add() {
     this.dialog
-      .open(UpsertLocalidadDialogComponent, {width: '600px'})
-      .afterClosed()
+      .openLocalidadesUpsert$()
       .subscribe(() => this.onBuscar());
   }
 

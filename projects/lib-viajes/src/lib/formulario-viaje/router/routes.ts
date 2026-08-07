@@ -1,16 +1,20 @@
-import { Routes } from "@angular/router";
+import { RouterModule, Routes } from "@angular/router";
+import { FormularioViajeRouterComponent } from "./router";
+import { FormularioViajeComponent } from "../view/formulario-viaje";
 
-export const FormularioViajesRoutes : Routes = [
+export const routes : Routes = [
     {
         path: '',
-        loadComponent: () => import('./router').then(m => m.FormularioViajeRouterComponent),
+        component: FormularioViajeRouterComponent,
         data: { title: 'Formulario'},
         children: [
             {
                 path: '',
-                loadComponent: () => import('../view/formulario-viaje').then(m => m.FormularioViajeComponent),
+                component: FormularioViajeComponent,
                 data: { title: '' },
             }
         ]
     }
 ]
+
+export const FormularioViajesRoutes = RouterModule.forChild(routes);

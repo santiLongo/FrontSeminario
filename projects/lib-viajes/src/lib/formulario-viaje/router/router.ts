@@ -1,10 +1,8 @@
 import { Component } from "@angular/core";
-import { RouterOutlet } from "@angular/router";
 
 @Component({
-    standalone: true,
+    standalone: false,
     selector: 'app-formulario-viaje-router',
-    template: '<router-outlet></router-outlet>',
-    imports: [RouterOutlet]
+    template: '<router-outlet></router-outlet>'
 })
 export class FormularioViajeRouterComponent{}

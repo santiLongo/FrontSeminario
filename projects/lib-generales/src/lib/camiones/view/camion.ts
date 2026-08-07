@@ -18,6 +18,7 @@ import { switchMap } from 'rxjs';
 import { TipoCamionDialogComponent } from '../dialogs/tipo-camion/tipo-camion';
 import { ArchivosDialogComponent } from '../dialogs/archivos-dialog/archivos-dialog';
 import { DialogService } from 'lib-servicios';
+import { CamionDialogService } from '../services/dialog.service';
 
 @Component({
   selector: 'app-camion',
@@ -37,7 +38,7 @@ export class CamionComponent implements OnInit, AfterViewInit {
   gridConfig: GridConfig<CamionesGridModel>;
   formulario: FormGroup;
 
-  constructor(public dataService: CamionesDataService, private fb: FormBuilder, private dialog: DialogService, private alertService: AlertService) {}
+  constructor(public dataService: CamionesDataService, private fb: FormBuilder, private dialog: CamionDialogService, private alertService: AlertService) {}
 
   ngOnInit(): void {
     this.formSetup();
@@ -153,14 +154,14 @@ export class CamionComponent implements OnInit, AfterViewInit {
   }
 
   openUpsert(id?: number) {
-    this.dialog.open(UpsertCamionDialogComponent, {data: { id }, size: 'l'}).afterClosed().subscribe(() => {
+    this.dialog.openCamionUpsert$(id).subscribe(() => {
       this.onBuscar();
     });
   }
 
   openArchivos(item: CamionesGridModel) {
     const idCamion = item.id;
-    this.dialog.open(ArchivosDialogComponent, {data: { idCamion }, size: 'xxl'}).afterClosed().subscribe(() => {
+    this.dialog.openArchivosCamion$(idCamion).subscribe(() => {
       this.onBuscar();
     });
   }
@@ -182,7 +183,7 @@ export class CamionComponent implements OnInit, AfterViewInit {
   }
 
   openTipoCamion() {
-    this.dialog.open(TipoCamionDialogComponent, { size: 'xxl' }).afterClosed().subscribe(() => {
+    this.dialog.openTipoCamion$().subscribe(() => {
       this.onBuscar();
     });
   }

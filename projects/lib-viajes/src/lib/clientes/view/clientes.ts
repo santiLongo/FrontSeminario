@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 import { switchMap } from 'rxjs';
 import { UpsertClienteDialogComponent } from '../dialog/upsert-dialog';
 import { DialogService } from 'lib-servicios';
+import { ClienteDialogService } from '../services/dialog.service';
 
 @Component({
   selector: 'app-clientes',
@@ -35,7 +36,7 @@ export class ClientesComponent implements OnInit {
 
   constructor(
     public dataService: ClientesDataService,
-    private dialog: DialogService,
+    private dialog: ClienteDialogService,
     private alertService: AlertService,
   ) {}
 
@@ -156,10 +157,7 @@ export class ClientesComponent implements OnInit {
   }
 
   openUpsert(idCliente?: number) {
-    this.dialog.open(UpsertClienteDialogComponent, {
-      data: { idCliente },
-      size: 'xl'
-    }).afterClosed()
+    this.dialog.openClienteUpsert$(idCliente)
     .subscribe(() => this.dataService.search());
   }
 }

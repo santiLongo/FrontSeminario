@@ -1,0 +1,85 @@
+<h6 class="card-subtitle mb-2 text-body-secondary">Datos Principales</h6>
+<form [formGroup]="datosPrincipales">
+  <div class="row">
+    <div class="col-6">
+      <app-date-form-field
+        formControlName="fechaPartida"
+        [label]="'Fecha de Partida'"
+        [readonly]="readonly"
+      ></app-date-form-field>
+    </div>
+    <div class="col-6">
+      <app-form-field
+        formControlName="carga"
+        [label]="'Carga'"
+        [readonly]="readonly"
+      ></app-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <app-decimal-form-field
+        formControlName="kilos"
+        [label]="'Kilos Netos'"
+        [decimals]="2"
+        [readonly]="readonly"
+      ></app-decimal-form-field>
+    </div>
+    <div class="col-6">
+      <app-decimal-form-field
+        formControlName="kilometros"
+        [label]="'Kilometros'"
+        [decimals]="2"
+        [readonly]="readonly"
+      ></app-decimal-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <app-decimal-form-field
+        formControlName="montoTotal"
+        [label]="'Monto Total'"
+        [decimals]="2"
+        [readonly]="readonly"
+      ></app-decimal-form-field>
+    </div>
+    <div class="col-6">
+      <app-combo
+        formControlName="idMoneda"
+        [type]="'ComboMoneda'"
+        [label]="'Moneda'"
+        [readonly]="readonly || idViaje > 0"
+      ></app-combo>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <app-decimal-form-field
+        formControlName="precioKm"
+        [label]="'Precio x KM'"
+        [readonly]="readonly"
+      ></app-decimal-form-field>
+    </div>
+  </div>
+</form>
+
+<h6 class="card-subtitle mb-2 text-body-secondary">Datos Cliente</h6>
+<form [formGroup]="datosCliente">
+  <div class="row">
+    <div class="col-6">
+      <app-combo
+        formControlName="idCliente"
+        [type]="'ComboClientes'"
+        [label]="'Cliente'"
+        [readonly]="readonly || idViaje > 0"
+      ></app-combo>
+    </div>
+    <div class="col-6">
+      <app-form-field
+        formControlName="cuit"
+        [label]="'Cuit Cliente'"
+        [readonly]="true"
+      ></app-form-field>
+    </div>
+  </div>
+</form>

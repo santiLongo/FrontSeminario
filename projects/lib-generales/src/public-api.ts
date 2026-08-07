@@ -4,3 +4,4 @@
 
 export * from './lib/router/routes';
 export * from './lib/config/generales-config';
+export * from './lib/config/listeners-config';

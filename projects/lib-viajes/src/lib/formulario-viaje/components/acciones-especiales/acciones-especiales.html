@@ -1,0 +1,24 @@
+<div style="display: flex">
+  <div style="display: flex; margin-right: auto; gap: 10px">
+    <app-button
+      icon="add"
+      [label]="'Agregar Camion'"
+      (onClick)="addCamion()"
+      [type]="'success'"
+    ></app-button>
+    <app-button
+      icon="add"
+      [label]="'Agregar Cliente'"
+      (onClick)="addCliente()"
+      [type]="'success'"
+    ></app-button>
+    <app-button
+      icon="add"
+      [label]="'Agregar Localidad'"
+      (onClick)="addLocalidad()"
+      [type]="'success'"
+    ></app-button>
+  </div>
+
+  <div style="display: flex; margin-left: auto; gap: 10px"></div>
+</div>

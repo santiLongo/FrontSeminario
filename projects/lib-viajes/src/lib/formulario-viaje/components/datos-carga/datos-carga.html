@@ -1,0 +1,93 @@
+<h6 class="card-subtitle mb-2 text-body-secondary">Chofer</h6>
+
+<form [formGroup]="datosChofer">
+  <div class="row">
+    <div class="col-6">
+      <app-combo
+        formControlName="idChofer"
+        [type]="'ComboChoferes'"
+        [label]="'Chofer'"
+        [readonly]="readonly"
+      ></app-combo>
+    </div>
+    <div class="col-6">
+      <app-form-field
+        [label]="'DNI'"
+        formControlName="dni"
+        [readonly]="true"
+      ></app-form-field>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <app-form-field
+        [label]="'Nro. Registro'"
+        formControlName="nroRegistro"
+        [readonly]="true"
+      ></app-form-field>
+    </div>
+  </div>
+</form>
+
+<h6 class="card-subtitle mb-2 text-body-secondary">Camion</h6>
+
+<form [formGroup]="datosCamion">
+  <div class="row">
+    <div class="col-6">
+      <app-combo
+        formControlName="idCamion"
+        [type]="comboCamiones"
+        [label]="'Camion'"
+        [readonly]="readonly"
+      ></app-combo>
+    </div>
+    <div class="col-6">
+      <app-date-form-field
+        [label]="'Ultimo Mantenimiento'"
+        formControlName="ultimoMantenimiento"
+        [readonly]="true"
+      ></app-date-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <app-combo
+        formControlName="idSemi"
+        [type]="comboSemi"
+        [label]="'Semirremolque'"
+        [readonly]="readonly"
+      ></app-combo>
+    </div>
+    <div class="col-6">
+      <app-date-form-field
+        [label]="'Ultimo Mantenimiento'"
+        formControlName="ultimoMantenimientoSemi"
+        [readonly]="true"
+      ></app-date-form-field>
+    </div>
+  </div>
+</form>
+
+<h6 class="card-subtitle mb-2 text-body-secondary">Procedencias y Destinos</h6>
+
+<form [formGroup]="formulario">
+  <div class="row">
+    <div class="col-6">
+      <app-multiple-combo
+        [label]="'Procedencias'"
+        [type]="'ComboDestinoProcedencias'"
+        formControlName="datosProcedencias"
+        [readonly]="readonly"
+      ></app-multiple-combo>
+    </div>
+    <div class="col-6">
+      <app-multiple-combo
+        [label]="'Destinos'"
+        [type]="'ComboDestinoProcedencias'"
+        formControlName="datosDestino"
+        [readonly]="readonly"
+      ></app-multiple-combo>
+    </div>
+  </div>
+</form>

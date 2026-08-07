@@ -13,11 +13,11 @@ export const GestionViajesRoutes : Routes = [
             },
             {
                 path: 'formulario',
-                loadChildren: () => import('../../formulario-viaje/router/routes').then(m => m.FormularioViajesRoutes),
+                loadChildren: () => import('../../formulario-viaje/formulario-viaje.module').then(m => m.FormularioViajeModule),
             },
             {
                 path: 'formulario/:idViaje/:readonly',
-                loadChildren: () => import('../../formulario-viaje/router/routes').then(m => m.FormularioViajesRoutes),
+                loadChildren: () => import('../../formulario-viaje/formulario-viaje.module').then(m => m.FormularioViajeModule),
             }
         ]
     }
