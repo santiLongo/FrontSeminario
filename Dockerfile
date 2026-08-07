@@ -11,6 +11,7 @@ RUN npm ci
 
 COPY . .
 
+ARG BUILD_CONFIGURATION=prod
 ARG BASE_HREF=/lognet-app/
 
 RUN npm run build:${BUILD_CONFIGURATION} -- --base-href=${BASE_HREF}
