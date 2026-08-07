@@ -41,7 +41,7 @@
     "tslib": "^2.8.1",
     "zone.js": "~0.15.0",
     "lib-components": "file:packages/lib-components-21.0.5.tgz",
-    "lib-servicios": "file:packages/lib-servicios-21.0.2.tgz"
+    "lib-servicios": "file:packages/lib-servicios-21.0.3.tgz"
   },
   "devDependencies": {
     "@angular/build": "^21.2.20",
