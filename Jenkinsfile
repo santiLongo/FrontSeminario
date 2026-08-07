@@ -28,12 +28,12 @@ pipeline {
             env.CONTAINER  = 'seminario-front'
             env.HOST_PORT  = '5006'
             env.BASE_HREF  = '/lognet-app/'
-            env.BUILD_CONFIGURATION = 'production'
+            env.BUILD_CONFIGURATION = 'prod'
           } else {
             env.CONTAINER  = 'seminario-front-test'
             env.HOST_PORT  = '5008'
             env.BASE_HREF  = '/lognet-test/'
-            env.BUILD_CONFIGURATION = 'development'
+            env.BUILD_CONFIGURATION = 'dev'
           }
         }
       }
