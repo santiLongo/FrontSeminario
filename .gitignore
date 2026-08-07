@@ -44,3 +44,6 @@ Thumbs.db
 
 # Prod env
 src/environments/environment.production.ts
+
+# Package-lock
+.package-lock.json
