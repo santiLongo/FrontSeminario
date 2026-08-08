@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiHttpService, GridState, PagedResult } from 'lib-servicios';
+import { ApiHttpService, GridState, HttpRef, PagedResult } from 'lib-servicios';
 import { Observable } from 'rxjs';
 import { FinanzasLibService } from '../../config/finanzas.service';
 import { ReciboGridModel } from '../models/grid-model';
@@ -17,8 +17,8 @@ export class RecibosHttpService {
         this.url = config.apiUrl + 'v1/recibos/';
     }
 
-    getAll(command: ReciboFilterModel, state: GridState): Observable<PagedResult<ReciboGridModel>> {
-        return this.http.getState(this.url + 'getAll', command, state);
+    getAll(command: ReciboFilterModel, state: GridState, ref: HttpRef): Observable<PagedResult<ReciboGridModel>> {
+        return this.http.getState(this.url + 'getAll', command, state, ref);
     }
 
     get(idRecibo: number): Observable<GetReciboResponse> {

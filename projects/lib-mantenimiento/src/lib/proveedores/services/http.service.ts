@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiHttpService, GridState, PagedResult } from 'lib-servicios';
+import { ApiHttpService, GridState, HttpRef, PagedResult } from 'lib-servicios';
 import { Observable } from 'rxjs';
 import { MantenimientoLibService } from '../../config/mantenimiento.service';
 import { ProveedoresFilterModel } from '../models/proveedores-filter-model';
@@ -21,10 +21,10 @@ export class ProveedoresHttpService {
 
   getAll(
     command: ProveedoresFilterModel,
-    state: GridState,
+    state: GridState, ref: HttpRef
   ): Observable<PagedResult<ProveedoresGridModel>> {
     const fullUrl = this.url + 'getAll';
-    return this.http.getState(fullUrl, command, state);
+    return this.http.getState(fullUrl, command, state, ref);
   }
 
   upsert(command: UpsertProveedorModel): Observable<void> {

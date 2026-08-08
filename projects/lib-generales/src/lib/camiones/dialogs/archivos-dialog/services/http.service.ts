@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiHttpService, GridState, PagedResult } from 'lib-servicios';
+import { ApiHttpService, GridState, HttpRef, PagedResult } from 'lib-servicios';
 import { ArchivoGridModel } from '../models/models';
 import { Observable } from 'rxjs';
 import { GeneralesLibService } from 'projects/lib-generales/src/lib/config/generales.service';
@@ -21,9 +21,10 @@ export class ArchivosCamionesHttpService {
   getAll(
     idCamion: number,
     state: GridState,
+    ref: HttpRef,
   ): Observable<PagedResult<ArchivoGridModel>> {
     const fullUrl = this.url + 'getAll';
-    return this.http.getState(fullUrl, { idCamion }, state);
+    return this.http.getState(fullUrl, { idCamion }, state, ref);
   }
 
   save(idCamion: number, archivo: File): Observable<void> {
@@ -40,9 +41,9 @@ export class ArchivosCamionesHttpService {
     );
   }
 
-  download(id: number): Observable<Blob> {
+  download(archivo: ArchivoGridModel): Observable<void> {
     const fullUrl = this.url + 'download';
-    return this.http.getBlob(fullUrl, { id }, 'Descargando archivo...');
+    return this.http.downloadGet$(fullUrl, archivo.nombre, { id: archivo.id });
   }
 
   delete(IdArchivoCamion: number): Observable<void> {

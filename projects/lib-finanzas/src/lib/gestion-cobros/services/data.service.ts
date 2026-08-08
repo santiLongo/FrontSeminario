@@ -16,7 +16,7 @@ export class CobrosDataService extends BaseGridService<CobrosGridModel> {
 
     getData(state: GridState): Observable<PagedResult<CobrosGridModel>> {
         const command = this.filterSub$.value;
-        return this.httpServie.getAll(command, state);
+        return this.httpServie.getAll(command, state, this.ref);
     }
 
     anular(idCobro: number): Observable<void> {

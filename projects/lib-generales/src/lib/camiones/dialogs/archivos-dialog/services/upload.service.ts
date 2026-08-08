@@ -23,23 +23,4 @@ export class ArchivosUploadService extends BaseUploadService {
   upload(file: File): Observable<void> {
     return this.http.save(this.idCamion, file);
   }
-
-  override list = (): Observable<NzUploadFile[]> =>
-    this.http
-      .getAll(this.idCamion, { page: 1, pageSize: 1000, filters: {} })
-      .pipe(
-        map((result) =>
-          result.items.map<NzUploadFile>((archivo) => ({
-            uid: String(archivo.id),
-            name: archivo.nombre,
-            status: 'done',
-          })),
-        ),
-      );
-
-  override download = (file: NzUploadFile): Observable<Blob> =>
-    this.http.download(Number(file.uid));
-
-  override remove = (file: NzUploadFile): Observable<any> =>
-    this.http.delete(Number(file.uid));
 }

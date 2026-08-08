@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ApiHttpService, GridState, PagedResult } from "lib-servicios";
+import { ApiHttpService, GridState, HttpRef, PagedResult } from "lib-servicios";
 import { CamionesFilterModel } from "../models/camiones-filter-model";
 import { Observable } from "rxjs";
 import { CamionesGridModel } from "../models/camiones-grid-model";
@@ -17,9 +17,9 @@ export class CamionesHttpService {
         this.url = config.apiUrl + 'v1/camion/';
     }
 
-    getAll(command: CamionesFilterModel, state: GridState): Observable<PagedResult<CamionesGridModel>> {
+    getAll(command: CamionesFilterModel, state: GridState, ref: HttpRef): Observable<PagedResult<CamionesGridModel>> {
         const fullUrl = this.url + 'getAll';
-        return this.http.getState(fullUrl, command, state);
+        return this.http.getState(fullUrl, command, state, ref);
     }
 
     get(id: number): Observable<UpsertCamionModel> {

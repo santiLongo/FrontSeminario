@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ApiHttpService, GridState, PagedResult } from "lib-servicios";
+import { ApiHttpService, GridState, HttpRef, PagedResult } from "lib-servicios";
 import { Observable } from "rxjs";
 import { TipoEventoGridModel } from "../model/grid-model";
 import { UpsertTipoEventoModel } from "../upsert/model/upsert-model";
@@ -16,9 +16,9 @@ export class TipoEventoHttpService {
             this.url = config.loginUrl + 'v1/eventos/';
         }
     
-        getAll(state: GridState): Observable<PagedResult<TipoEventoGridModel>> {
+        getAll(state: GridState, ref: HttpRef): Observable<PagedResult<TipoEventoGridModel>> {
             const fullUrl = this.url + 'getTipos';
-            return this.http.getState(fullUrl, null, state);
+            return this.http.getState(fullUrl, null, state, ref);
         }
     
         add(command: UpsertTipoEventoModel): Observable<void> {

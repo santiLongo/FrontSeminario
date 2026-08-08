@@ -4,7 +4,7 @@ import { ViajesLibService } from '../../config/viajes.service';
 import { ClienteGridModel } from '../models/grid-model';
 import { ClienteFilterModel } from '../models/filter-model';
 import { ClienteUpsertModel } from '../dialog/model/upsert-model';
-import { ApiHttpService, GridState, PagedResult } from 'lib-servicios';
+import { ApiHttpService, GridState, HttpRef, PagedResult } from 'lib-servicios';
 
 @Injectable({
   providedIn: 'root',
@@ -21,10 +21,10 @@ export class ClientesHttpService {
 
   getAll(
     command: ClienteFilterModel,
-    state: GridState,
+    state: GridState, ref: HttpRef
   ): Observable<PagedResult<ClienteGridModel>> {
     const fullUrl = this.url + 'getAll';
-    return this.http.getState(fullUrl, command, state);
+    return this.http.getState(fullUrl, command, state, ref);
   }
 
   bajaAlta(idCliente: number): Observable<void> {

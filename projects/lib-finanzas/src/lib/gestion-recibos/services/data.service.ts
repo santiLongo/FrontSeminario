@@ -5,7 +5,7 @@ import { FormControl } from '@angular/forms';
 import { ReciboGridModel } from '../models/grid-model';
 import { RecibosHttpService } from './http.service';
 import { ReciboFilterModel } from '../models/filter-model';
-import { GridState, PagedResult } from 'lib-servicios';
+import { GridState, HttpRef, PagedResult } from 'lib-servicios';
 
 @Injectable()
 export class RecibosDataService extends BaseGridService<ReciboGridModel> {
@@ -15,11 +15,11 @@ export class RecibosDataService extends BaseGridService<ReciboGridModel> {
         super();
     }
 
-    override getData(state: GridState): Observable<PagedResult<ReciboGridModel>> {
+    override getData(state: GridState, ref: HttpRef): Observable<PagedResult<ReciboGridModel>> {
         const command: ReciboFilterModel = {
             tipoRecibo: this.tipoRecibo.value ?? undefined,
         };
-        return this.httpService.getAll(command, state);
+        return this.httpService.getAll(command, state, ref);
     }
 
     anular(idRecibo: number): Observable<void> {

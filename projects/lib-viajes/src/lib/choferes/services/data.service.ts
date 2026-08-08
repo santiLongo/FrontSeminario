@@ -5,7 +5,7 @@ import { ChoferesFilterModel } from "../models/choferes-filter-model";
 import { ChoferesGridModel } from "../models/choferes-grid-model";
 import { ChoferesHttpService } from "./http.service";
 import { FormControl } from "@angular/forms";
-import { GridState, PagedResult } from "lib-servicios";
+import { GridState, HttpRef, PagedResult } from "lib-servicios";
 
 @Injectable()
 export class ChoferesDataService extends BaseGridService<ChoferesGridModel> {
@@ -16,11 +16,11 @@ export class ChoferesDataService extends BaseGridService<ChoferesGridModel> {
         super();
     }
     
-    override getData(state: GridState): Observable<PagedResult<ChoferesGridModel>> {
+    override getData(state: GridState, ref: HttpRef): Observable<PagedResult<ChoferesGridModel>> {
         const command: ChoferesFilterModel = {
             estado:this.estado.value
         };
-        return this.httpService.getAll(command, state);
+        return this.httpService.getAll(command, state, ref);
     }
 
     baja(idChofer: number): Observable<void> {

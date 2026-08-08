@@ -109,14 +109,7 @@ export class ArchivosDialogComponent implements OnInit, AfterViewInit {
   }
 
   private download(item: ArchivoGridModel) {
-    this.dataService.download(item.id).subscribe((blob) => {
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = item.nombre;
-      link.click();
-      window.URL.revokeObjectURL(url);
-    });
+    this.dataService.download(item).subscribe();
   }
 
   private remove(item: ArchivoGridModel) {

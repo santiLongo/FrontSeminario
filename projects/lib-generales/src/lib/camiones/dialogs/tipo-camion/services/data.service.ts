@@ -3,7 +3,7 @@ import { BaseGridService } from "lib-components";
 import { TipoCamionGridModel } from "../model/grid-model";
 import { Observable } from "rxjs";
 import { TipoCamionHttpService } from "./http.service";
-import { GridState, PagedResult } from "lib-servicios";
+import { GridState, HttpRef, PagedResult } from "lib-servicios";
 
 @Injectable()
 export class TipoCamionDataService extends BaseGridService<TipoCamionGridModel> {
@@ -12,8 +12,8 @@ export class TipoCamionDataService extends BaseGridService<TipoCamionGridModel> 
         super();
     }
     
-    override getData(state: GridState): Observable<PagedResult<TipoCamionGridModel>> {
-        return this.httpService.getAll(state);
+    override getData(state: GridState, ref: HttpRef): Observable<PagedResult<TipoCamionGridModel>> {
+        return this.httpService.getAll(state, ref);
     }
     
     delete(id: number): Observable<void> {

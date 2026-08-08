@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiHttpService, GridState, PagedResult } from 'lib-servicios';
+import { ApiHttpService, GridState, HttpRef, PagedResult } from 'lib-servicios';
 import { Observable } from 'rxjs';
 import { FinanzasLibService } from '../../../config/finanzas.service';
 import { FacturaEmitidaGridModel } from '../models/grid-model';
@@ -20,8 +20,8 @@ export class FacturasEmitidasHttpService {
         this.pendientesUrl = config.apiUrl + 'v1/pendientes-facturacion/';
     }
 
-    getAll(command: FacturaEmitidaFilterModel, state: GridState): Observable<PagedResult<FacturaEmitidaGridModel>> {
-        return this.http.getState(this.url + 'getAll', command, state);
+    getAll(command: FacturaEmitidaFilterModel, state: GridState, ref: HttpRef): Observable<PagedResult<FacturaEmitidaGridModel>> {
+        return this.http.getState(this.url + 'getAll', command, state, ref);
     }
 
     addConViaje(command: CrearEmitidaConViajeModel): Observable<number> {

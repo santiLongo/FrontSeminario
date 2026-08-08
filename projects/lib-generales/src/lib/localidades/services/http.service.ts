@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiHttpService, GridState, PagedResult } from 'lib-servicios';
+import { ApiHttpService, GridState, HttpRef, PagedResult } from 'lib-servicios';
 import { Observable } from 'rxjs';
 import { LocalidadGridModel } from '../models/localidad-grid-model';
 import { LocalidadFilterModel } from '../models/localidad-filter-model';
@@ -21,10 +21,10 @@ export class LocalidadHttpService {
 
   getAll(
     command: LocalidadFilterModel,
-    state: GridState,
+    state: GridState, ref: HttpRef
   ): Observable<PagedResult<LocalidadGridModel>> {
     const fullUrl = this.url + 'getAll';
-    return this.http.getState(fullUrl, command, state);
+    return this.http.getState(fullUrl, command, state, ref);
   }
 
   upsert(command: UpsertLocalidadModel): Observable<void> {

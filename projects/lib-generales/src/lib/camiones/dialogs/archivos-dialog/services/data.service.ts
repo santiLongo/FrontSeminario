@@ -3,7 +3,7 @@ import { BaseGridService } from 'lib-components';
 import { ArchivoGridModel } from '../models/models';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ArchivosCamionesHttpService } from './http.service';
-import { GridState, PagedResult } from 'lib-servicios';
+import { GridState, HttpRef, PagedResult } from 'lib-servicios';
 
 @Injectable()
 export class ArchivosCamionesDataService extends BaseGridService<ArchivoGridModel> {
@@ -13,13 +13,13 @@ export class ArchivosCamionesDataService extends BaseGridService<ArchivoGridMode
     super();
   }
 
-  getData(state: GridState): Observable<PagedResult<ArchivoGridModel>> {
+  getData(state: GridState, ref: HttpRef): Observable<PagedResult<ArchivoGridModel>> {
     const idCamion = this.camion;
-    return this.httpService.getAll(idCamion, state);
+    return this.httpService.getAll(idCamion, state, ref);
   }
 
-  download(id: number): Observable<Blob> {
-    return this.httpService.download(id);
+  download(item: ArchivoGridModel): Observable<void> {
+    return this.httpService.download(item);
   }
 
   delete(id: number): Observable<void> {

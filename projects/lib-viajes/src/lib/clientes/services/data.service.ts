@@ -5,7 +5,7 @@ import { FormControl } from "@angular/forms";
 import { ClienteGridModel } from "../models/grid-model";
 import { ClientesHttpService } from "./http.service";
 import { ClienteFilterModel } from "../models/filter-model";
-import { GridState, PagedResult } from "lib-servicios";
+import { GridState, HttpRef, PagedResult } from "lib-servicios";
 
 @Injectable()
 export class ClientesDataService extends BaseGridService<ClienteGridModel> {
@@ -16,11 +16,11 @@ export class ClientesDataService extends BaseGridService<ClienteGridModel> {
         super();
     }
     
-    override getData(state: GridState): Observable<PagedResult<ClienteGridModel>> {
+    override getData(state: GridState, ref: HttpRef): Observable<PagedResult<ClienteGridModel>> {
         const command: ClienteFilterModel = {
             estado: this.estado.value
         }
-        return this.httpService.getAll(command, state);
+        return this.httpService.getAll(command, state, ref);
     }
 
     bajaAlta(idCliente: number): Observable<void> {

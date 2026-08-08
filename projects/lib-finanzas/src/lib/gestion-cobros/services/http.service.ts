@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { FinanzasLibService } from "../../config/finanzas.service";
-import { ApiHttpService, GridState, PagedResult } from "lib-servicios";
+import { ApiHttpService, GridState, HttpRef, PagedResult } from "lib-servicios";
 import { CobrosFilterModel } from "../models/cobros-filter-model";
 import { Observable } from "rxjs";
 import { CobrosGridModel } from "../models/cobros-grid-model";
@@ -16,9 +16,9 @@ export class CobrosHttpService {
         this.url = config.apiUrl + 'v1/cobros/'
     }
 
-    getAll(command: CobrosFilterModel, state: GridState): Observable<PagedResult<CobrosGridModel>> {
+    getAll(command: CobrosFilterModel, state: GridState, ref: HttpRef): Observable<PagedResult<CobrosGridModel>> {
         const fullUrl = this.url + 'getAll';
-        return this.http.getState(fullUrl, command, state);
+        return this.http.getState(fullUrl, command, state, ref);
     }
 
     update(command: UpdateCobroModel): Observable<void> {

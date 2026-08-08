@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { FacturaEmitidaGridModel } from '../models/grid-model';
 import { FacturasEmitidasHttpService } from './http.service';
 import { FacturaEmitidaFilterModel } from '../models/filter-model';
-import { GridState, PagedResult } from 'lib-servicios';
+import { GridState, HttpRef, PagedResult } from 'lib-servicios';
 
 @Injectable()
 export class FacturasEmitidasDataService extends BaseGridService<FacturaEmitidaGridModel> {
@@ -12,9 +12,9 @@ export class FacturasEmitidasDataService extends BaseGridService<FacturaEmitidaG
         super();
     }
 
-    override getData(state: GridState): Observable<PagedResult<FacturaEmitidaGridModel>> {
+    override getData(state: GridState, ref: HttpRef): Observable<PagedResult<FacturaEmitidaGridModel>> {
         const command: FacturaEmitidaFilterModel = { confirmada: true };
-        return this.httpService.getAll(command, state);
+        return this.httpService.getAll(command, state, ref);
     }
 
     anular(idFactura: number): Observable<void> {

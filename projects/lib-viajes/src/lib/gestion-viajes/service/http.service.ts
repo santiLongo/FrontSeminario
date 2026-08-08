@@ -6,7 +6,7 @@ import { ForzarEstadoModel } from '../dialogs/forzar-estado/models/forzar-estado
 import { InformarDescargaModel } from '../dialogs/informar-descarga/models/informar-descarga-model';
 import { ViajesLibService } from '../../config/viajes.service';
 import { ObservacionesModel } from '../dialogs/observaciones/model/model';
-import { ApiHttpService, GridState, PagedResult } from 'lib-servicios';
+import { ApiHttpService, GridState, HttpRef, PagedResult } from 'lib-servicios';
 
 @Injectable({
   providedIn: 'root',
@@ -26,9 +26,10 @@ export class GestionViajesHttpService {
   getAll(
     command: GestionViajesFilterModel,
     state: GridState,
+    ref: HttpRef,
   ): Observable<PagedResult<GestionViajesGridModel>> {
     const fullUrl = this.url + 'getAll';
-    return this.http.getState(fullUrl, command, state);
+    return this.http.getState(fullUrl, command, state, ref);
   }
 
   forzarEstado(command: ForzarEstadoModel): Observable<void> {
@@ -44,8 +45,9 @@ export class GestionViajesHttpService {
   getObs(
     idViaje: number,
     state: GridState,
+    ref: HttpRef,
   ): Observable<PagedResult<ObservacionesModel>> {
     const fullUrl = this.url + 'get-obs';
-    return this.http.getState(fullUrl, { idViaje }, state);
+    return this.http.getState(fullUrl, { idViaje }, state, ref);
   }
 }

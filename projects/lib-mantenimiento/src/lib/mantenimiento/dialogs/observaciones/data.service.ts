@@ -3,7 +3,7 @@ import { BaseGridService } from "lib-components";
 import { ObservacionesModel } from "./model/model";
 import { BehaviorSubject, Observable } from "rxjs";
 import { MantenimientoHttpService } from "../../services/http.service";
-import { GridState, PagedResult } from "lib-servicios";
+import { GridState, HttpRef, PagedResult } from "lib-servicios";
 
 @Injectable()
 export class ObservacionesDataService extends BaseGridService<ObservacionesModel> {
@@ -14,8 +14,8 @@ export class ObservacionesDataService extends BaseGridService<ObservacionesModel
         super()
     }
     
-    getData(state: GridState): Observable<PagedResult<ObservacionesModel>> {
-        return this.httpService.getObs(this.idSub$.value, state)
+    getData(state: GridState, ref: HttpRef): Observable<PagedResult<ObservacionesModel>> {
+        return this.httpService.getObs(this.idSub$.value, state, ref)
     }
 
 }

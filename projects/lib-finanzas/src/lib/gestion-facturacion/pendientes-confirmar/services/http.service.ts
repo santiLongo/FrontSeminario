@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiHttpService, GridState, PagedResult } from 'lib-servicios';
+import { ApiHttpService, GridState, HttpRef, PagedResult } from 'lib-servicios';
 import { Observable } from 'rxjs';
 import { FinanzasLibService } from '../../../config/finanzas.service';
 import { PendienteConfirmarGridModel } from '../models/grid-model';
@@ -19,8 +19,8 @@ export class PendientesConfirmarHttpService {
         this.urlRecibidas = config.apiUrl + 'v1/facturas-recibidas/';
     }
 
-    getAll(state: GridState): Observable<PagedResult<PendienteConfirmarGridModel>> {
-        return this.http.getState(this.url + 'getAll', {}, state);
+    getAll(state: GridState, ref: HttpRef): Observable<PagedResult<PendienteConfirmarGridModel>> {
+        return this.http.getState(this.url + 'getAll', {}, state, ref);
     }
 
     getFactura(idFactura: number, tipo: number): Observable<any> {

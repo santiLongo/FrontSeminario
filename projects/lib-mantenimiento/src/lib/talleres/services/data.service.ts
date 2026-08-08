@@ -4,7 +4,7 @@ import {  TalleresGridModel } from "../models/talleres-grid-model";
 import { BehaviorSubject, Observable } from "rxjs";
 import { TalleresHttpService } from "./http.service";
 import { TalleresFilterModel } from "../models/talleres-filter-model";
-import { GridState, PagedResult } from "lib-servicios";
+import { GridState, HttpRef, PagedResult } from "lib-servicios";
 
 @Injectable()
 export class TalleresDataService extends BaseGridService<TalleresGridModel> {
@@ -16,8 +16,8 @@ export class TalleresDataService extends BaseGridService<TalleresGridModel> {
         this.filterSub$ = new BehaviorSubject<TalleresFilterModel>({});
     }
     
-    override getData(state: GridState): Observable<PagedResult<TalleresGridModel>> {
+    override getData(state: GridState, ref: HttpRef): Observable<PagedResult<TalleresGridModel>> {
         const command = this.filterSub$.value;
-        return this.httpService.getAll(command, state);
+        return this.httpService.getAll(command, state, ref);
     }
 }

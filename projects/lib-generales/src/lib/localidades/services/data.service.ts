@@ -4,7 +4,7 @@ import { LocalidadGridModel } from "../models/localidad-grid-model";
 import { BehaviorSubject, Observable } from "rxjs";
 import { LocalidadHttpService } from "./http.service";
 import { LocalidadFilterModel } from "../models/localidad-filter-model";
-import { GridState, PagedResult } from "lib-servicios";
+import { GridState, HttpRef, PagedResult } from "lib-servicios";
 
 @Injectable()
 export class LocalidadDataService extends BaseGridService<LocalidadGridModel> {
@@ -16,9 +16,9 @@ export class LocalidadDataService extends BaseGridService<LocalidadGridModel> {
         this.filterSub$ = new BehaviorSubject<LocalidadFilterModel>({});
     }
     
-    override getData(state: GridState): Observable<PagedResult<LocalidadGridModel>> {
+    override getData(state: GridState, ref: HttpRef): Observable<PagedResult<LocalidadGridModel>> {
         const command = this.filterSub$.value;
-        return this.httpService.getAll(command, state);
+        return this.httpService.getAll(command, state, ref);
     }
 
     delete(id: number): Observable<void> {

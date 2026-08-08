@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiHttpService, GridState, PagedResult } from 'lib-servicios';
+import { ApiHttpService, GridState, HttpRef, PagedResult } from 'lib-servicios';
 import { Observable } from 'rxjs';
 import { MantenimientoLibService } from '../../config/mantenimiento.service';
 import { MantenimientoFilterModel } from '../models/mantenimentos-filter-model';
@@ -24,10 +24,10 @@ export class MantenimientoHttpService {
 
   getAll(
     command: MantenimientoFilterModel,
-    state: GridState,
+    state: GridState, ref: HttpRef
   ): Observable<PagedResult<MantenimientoGridModel>> {
     const fullUrl = this.url + 'getAll';
-    return this.http.getState(fullUrl, command, state);
+    return this.http.getState(fullUrl, command, state, ref);
   }
 
   upsert(command: UpsertMantenimientoModel): Observable<void> {
@@ -52,10 +52,10 @@ export class MantenimientoHttpService {
 
   getObs(
     idMantenimiento: number,
-    state: GridState,
+    state: GridState, ref: HttpRef
   ): Observable<PagedResult<ObservacionesModel>> {
     const fullUrl = this.url + 'get-obs';
-    return this.http.getState(fullUrl, { idMantenimiento }, state);
+    return this.http.getState(fullUrl, { idMantenimiento }, state, ref);
   }
 
   suspender(idMantenimiento: number): Observable<void> {

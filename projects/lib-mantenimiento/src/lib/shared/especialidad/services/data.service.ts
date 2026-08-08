@@ -3,7 +3,7 @@ import { BaseGridService  } from "lib-components";
 import { EspecialidadGridModel } from "../models/especialidad-grid";
 import { Observable } from "rxjs";
 import { EspecialidadHttpService } from "./http.service";
-import { GridState, PagedResult } from "lib-servicios";
+import { GridState, HttpRef, PagedResult } from "lib-servicios";
 
 @Injectable()
 export class EspecialidadDataService extends BaseGridService<EspecialidadGridModel> {
@@ -14,8 +14,8 @@ export class EspecialidadDataService extends BaseGridService<EspecialidadGridMod
         super()
     }
 
-    override getData(state: GridState): Observable<PagedResult<EspecialidadGridModel>> {
-        return this.httpService.getAll(state);
+    override getData(state: GridState, ref: HttpRef): Observable<PagedResult<EspecialidadGridModel>> {
+        return this.httpService.getAll(state, ref);
     }
     
 }

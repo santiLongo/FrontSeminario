@@ -4,7 +4,7 @@ import { CamionesGridModel } from "../models/camiones-grid-model";
 import { BehaviorSubject, Observable } from "rxjs";
 import { CamionesFilterModel } from "../models/camiones-filter-model";
 import { CamionesHttpService } from "./http.service";
-import { GridState, PagedResult } from "lib-servicios";
+import { GridState, HttpRef, PagedResult } from "lib-servicios";
 
 @Injectable()
 export class CamionesDataService extends BaseGridService<CamionesGridModel> {
@@ -15,9 +15,9 @@ export class CamionesDataService extends BaseGridService<CamionesGridModel> {
         this.filterSub$ = new BehaviorSubject<CamionesFilterModel>({});
     }
 
-    getData(state: GridState): Observable<PagedResult<CamionesGridModel>> {
+    getData(state: GridState, ref: HttpRef): Observable<PagedResult<CamionesGridModel>> {
         const command = this.filterSub$.value;
-        return this.httpService.getAll(command, state);
+        return this.httpService.getAll(command, state, ref);
     }
 
     darBaja(id: number): Observable<void> {

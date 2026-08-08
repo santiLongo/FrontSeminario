@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ApiHttpService, GridState, PagedResult } from "lib-servicios";
+import { ApiHttpService, GridState, HttpRef, PagedResult } from "lib-servicios";
 import { Observable } from "rxjs";
 import { TipoCamionGridModel } from "../model/grid-model";
 import { UpsertTipoCamionModel } from "../upsert/model/upsert-model";
@@ -16,9 +16,9 @@ export class TipoCamionHttpService {
             this.url = config.apiUrl + 'v1/tipo-camion/';
         }
     
-        getAll(state: GridState): Observable<PagedResult<TipoCamionGridModel>> {
+        getAll(state: GridState, ref: HttpRef): Observable<PagedResult<TipoCamionGridModel>> {
             const fullUrl = this.url + 'getAll';
-            return this.http.getState(fullUrl, null, state);
+            return this.http.getState(fullUrl, null, state, ref);
         }
     
         upsert(command: UpsertTipoCamionModel): Observable<void> {

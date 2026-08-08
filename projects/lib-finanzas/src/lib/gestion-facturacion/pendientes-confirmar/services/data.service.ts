@@ -3,7 +3,7 @@ import { BaseGridService } from 'lib-components';
 import { Observable } from 'rxjs';
 import { PendienteConfirmarGridModel } from '../models/grid-model';
 import { PendientesConfirmarHttpService } from './http.service';
-import { GridState, PagedResult } from 'lib-servicios';
+import { GridState, HttpRef, PagedResult } from 'lib-servicios';
 
 @Injectable()
 export class PendientesConfirmarDataService extends BaseGridService<PendienteConfirmarGridModel> {
@@ -11,8 +11,8 @@ export class PendientesConfirmarDataService extends BaseGridService<PendienteCon
         super();
     }
 
-    override getData(state: GridState): Observable<PagedResult<PendienteConfirmarGridModel>> {
-        return this.httpService.getAll(state);
+    override getData(state: GridState, ref: HttpRef): Observable<PagedResult<PendienteConfirmarGridModel>> {
+        return this.httpService.getAll(state, ref);
     }
 
     delete(idFactura: number, tipo: number): Observable<void> {

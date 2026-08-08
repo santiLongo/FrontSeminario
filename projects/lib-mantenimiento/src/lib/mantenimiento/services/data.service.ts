@@ -4,7 +4,7 @@ import {  MantenimientoGridModel } from "../models/mantenimentos-grid-model";
 import { BehaviorSubject, Observable } from "rxjs";
 import { MantenimientoHttpService } from "./http.service";
 import { MantenimientoFilterModel } from "../models/mantenimentos-filter-model";
-import { GridState, PagedResult } from "lib-servicios";
+import { GridState, HttpRef, PagedResult } from "lib-servicios";
 
 @Injectable()
 export class MantenimientoDataService extends BaseGridService<MantenimientoGridModel> {
@@ -16,9 +16,9 @@ export class MantenimientoDataService extends BaseGridService<MantenimientoGridM
         this.filterSub$ = new BehaviorSubject<MantenimientoFilterModel>({});
     }
     
-    getData(state: GridState): Observable<PagedResult<MantenimientoGridModel>> {
+    getData(state: GridState, ref: HttpRef): Observable<PagedResult<MantenimientoGridModel>> {
         const command = this.filterSub$.value;
-        return this.httpService.getAll(command, state);
+        return this.httpService.getAll(command, state, ref);
     }
 
     suspender(idMantenimiento: number): Observable<void> {

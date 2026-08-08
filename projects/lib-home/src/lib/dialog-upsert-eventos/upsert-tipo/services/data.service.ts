@@ -3,7 +3,7 @@ import { BaseGridService } from "lib-components";
 import { TipoEventoGridModel } from "../model/grid-model";
 import { Observable } from "rxjs";
 import { TipoEventoHttpService } from "./http.service";
-import { GridState, PagedResult } from "lib-servicios";
+import { GridState, HttpRef, PagedResult } from "lib-servicios";
 
 @Injectable()
 export class TipoEventoDataService extends BaseGridService<TipoEventoGridModel> {
@@ -12,7 +12,7 @@ export class TipoEventoDataService extends BaseGridService<TipoEventoGridModel> 
         super();
     }
     
-    override getData(state: GridState): Observable<PagedResult<TipoEventoGridModel>> {
-        return this.httpService.getAll(state);
+    override getData(state: GridState, ref: HttpRef): Observable<PagedResult<TipoEventoGridModel>> {
+        return this.httpService.getAll(state, ref);
     }
 }
