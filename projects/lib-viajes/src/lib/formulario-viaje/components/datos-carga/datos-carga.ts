@@ -17,18 +17,6 @@ export class DatosTransporteComponent {
   @Input()
   idViaje?: number;
 
-  comboCamiones: ComboCamiones;
-  comboSemi: ComboSemi;
-
-  constructor() {
-    if (this.idViaje > 0) {
-      this.comboCamiones = 'ComboCamiones';
-      this.comboSemi = 'ComboSemis';
-    } else {
-      this.comboCamiones = 'ComboCamionesDisponibles';
-      this.comboSemi = 'ComboSemisDisponibles';
-    }
-  }
 
   get datosCamion() {
     return this.formulario.get('datosCamion') as FormGroup;

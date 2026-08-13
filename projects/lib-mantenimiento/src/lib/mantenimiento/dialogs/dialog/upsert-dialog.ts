@@ -96,7 +96,7 @@ export class UpsertProveedorDialogComponent implements OnInit {
         },
         {
           key: 'descripcion',
-          title: 'Tarea',
+          title: 'Descripcion',
           type: 'text',
           editable: true
         },

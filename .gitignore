@@ -47,3 +47,4 @@ src/environments/environment.production.ts
 
 # Package-lock
 .package-lock.json
+src/environments/environment.ts

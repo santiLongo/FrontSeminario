@@ -29,12 +29,12 @@ export class FormularioViajeHttpService {
 
   add(command: FormularioAddCommand): Observable<any> {
     const fullUrl = this.url + 'add';
-    return this.http.postWithBlock(fullUrl, command);
+    return this.http.postWithBlock(fullUrl, command, { useNovedades: true });
   }
 
   update(command: FormularioUpdateCommand): Observable<any> {
     const fullUrl = this.url + 'update';
-    return this.http.postWithBlock(fullUrl, command);
+    return this.http.postWithBlock(fullUrl, command, { useNovedades: true });
   }
 
   getCuitCliente(idCliente: number): Observable<{ cuit: string }> {

@@ -143,6 +143,10 @@ export class FormularioViajeComponent
     this.kilometros.valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.calcularPrecioKm());
+    //
+    this.precioKm.valueChanges
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.calcularTotal());
   }
 
   ngOnDestroy(): void {
@@ -156,7 +160,7 @@ export class FormularioViajeComponent
         idViaje: [],
         kilometros: [, { updateOn: 'blur' }],
         montoTotal: [, { validators: Validators.required, updateOn: 'blur' }],
-        precioKm: [],
+        precioKm: [, { updateOn: 'blur' }],
         idMoneda: [, Validators.required],
         fechaPartida: [, Validators.required],
         fechaDescarga: [],
@@ -197,6 +201,15 @@ export class FormularioViajeComponent
     const precioKm = montoTotal / kilometros;
 
     this.precioKm.setValue(precioKm);
+  }
+
+  calcularTotal() {
+    const kilometros = this.kilometros.value;
+    const precioKm = this.precioKm.value;
+
+    const montoTotal = precioKm * kilometros;
+
+    this.montoTotal.setValue(montoTotal);
   }
 
   salir() {
@@ -256,18 +269,9 @@ export class FormularioViajeComponent
       .info$('Esta seguro?', 'Desea confirmar el siguiente viaje?')
       .subscribe((i) => {
         if (i)
-          [
-            this.httpService.add(command).subscribe((res) => {
-              this.alertService
-                .success$(
-                  'Exito',
-                  'Se creo el viaje' + res.NroViaje + ' con exito.',
-                )
-                .subscribe(() => {
-                  this.salir();
-                });
-            }),
-          ];
+        {
+          this.httpService.add(command).subscribe(() => this.salir())
+        }
       });
   }
 
