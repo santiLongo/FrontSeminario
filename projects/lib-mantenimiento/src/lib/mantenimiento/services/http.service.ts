@@ -24,7 +24,8 @@ export class MantenimientoHttpService {
 
   getAll(
     command: MantenimientoFilterModel,
-    state: GridState, ref: HttpRef
+    state: GridState,
+    ref: HttpRef,
   ): Observable<PagedResult<MantenimientoGridModel>> {
     const fullUrl = this.url + 'getAll';
     return this.http.getState(fullUrl, command, state, ref);
@@ -52,7 +53,8 @@ export class MantenimientoHttpService {
 
   getObs(
     idMantenimiento: number,
-    state: GridState, ref: HttpRef
+    state: GridState,
+    ref: HttpRef,
   ): Observable<PagedResult<ObservacionesModel>> {
     const fullUrl = this.url + 'get-obs';
     return this.http.getState(fullUrl, { idMantenimiento }, state, ref);
@@ -60,6 +62,11 @@ export class MantenimientoHttpService {
 
   suspender(idMantenimiento: number): Observable<void> {
     const fullUrl = this.url + 'suspender';
-    return this.http.postWithBlock(fullUrl, idMantenimiento );
+    return this.http.postWithBlock(fullUrl, idMantenimiento);
+  }
+
+  borrar(idMantenimiento: number): Observable<void> {
+    const fullUrl = this.url + 'delete';
+    return this.http.postWithBlock(fullUrl, { id: idMantenimiento });
   }
 }

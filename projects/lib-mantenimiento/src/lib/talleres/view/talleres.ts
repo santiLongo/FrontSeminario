@@ -20,6 +20,7 @@ import { TalleresGridModel } from '../models/talleres-grid-model';
 import { TalleresDataService } from '../services/data.service';
 import { TalleresFilterModel } from '../models/talleres-filter-model';
 import { DialogService } from 'lib-servicios';
+import { TallerDialogService } from '../services/dialog.service';
 
 @Component({
   selector: 'app-localidad',
@@ -42,8 +43,7 @@ export class TalleresComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public dataService: TalleresDataService,
-    private dialog: DialogService,
-    private alertService: AlertService
+    private dialog: TallerDialogService
   ) {}
 
   ngOnInit(): void {
@@ -122,15 +122,13 @@ export class TalleresComponent implements OnInit {
 
   update(row: TalleresGridModel) {
     this.dialog
-      .open(UpsertTallerDialogComponent, { data: { idTaller: row.idTaller }, size: 'xxl' })
-      .afterClosed()
+      .openTallerUpsert$(row.idTaller)
       .subscribe(() => this.onBuscar());
   }
 
   add() {
     this.dialog
-      .open(UpsertTallerDialogComponent, {size: 'xxl'})
-      .afterClosed()
+      .openTallerUpsert$()
       .subscribe(() => this.onBuscar());
   }
 

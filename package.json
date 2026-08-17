@@ -40,7 +40,7 @@
     "rxjs": "~7.8.0",
     "tslib": "^2.8.1",
     "zone.js": "~0.15.0",
-    "lib-components": "file:packages/lib-components-21.0.7.tgz",
+    "lib-components": "file:packages/lib-components-21.0.9.tgz",
     "lib-servicios": "file:packages/lib-servicios-21.0.10.tgz"
   },
   "devDependencies": {

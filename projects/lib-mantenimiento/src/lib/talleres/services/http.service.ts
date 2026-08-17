@@ -27,7 +27,7 @@ export class TalleresHttpService {
     return this.http.getState(fullUrl, command, state, ref);
   }
 
-  upsert(command: UpsertTallerModel): Observable<void> {
+  upsert(command: UpsertTallerModel): Observable<number> {
     const fullUrl = this.url + 'upsert';
     return this.http.postWithBlock(fullUrl, command);
   }

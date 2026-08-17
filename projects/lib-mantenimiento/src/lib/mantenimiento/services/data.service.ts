@@ -8,7 +8,16 @@ import { GridState, HttpRef, PagedResult } from "lib-servicios";
 
 @Injectable()
 export class MantenimientoDataService extends BaseGridService<MantenimientoGridModel> {
-    
+    override state: GridState = {
+        sort: {
+            field: 'fechaEntrada',
+            direction: "desc"
+        },
+        page: 1,
+        pageSize: 10,
+    };
+
+
     public filterSub$: BehaviorSubject<MantenimientoFilterModel>;
 
     constructor(private httpService: MantenimientoHttpService) {
@@ -23,5 +32,9 @@ export class MantenimientoDataService extends BaseGridService<MantenimientoGridM
 
     suspender(idMantenimiento: number): Observable<void> {
       return this.httpService.suspender(idMantenimiento);
+    }
+
+    borrar(idMantenimiento: number): Observable<void> {
+      return this.httpService.borrar(idMantenimiento);
     }
 }

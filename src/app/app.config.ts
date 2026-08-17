@@ -29,6 +29,7 @@ import { DashboardService } from 'src/service/dashboard.service';
 import { APP_DATE_FORMATS, COMBO_DATA_PROVIDER } from 'lib-components';
 import { ComboHttpService } from 'src/service/combo-http.service';
 import { provideGeneralesListeners } from 'lib-generales';
+import { provideMantenimientoListeners } from 'lib-mantenimiento';
 
 registerLocaleData(localeEs)
 registerLocaleData(localeEsAR, 'es-AR');
@@ -65,6 +66,7 @@ export const appConfig: ApplicationConfig = {
       useClass: DashboardService
     },
     { provide: COMBO_DATA_PROVIDER, useExisting: ComboHttpService },
-    provideGeneralesListeners()
+    provideGeneralesListeners(),
+    provideMantenimientoListeners()
   ],
 };

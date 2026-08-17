@@ -7,7 +7,6 @@ import {
   DateFormFieldComponent,
   ComboComponent,
   GridConfig,
-  AlertService,
 } from 'lib-components';
 import {
   FormBuilder,
@@ -17,7 +16,6 @@ import {
 } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { UpsertProveedorDialogComponent } from '../dialogs/dialog/upsert-dialog';
-import { Subject } from 'rxjs';
 import { MantenimientoGridModel } from '../models/mantenimentos-grid-model';
 import { MantenimientoDataService } from '../services/data.service';
 import { MantenimientoFilterModel } from '../models/mantenimentos-filter-model';
@@ -47,14 +45,11 @@ export class MantenimientosComponent implements OnInit {
   formulario: FormGroup;
   gridConfig: GridConfig<MantenimientoGridModel>;
 
-  private destroy$ = new Subject<void>()
 
   constructor(
     private fb: FormBuilder,
     public dataService: MantenimientoDataService,
-    private dialog: DialogService,
-    private alertService: AlertService
-  ) {}
+    private dialog: DialogService  ) {}
 
   ngOnInit(): void {
     this.formSetup();
@@ -120,7 +115,8 @@ export class MantenimientosComponent implements OnInit {
           key: 'fechaEntrada',
           title: 'Fecha de Entrada',
           type: 'date',
-          format: 'ddMMyyyy'
+          format: 'ddMMyyyy',
+          sortable: true
         },
         {
           key: 'fechaSalida',
@@ -136,6 +132,14 @@ export class MantenimientosComponent implements OnInit {
           icon: 'remove',
           onClick: (row) => {
             this.suspender(row)
+          }
+        },
+        {
+          key: 'delete',
+          label: 'Borrar',
+          icon: 'delete',
+          onClick: (row) => {
+            this.borrar(row)
           }
         }
       ],
@@ -219,6 +223,11 @@ export class MantenimientosComponent implements OnInit {
 
   suspender(row: MantenimientoGridModel) {
     this.dataService.suspender(row.idMantenimiento)
+    .subscribe(() => this.onBuscar())
+  }
+
+  borrar(row: MantenimientoGridModel) {
+    this.dataService.borrar(row.idMantenimiento)
     .subscribe(() => this.onBuscar())
   }
 

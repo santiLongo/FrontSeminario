@@ -17,6 +17,7 @@ import { filter, switchMap } from 'rxjs';
 import { MantenimientoHttpService } from '../../services/http.service';
 import { UpsertDataService } from './data.service';
 import { UpsertMantenimientoModel, UpsertTareas } from './models/upsert-model';
+import { TallerDialogService } from '../../../talleres/services/dialog.service';
 
 @Component({
   selector: 'app-upsert-localidad-dialog',
@@ -49,6 +50,7 @@ export class UpsertProveedorDialogComponent implements OnInit {
     private alertService: AlertService,
     private httpService: MantenimientoHttpService,
     public dataService: UpsertDataService,
+    private tallerDialog: TallerDialogService
   ) {
     this.idMantenimiento = data?.idMantenimiento;
   }
@@ -113,7 +115,22 @@ export class UpsertProveedorDialogComponent implements OnInit {
         selectable: true,
         type: 'single',
       },
-      isEditable: true
+      isEditable: true,
+      toolBarActions: [
+        {
+          key: 'taller',
+          label: 'Alta Taller',
+          position: 'right',
+          type: 'success',
+          onClick: () => {
+            this.tallerDialog.openTallerUpsert$().subscribe((value) => {
+              if(value){
+                this.formulario.controls['idTaller'].patchValue(value);
+              }
+            })
+          }
+        }
+      ]
     };
   }
 

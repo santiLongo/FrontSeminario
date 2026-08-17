@@ -150,8 +150,8 @@ export class UpsertTallerDialogComponent implements OnInit {
       });
   }
 
-  salir() {
-    this.dialogRef.close();
+  salir(value?: number) {
+    this.dialogRef.close(value);
   }
 
   guardar() {
@@ -166,27 +166,17 @@ export class UpsertTallerDialogComponent implements OnInit {
     command.idTaller = this.idTaller;
     command.especialidades = this.dataService.data;
 
-    if (command.especialidades.length <= 0) {
-      this.alertService
-        .error$('Tiene que cargar al menos una especialidad')
-        .subscribe();
-      return;
-    }
-
     this.alertService
       .info$('Seguro que desea actualizar el taller?')
       .pipe(
         filter(Boolean),
         switchMap(() => {
           return this.httpService.upsert(command);
-        }),
-        switchMap(() => {
-          return this.alertService.success$(
+        })
+      )
+      .subscribe((value) => this.alertService.success$(
             'Exito',
             'Se guardo el taller con exito',
-          );
-        }),
-      )
-      .subscribe(() => this.salir());
+          ).subscribe(() => this.salir(value)));
   }
 }
